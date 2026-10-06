@@ -50,6 +50,7 @@ class ExecutionAgent:
         job.policy_reason = policy_result.reason
         job.confidence = reasoning_output.confidence
         job.recommended_start_time = reasoning_output.recommended_start_time
+        job.candidate_windows = reasoning_output.candidate_windows
 
         # Enforce Policy Gate:
         # AI decision -> Policy validation -> Allowed? -> YES: Execute | NO: Block / Ask User

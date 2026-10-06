@@ -8,7 +8,11 @@ from backend.agents.orchestrator import orchestrator
 from backend.config import settings
 from backend.database import db_manager
 from backend.mcp.server import mcp_registry
-from backend.models.schemas import SimulationUpdateRequest, WorkloadSubmitRequest
+from backend.models.schemas import (
+    SimulationUpdateRequest,
+    WorkloadConfigureRequest,
+    WorkloadSubmitRequest,
+)
 from backend.policies.policy_engine import policy_engine
 from backend.simulation.cloud_runtime import cloud_runtime
 from backend.simulation.demo_scenarios import (
@@ -93,7 +97,7 @@ def api_grid_renewable() -> Dict[str, Any]:
 
 
 @router.post("/simulation/update")
-def api_update_simulation(req: SimulationUpdateRequest) -> Dict[str, Any]:
+def api_update_simulation(req: SimulationUpdateRequest, re_evaluate: bool = False) -> Dict[str, Any]:
     if req.profile and req.profile in PROFILES:
         simulated_grid_provider.active_profile = req.profile
     if req.override_current_carbon is not None:
@@ -106,14 +110,22 @@ def api_update_simulation(req: SimulationUpdateRequest) -> Dict[str, Any]:
     if req.cloud_capacity_utilization_pct is not None:
         simulated_grid_provider.cloud_capacity_utilization_pct = req.cloud_capacity_utilization_pct
 
-    if req.current_hour is not None:
-        return orchestrator.advance_simulation_time(req.current_hour)
-
-    return {
+    result: Dict[str, Any] = {
         "current_status": get_grid_provider().get_current_status().model_dump(),
         "transitions": [],
-        "workloads": [j.model_dump() for j in cloud_runtime.list_jobs()],
+        "workloads": [],
     }
+    if req.current_hour is not None:
+        result = orchestrator.advance_simulation_time(req.current_hour)
+
+    if re_evaluate:
+        for job in cloud_runtime.list_jobs():
+            if job.status.value in {"QUEUED", "DEFERRED", "RUNNING", "AWAITING_APPROVAL"}:
+                orchestrator.orchestrate_job(job.job_id)
+
+    result["current_status"] = get_grid_provider().get_current_status().model_dump()
+    result["workloads"] = [j.model_dump() for j in cloud_runtime.list_jobs()]
+    return result
 
 
 @router.post("/simulation/step")
@@ -127,6 +139,8 @@ def api_reset_simulation(seed_scenario_1: bool = False) -> Dict[str, Any]:
     orchestrator.clear_all_state()
     if seed_scenario_1:
         run_demo_scenario("scenario_1", reset_first=False)
+    else:
+        run_all_five_scenarios()
     return get_dashboard_state()
 
 
@@ -138,6 +152,34 @@ def api_list_workloads() -> Dict[str, Any]:
 @router.post("/workloads")
 def api_submit_workload(req: WorkloadSubmitRequest) -> Dict[str, Any]:
     return orchestrator.submit_and_orchestrate(req)
+
+
+@router.post("/workloads/{job_id}/configure")
+def api_configure_workload(job_id: str, req: WorkloadConfigureRequest) -> Dict[str, Any]:
+    job = cloud_runtime.get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Workload '{job_id}' not found.")
+
+    if req.duration_minutes is not None:
+        job.duration_minutes = req.duration_minutes
+    if req.deadline is not None:
+        job.deadline = req.deadline
+    if req.priority is not None:
+        job.priority = req.priority
+    if req.energy_kwh is not None:
+        job.energy_kwh = req.energy_kwh
+    if req.workload_type is not None:
+        job.workload_type = req.workload_type
+        job.is_protected_service = req.workload_type.strip().lower() in {
+            "production_web_server",
+            "emergency_database",
+            "health_tech_api",
+        }
+    if req.estimated_cloud_cost_usd is not None:
+        job.estimated_cloud_cost_usd = req.estimated_cloud_cost_usd
+
+    cloud_runtime.submit_job(job)
+    return orchestrator.orchestrate_job(job_id)
 
 
 @router.post("/workloads/{job_id}/orchestrate")

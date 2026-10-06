@@ -96,3 +96,33 @@ def test_section_18_judge_lifecycle_walkthrough() -> None:
     assert data["final_job"]["status"] == "COMPLETED"
     assert data["comparison"]["total_carbon_saved_gco2"] == 46500.0
     assert data["comparison"]["carbon_reduction_percentage"] == 44.29
+
+
+def test_interactive_workload_configure_and_candidate_windows() -> None:
+    """
+    Verifies that changing a workload's deadline or duration in the Digital Twin
+    recalculates candidate execution windows and AI recommendations deterministically.
+    """
+    client.post("/api/scenarios/scenario_1/run?reset_first=true")
+
+    # Tighten deadline to 16:00 -> should switch AI-TRAINING-001 to RUN_IMMEDIATELY at 15:00
+    tight_resp = client.post(
+        "/api/workloads/AI-TRAINING-001/configure",
+        json={"deadline": "16:00", "duration_minutes": 60},
+    )
+    assert tight_resp.status_code == 200
+    tight_data = tight_resp.json()
+    assert tight_data["reasoning"]["decision"] == "RUN_IMMEDIATELY"
+    assert tight_data["job"]["carbon_reduction_pct"] == 0.0
+
+    # Relax deadline back to 20:00 -> should defer to 17:00 again with candidate windows
+    relax_resp = client.post(
+        "/api/workloads/AI-TRAINING-001/configure",
+        json={"deadline": "20:00", "duration_minutes": 60},
+    )
+    assert relax_resp.status_code == 200
+    relax_data = relax_resp.json()
+    assert relax_data["reasoning"]["decision"] == "DEFER"
+    assert relax_data["job"]["recommended_start_time"] == "17:00"
+    assert len(relax_data["job"]["candidate_windows"]) >= 5
+

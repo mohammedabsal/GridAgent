@@ -179,6 +179,16 @@ class WorkloadJob(BaseModel):
     confidence: Optional[float] = None
     region: str = "ap-south-1 (Simulated K8s)"
     is_protected_service: bool = False
+    candidate_windows: List[CandidateWindow] = Field(default_factory=list)
+
+
+class WorkloadConfigureRequest(BaseModel):
+    duration_minutes: Optional[int] = Field(default=None, ge=15, le=720)
+    deadline: Optional[str] = Field(default=None, pattern=r"^\d{2}:\d{2}$")
+    priority: Optional[WorkloadPriority] = None
+    energy_kwh: Optional[float] = Field(default=None, gt=0.0)
+    workload_type: Optional[str] = None
+    estimated_cloud_cost_usd: Optional[float] = None
 
 
 class WorkloadSubmitRequest(BaseModel):

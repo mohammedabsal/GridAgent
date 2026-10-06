@@ -29,6 +29,21 @@ export interface GridHourlyPoint {
   is_simulated: boolean;
 }
 
+export interface CandidateWindow {
+  start_hour: number;
+  start_time: string;
+  end_hour: number;
+  end_time: string;
+  avg_carbon_intensity: number;
+  avg_solar_mw: number;
+  avg_renewable_pct: number;
+  avg_price_usd_kwh: number;
+  estimated_emissions_gco2: number;
+  estimated_cost_usd: number;
+  composite_score?: number;
+  meets_deadline: boolean;
+}
+
 export interface WorkloadJob {
   job_id: string;
   name: string;
@@ -69,6 +84,7 @@ export interface WorkloadJob {
   confidence?: number;
   region: string;
   is_protected_service: boolean;
+  candidate_windows?: CandidateWindow[];
 }
 
 export interface AgentActivityEvent {
@@ -199,14 +215,17 @@ export const api = {
   stepSimulation: (hours = 1) =>
     requestJson<unknown>(`/simulation/step?hours=${hours}`, { method: 'POST' }),
 
-  updateSimulation: (payload: {
-    current_hour?: number;
-    profile?: string;
-    override_current_carbon?: number | null;
-    override_current_solar_mw?: number | null;
-    cloud_capacity_utilization_pct?: number;
-  }) =>
-    requestJson<unknown>('/simulation/update', {
+  updateSimulation: (
+    payload: {
+      current_hour?: number;
+      profile?: string;
+      override_current_carbon?: number | null;
+      override_current_solar_mw?: number | null;
+      cloud_capacity_utilization_pct?: number;
+    },
+    reEvaluate = false
+  ) =>
+    requestJson<unknown>(`/simulation/update?re_evaluate=${reEvaluate}`, {
       method: 'POST',
       body: JSON.stringify(payload),
     }),
@@ -231,6 +250,27 @@ export const api = {
     requestJson<unknown>('/workloads', {
       method: 'POST',
       body: JSON.stringify(payload),
+    }),
+
+  configureWorkload: (
+    jobId: string,
+    payload: {
+      duration_minutes?: number;
+      deadline?: string;
+      priority?: string;
+      energy_kwh?: number;
+      workload_type?: string;
+      estimated_cloud_cost_usd?: number;
+    }
+  ) =>
+    requestJson<unknown>(`/workloads/${encodeURIComponent(jobId)}/configure`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
+  orchestrateWorkload: (jobId: string) =>
+    requestJson<unknown>(`/workloads/${encodeURIComponent(jobId)}/orchestrate`, {
+      method: 'POST',
     }),
 
   workloadAction: (

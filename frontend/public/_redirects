@@ -1,0 +1,16 @@
+# Public public-facing landing pages
+/            /index.html   include  /index.html   200
+/index.html  /index.html   include  /index.html   200
+/static      /static      200
+*.js         /assets/*    200
+*.css        /assets/*    200
+/*.png       /assets/*    200
+/*.svg       /assets/*    200
+
+# Existing GridAgent application keeps its server-rendered SPA route;
+# browser-side React issues the /app navigation, so this is the real SPA output.
+/app          /app          200
+/app/*        /app          200
+
+# Fallback: send unknown public paths to the landing shell
+/*            /index.html   200

@@ -7,7 +7,6 @@ import { HeroSection } from './landing/HeroSection';
 import {
   FeaturesSection,
   HowItWorksSection,
-  TechnologySection,
   UseCasesSection,
 } from './landing/FeatureSections';
 import {
@@ -118,11 +117,10 @@ export const Landing: React.FC = () => {
         )}
       </header>
 
-      <main>
+      <main className="landing-main">
         <HeroSection data={data} />
         <FeaturesSection />
         <HowItWorksSection />
-        <TechnologySection />
         <UseCasesSection />
         <SafetySection />
         <ImpactSection data={data} />

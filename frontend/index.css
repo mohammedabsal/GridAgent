@@ -19,3 +19,150 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
+
+/* ------------------------------------------------------------------ */
+/* Global motion system — pure CSS, no layout or logic changes          */
+/* Landing: rise-on-enter + scroll reveal + float.                       */
+/* App (/app tabbed console): opacity-only fades (no transforms on      */
+/* layout shells, canvas, charts, or live-updating panels).              */
+/* ------------------------------------------------------------------ */
+
+@keyframes ga-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ga-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ga-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Landing scroll-reveal (was referenced by Reveal but never defined). */
+.ga-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.ga-reveal.ga-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Landing decorative float (was referenced as ga-float, never defined). */
+.ga-float {
+  animation: ga-float 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Every landing section rises in with a stagger. */
+.landing-main > section,
+.landing-main > div > section,
+footer > div {
+  animation: ga-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.landing-main > section:nth-of-type(2),
+.landing-main > div > section:nth-of-type(2) {
+  animation-delay: 0.06s;
+}
+
+.landing-main > section:nth-of-type(3),
+.landing-main > div > section:nth-of-type(3) {
+  animation-delay: 0.12s;
+}
+
+.landing-main > section:nth-of-type(n + 4),
+.landing-main > div > section:nth-of-type(n + 4) {
+  animation-delay: 0.18s;
+}
+
+/* App console: gentle opacity-only entrance on the page shell and its
+   direct panels. Attribute selector avoids touching recharts internals
+   (which use inline transform/width on SVG nodes). */
+div[class*='max-w-[1600px]'] {
+  animation: ga-fade 0.45s ease-out both;
+}
+
+div[class*='max-w-[1600px]'] > div[class*='space-y-5'] > div {
+  animation: ga-fade 0.5s ease-out both;
+}
+
+div[class*='max-w-[1600px]'] > div[class*='space-y-5'] > div:nth-child(2) {
+  animation-delay: 0.07s;
+}
+
+div[class*='max-w-[1600px]'] > div[class*='space-y-5'] > div:nth-child(n + 3) {
+  animation-delay: 0.14s;
+}
+
+/* Banner / toast entrance (key change only, no layout shift). */
+div[class*='max-w-[1600px]'] div[class*='rounded-xl'][class*='emerald-500/15'] {
+  animation: ga-fade 0.35s ease-out both;
+}
+
+/* Buttons + links: soft press, transform-only. */
+button {
+  transition:
+    transform 0.16s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.975);
+}
+
+a {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Respect users who prefer no motion. */
+@media (prefers-reduced-motion: reduce) {
+  .ga-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .ga-float,
+  .landing-main > section,
+  .landing-main > div > section,
+  footer > div,
+  div[class*='max-w-[1600px]'],
+  div[class*='max-w-[1600px]'] > div[class*='space-y-5'] > div {
+    animation: none;
+  }
+  button:active {
+    transform: none;
+  }
+}
+

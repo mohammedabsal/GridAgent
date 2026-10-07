@@ -10,7 +10,7 @@ import {
   Leaf,
   Sparkles,
 } from 'lucide-react';
-import { GridHourlyPoint, GridStatus, WorkloadJob } from '../services/api';
+import { CandidateWindow, GridHourlyPoint, GridStatus, WorkloadJob } from '../services/api';
 
 interface WhatIfSimulationProps {
   workload: WorkloadJob;
@@ -323,7 +323,7 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-          {candidates.map((win) => {
+          {candidates.map((win: CandidateWindow) => {
             const isBest = win.start_time === recTime && !isBlocked;
             const kg = (win.estimated_emissions_gco2 / 1000).toFixed(1);
             const highC = win.avg_carbon_intensity >= 550;

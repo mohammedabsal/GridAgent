@@ -61,40 +61,40 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     : Math.max(3, Math.round((grid.cloud_capacity_utilization_pct / 100) * 12));
 
   return (
-    <div className="bg-[#0D1117] border border-[#1E2633] rounded-sm overflow-hidden">
+    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
       {/* =====================================================================
           HEADER BAR: DIGITAL TWIN STATUS & REAL-TO-TWIN SYNCHRONIZATION
       ===================================================================== */}
-      <div className="px-5 py-3 border-b border-[#1E2633] bg-[#11161F] flex flex-wrap items-center justify-between gap-4">
+      <div className="px-5 py-3 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <h2 className="text-xs font-bold tracking-[0.14em] uppercase text-[#E6EDF3]">
+          <h2 className="text-xs font-bold tracking-[0.14em] uppercase text-[#0d3f3a]">
             DIGITAL TWIN
           </h2>
-          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-[#0D1117] border border-[#1E2633] text-[11px] font-mono text-[#10B981]">
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-2xl bg-white border border-slate-200 text-[11px] font-mono text-[#10B981]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
             LIVE SIMULATION
           </span>
-          <span className="hidden md:inline-block text-[11px] text-[#8B949E] border-l border-[#1E2633] pl-3">
+          <span className="hidden md:inline-block text-[11px] text-slate-500 border-l border-slate-200 pl-3">
             DIGITAL REPRESENTATION — Synchronized with simulated grid + workload
             data
           </span>
         </div>
 
         {/* Subtle Real System -> Digital Twin Mapping */}
-        <div className="hidden xl:flex items-center gap-4 text-[11px] font-mono text-[#8B949E]">
+        <div className="hidden xl:flex items-center gap-4 text-[11px] font-mono text-slate-500">
           <span>
             Cloud workload <span className="text-[#3B82F6]">→</span> Simulated
             workload
           </span>
-          <span className="text-[#1E2633]">|</span>
+          <span className="text-slate-300">|</span>
           <span>
             Energy grid <span className="text-[#3B82F6]">→</span> Simulated grid
           </span>
-          <span className="text-[#1E2633]">|</span>
+          <span className="text-slate-300">|</span>
           <span>
             Renewable energy <span className="text-[#3B82F6]">→</span> Forecast
           </span>
-          <span className="text-[#1E2633]">|</span>
+          <span className="text-slate-300">|</span>
           <span>
             Execution <span className="text-[#3B82F6]">→</span> What-if
             simulation
@@ -105,20 +105,20 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
       {/* =====================================================================
           MAIN DIGITAL TWIN ENGINEERING SCHEMATIC CANVAS
       ===================================================================== */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-[#1E2633]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 border-b border-slate-200">
         {/* LEFT COLUMN (3 cols): REAL SYSTEM VS DIGITAL TWIN MODEL + TELEMETRY */}
-        <div className="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-[#1E2633] p-5 flex flex-col justify-between bg-[#0B0F15]">
+        <div className="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-slate-200 p-5 flex flex-col justify-between bg-slate-50">
           <div className="space-y-4">
             <div>
-              <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8B949E]">
+              <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
                 SIMULATION CLOCK
               </div>
               <div className="mt-1 flex items-baseline gap-2.5">
-                <span className="text-2xl font-mono font-semibold text-[#E6EDF3]">
+                <span className="text-2xl font-mono font-semibold text-[#0d3f3a]">
                   {grid.current_time}
                 </span>
                 <span
-                  className="text-[11px] font-mono px-1.5 py-0.5 rounded-sm border"
+                  className="text-[11px] font-mono px-1.5 py-0.5 rounded-2xl border"
                   style={{
                     color: gridStateColor,
                     borderColor: `${gridStateColor}40`,
@@ -131,32 +131,32 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
             </div>
 
             {/* Real System -> Digital Twin Mapping Table */}
-            <div className="pt-3 border-t border-[#1E2633]">
-              <div className="grid grid-cols-2 text-[10px] font-mono uppercase tracking-wider text-[#8B949E] pb-2 border-b border-[#1E2633]/70">
+            <div className="pt-3 border-t border-slate-200">
+              <div className="grid grid-cols-2 text-[10px] font-mono uppercase tracking-wider text-slate-500 pb-2 border-b border-slate-200/70">
                 <span>REAL SYSTEM</span>
                 <span>DIGITAL TWIN</span>
               </div>
-              <div className="divide-y divide-[#1E2633]/60 text-xs">
+              <div className="divide-y divide-slate-200 text-xs">
                 <div className="py-2 flex items-center justify-between">
-                  <span className="text-[#8B949E]">Cloud workload</span>
-                  <span className="font-mono text-[#E6EDF3]">
+                  <span className="text-slate-500">Cloud workload</span>
+                  <span className="font-mono text-[#0d3f3a]">
                     {workload.job_id}
                   </span>
                 </div>
                 <div className="py-2 flex items-center justify-between">
-                  <span className="text-[#8B949E]">Energy grid</span>
-                  <span className="font-mono text-[#E6EDF3]">
+                  <span className="text-slate-500">Energy grid</span>
+                  <span className="font-mono text-[#0d3f3a]">
                     {Math.round(carbon)} gCO₂/kWh
                   </span>
                 </div>
                 <div className="py-2 flex items-center justify-between">
-                  <span className="text-[#8B949E]">Renewable energy</span>
+                  <span className="text-slate-500">Renewable energy</span>
                   <span className="font-mono text-[#10B981]">
                     {renewable.toFixed(1)}% ({Math.round(solarMw + windMw)} MW)
                   </span>
                 </div>
                 <div className="py-2 flex items-center justify-between">
-                  <span className="text-[#8B949E]">Execution</span>
+                  <span className="text-slate-500">Execution</span>
                   <span className="font-mono text-[#3B82F6]">
                     {isExecutingAtCurrentHour
                       ? 'RUNNING NOW'
@@ -170,23 +170,23 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
           </div>
 
           {/* Active Workload Spec Readout */}
-          <div className="mt-6 pt-4 border-t border-[#1E2633] space-y-2">
-            <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#8B949E]">
+          <div className="mt-6 pt-4 border-t border-slate-200 space-y-2">
+            <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
               TARGET WORKLOAD MODEL
             </div>
-            <div className="text-sm font-semibold text-[#E6EDF3]">
+            <div className="text-sm font-semibold text-[#0d3f3a]">
               {workload.name}
             </div>
             <div className="grid grid-cols-2 gap-2 pt-1 text-[11px] font-mono">
-              <div className="bg-[#11161F] border border-[#1E2633] px-2.5 py-1.5 rounded-sm">
-                <div className="text-[#8B949E] text-[10px]">ENERGY DRAW</div>
-                <div className="text-[#E6EDF3] font-semibold">
+              <div className="bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-2xl">
+                <div className="text-slate-500 text-[10px]">ENERGY DRAW</div>
+                <div className="text-[#0d3f3a] font-semibold">
                   {workload.energy_kwh} kWh
                 </div>
               </div>
-              <div className="bg-[#11161F] border border-[#1E2633] px-2.5 py-1.5 rounded-sm">
-                <div className="text-[#8B949E] text-[10px]">SLA DEADLINE</div>
-                <div className="text-[#E6EDF3] font-semibold">
+              <div className="bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-2xl">
+                <div className="text-slate-500 text-[10px]">SLA DEADLINE</div>
+                <div className="text-[#0d3f3a] font-semibold">
                   {workload.deadline}
                 </div>
               </div>
@@ -195,13 +195,13 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         </div>
 
         {/* CENTER/RIGHT COLUMN (9 cols): TECHNICAL CAD / TOPOLOGY VISUALIZATION */}
-        <div className="lg:col-span-9 p-4 md:p-6 bg-[#0A0D12] relative flex flex-col justify-center">
+        <div className="lg:col-span-9 p-4 md:p-6 bg-[#F1F5F9] relative flex flex-col justify-center">
           {/* Subtle technical blueprint grid background */}
           <div
             className="absolute inset-0 pointer-events-none opacity-30"
             style={{
               backgroundImage:
-                'linear-gradient(to right, #18202C 1px, transparent 1px), linear-gradient(to bottom, #18202C 1px, transparent 1px)',
+                'linear-gradient(to right, #E2E8F0 1px, transparent 1px), linear-gradient(to bottom, #E2E8F0 1px, transparent 1px)',
               backgroundSize: '32px 32px',
             }}
           />
@@ -215,6 +215,9 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               aria-label="Digital Twin Infrastructure Topology: Solar and Wind Generation to Energy Grid to Data Center to Workload"
             >
               <defs>
+                <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#0F172A" floodOpacity="0.08" />
+                </filter>
                 <marker
                   id="arrow-blue"
                   viewBox="0 0 10 10"
@@ -260,8 +263,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   width="300"
                   height="64"
                   rx="3"
-                  fill="#11161F"
-                  stroke={renewable >= 35 ? '#10B981' : '#263244'}
+                  fill="#FFFFFF" filter="url(#cardShadow)"
+                  stroke={renewable >= 35 ? '#10B981' : '#CBD5E1'}
                   strokeWidth="1.2"
                 />
                 {/* Technical Corner Ticks */}
@@ -319,7 +322,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="62"
                   y="25"
-                  fill="#8B949E"
+                  fill="#64748B"
                   fontSize="10"
                   fontFamily="monospace"
                   letterSpacing="1.2"
@@ -329,7 +332,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="62"
                   y="46"
-                  fill="#E6EDF3"
+                  fill="#0F172A"
                   fontSize="14"
                   fontWeight="600"
                   fontFamily="monospace"
@@ -354,7 +357,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   y1="76"
                   x2="440"
                   y2="108"
-                  stroke="#1E2633"
+                  stroke="#CBD5E1"
                   strokeWidth="2"
                 />
                 <line
@@ -387,14 +390,14 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   width="300"
                   height="68"
                   rx="3"
-                  fill="#11161F"
+                  fill="#FFFFFF" filter="url(#cardShadow)"
                   stroke={gridStateColor}
                   strokeWidth="1.3"
                 />
                 <text
                   x="20"
                   y="24"
-                  fill="#8B949E"
+                  fill="#64748B"
                   fontSize="10"
                   fontFamily="monospace"
                   letterSpacing="1.2"
@@ -415,7 +418,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="20"
                   y="49"
-                  fill="#E6EDF3"
+                  fill="#0F172A"
                   fontSize="17"
                   fontWeight="700"
                   fontFamily="monospace"
@@ -426,7 +429,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   x="280"
                   y="49"
                   textAnchor="end"
-                  fill="#8B949E"
+                  fill="#64748B"
                   fontSize="12"
                   fontFamily="monospace"
                 >
@@ -441,7 +444,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   y1="178"
                   x2="440"
                   y2="210"
-                  stroke="#1E2633"
+                  stroke="#CBD5E1"
                   strokeWidth="2"
                 />
                 <line
@@ -474,14 +477,14 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   width="420"
                   height="104"
                   rx="3"
-                  fill="#11161F"
+                  fill="#FFFFFF" filter="url(#cardShadow)"
                   stroke="#3B82F6"
                   strokeWidth="1.2"
                 />
                 <text
                   x="20"
                   y="22"
-                  fill="#8B949E"
+                  fill="#64748B"
                   fontSize="10"
                   fontFamily="monospace"
                   letterSpacing="1.2"
@@ -492,7 +495,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   x="400"
                   y="22"
                   textAnchor="end"
-                  fill="#E6EDF3"
+                  fill="#0F172A"
                   fontSize="11"
                   fontFamily="monospace"
                 >
@@ -511,12 +514,12 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                     ? isCleanCarbon
                       ? '#10B981'
                       : '#3B82F6'
-                    : '#263244';
+                    : '#CBD5E1';
                   const nodeFill = isNodeActive
                     ? isCleanCarbon
                       ? '#10B98118'
                       : '#3B82F618'
-                    : '#0B0F15';
+                    : '#F1F5F9';
 
                   return (
                     <g key={idx} transform={`translate(${nx}, ${ny})`}>
@@ -540,13 +543,13 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                             ? isCleanCarbon
                               ? '#10B981'
                               : '#3B82F6'
-                            : '#1E2633'
+                            : '#CBD5E1'
                         }
                       />
                       <text
                         x="16"
                         y="14"
-                        fill={isNodeActive ? '#E6EDF3' : '#8B949E'}
+                        fill={isNodeActive ? '#0F172A' : '#64748B'}
                         fontSize="9"
                         fontFamily="monospace"
                       >
@@ -564,7 +567,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   y1="316"
                   x2="440"
                   y2="344"
-                  stroke="#1E2633"
+                  stroke="#CBD5E1"
                   strokeWidth="2"
                 />
                 <line
@@ -603,8 +606,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   width="360"
                   height="38"
                   rx="3"
-                  fill="#11161F"
-                  stroke={isExecutingAtCurrentHour ? '#10B981' : '#263244'}
+                  fill="#FFFFFF" filter="url(#cardShadow)"
+                  stroke={isExecutingAtCurrentHour ? '#10B981' : '#CBD5E1'}
                   strokeWidth="1.2"
                 />
                 <circle
@@ -622,7 +625,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="32"
                   y="23"
-                  fill="#E6EDF3"
+                  fill="#0F172A"
                   fontSize="12"
                   fontWeight="600"
                   fontFamily="monospace"
@@ -633,7 +636,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   x="344"
                   y="23"
                   textAnchor="end"
-                  fill={isExecutingAtCurrentHour ? '#10B981' : '#8B949E'}
+                  fill={isExecutingAtCurrentHour ? '#10B981' : '#64748B'}
                   fontSize="11"
                   fontFamily="monospace"
                 >
@@ -653,14 +656,14 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   width="185"
                   height="88"
                   rx="3"
-                  fill="#0D1117"
-                  stroke="#1E2633"
+                  fill="#FFFFFF" filter="url(#cardShadow)"
+                  stroke="#CBD5E1"
                   strokeWidth="1"
                 />
                 <text
                   x="12"
                   y="20"
-                  fill="#8B949E"
+                  fill="#64748B"
                   fontSize="9"
                   fontFamily="monospace"
                   letterSpacing="1"
@@ -670,7 +673,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="12"
                   y="42"
-                  fill="#E6EDF3"
+                  fill="#0F172A"
                   fontSize="12"
                   fontFamily="monospace"
                 >
@@ -688,7 +691,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="12"
                   y="78"
-                  fill="#8B949E"
+                  fill="#64748B"
                   fontSize="10"
                   fontFamily="monospace"
                 >
@@ -706,14 +709,14 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   width="186"
                   height="88"
                   rx="3"
-                  fill="#0D1117"
-                  stroke="#1E2633"
+                  fill="#FFFFFF" filter="url(#cardShadow)"
+                  stroke="#CBD5E1"
                   strokeWidth="1"
                 />
                 <text
                   x="12"
                   y="20"
-                  fill="#8B949E"
+                  fill="#64748B"
                   fontSize="9"
                   fontFamily="monospace"
                   letterSpacing="1"
@@ -723,7 +726,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="12"
                   y="42"
-                  fill="#E6EDF3"
+                  fill="#0F172A"
                   fontSize="11"
                   fontFamily="monospace"
                 >
@@ -732,7 +735,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="12"
                   y="60"
-                  fill="#E6EDF3"
+                  fill="#0F172A"
                   fontSize="11"
                   fontFamily="monospace"
                 >
@@ -741,7 +744,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <text
                   x="12"
                   y="78"
-                  fill="#8B949E"
+                  fill="#64748B"
                   fontSize="10"
                   fontFamily="monospace"
                 >
@@ -753,11 +756,11 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
           {/* Demo Step Banner inside Canvas if Live Demo is active */}
           {demoStep && (
-            <div className="mt-2 px-4 py-2 bg-[#11161F] border border-[#10B981]/50 rounded-sm flex items-center justify-between text-xs font-mono">
+            <div className="mt-2 px-4 py-2 bg-slate-50 border border-[#10B981]/50 rounded-2xl flex items-center justify-between text-xs font-mono">
               <span className="text-[#10B981] font-semibold">
                 LIVE DEMO STEP {demoStep} / 6
               </span>
-              <span className="text-[#E6EDF3]">
+              <span className="text-[#0d3f3a]">
                 {demoStep === 1 &&
                   'Step 1: Observing current time 15:00 — Grid carbon at 700 gCO₂/kWh — Workload Ready'}
                 {demoStep === 2 &&
@@ -785,13 +788,13 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
       {/* =====================================================================
           INTERACTIVE TIME SIMULATION TIMELINE (SECTION 7)
       ===================================================================== */}
-      <div className="p-5 bg-[#0D1117]">
+      <div className="p-5 bg-white">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#E6EDF3]">
+            <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#0d3f3a]">
               TIME SIMULATION TIMELINE
             </span>
-            <span className="text-xs text-[#8B949E]">
+            <span className="text-xs text-slate-500">
               Drag or select any hour to inspect grid carbon, renewables, and
               workload state
             </span>
@@ -799,7 +802,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
           {/* Legend Markers: NOW, BEST WINDOW, DEADLINE */}
           <div className="flex items-center gap-5 text-[11px] font-mono">
-            <span className="inline-flex items-center gap-1.5 text-[#E6EDF3]">
+            <span className="inline-flex items-center gap-1.5 text-[#0d3f3a]">
               <span className="h-2 w-2 rounded-full bg-[#3B82F6]" />
               NOW ({grid.current_time})
             </span>
@@ -816,7 +819,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
         {/* Continuous Range Slider for smooth scrubbing */}
         <div className="mb-4 flex items-center gap-3">
-          <span className="text-[11px] font-mono text-[#8B949E] w-12">
+          <span className="text-[11px] font-mono text-slate-500 w-12">
             00:00
           </span>
           <input
@@ -826,22 +829,22 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
             value={currentHour}
             onChange={(e) => onSelectHour(Number(e.target.value))}
             aria-label="Simulation Time Cursor"
-            className="w-full h-1.5 bg-[#1E2633] rounded-sm appearance-none cursor-pointer accent-[#10B981]"
+            className="w-full h-1.5 bg-slate-200 rounded-2xl appearance-none cursor-pointer accent-[#10B981]"
           />
-          <span className="text-[11px] font-mono text-[#8B949E] w-12 text-right">
+          <span className="text-[11px] font-mono text-slate-500 w-12 text-right">
             23:00
           </span>
         </div>
 
         {/* 24-Hour Engineering Timeline Matrix (Time / Carbon / Renewables / Markers) */}
-        <div className="overflow-x-auto border border-[#1E2633] rounded-sm">
+        <div className="overflow-x-auto border border-slate-200 rounded-2xl">
           <div className="min-w-[960px]">
             {/* Row 0: Marker Row (NOW / BEST WINDOW / DEADLINE) */}
             <div
-              className="grid bg-[#0A0D12] border-b border-[#1E2633] text-[9px] font-mono"
+              className="grid bg-slate-50 border-b border-slate-200 text-[9px] font-mono"
               style={{ gridTemplateColumns: '76px repeat(24, minmax(0, 1fr))' }}
             >
-              <div className="px-2 py-1.5 text-[#8B949E] border-r border-[#1E2633]">
+              <div className="px-2 py-1.5 text-slate-500 border-r border-slate-200">
                 MARKER
               </div>
               {forecast24h.map((pt) => {
@@ -852,7 +855,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   <button
                     key={`marker-${pt.hour}`}
                     onClick={() => onSelectHour(pt.hour)}
-                    className={`py-1.5 text-center border-r border-[#1E2633]/50 last:border-r-0 transition ${
+                    className={`py-1.5 text-center border-r border-slate-200/50 last:border-r-0 transition ${
                       isNow
                         ? 'bg-[#3B82F6]/20 text-[#3B82F6] font-bold'
                         : isBest
@@ -870,10 +873,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
             {/* Row 1: Hour Labels */}
             <div
-              className="grid bg-[#11161F] border-b border-[#1E2633] text-[10px] font-mono"
+              className="grid bg-slate-50 border-b border-slate-200 text-[10px] font-mono"
               style={{ gridTemplateColumns: '76px repeat(24, minmax(0, 1fr))' }}
             >
-              <div className="px-2 py-2 text-[#8B949E] border-r border-[#1E2633]">
+              <div className="px-2 py-2 text-slate-500 border-r border-slate-200">
                 TIME
               </div>
               {forecast24h.map((pt) => {
@@ -883,12 +886,12 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   <button
                     key={`time-${pt.hour}`}
                     onClick={() => onSelectHour(pt.hour)}
-                    className={`py-2 text-center border-r border-[#1E2633]/50 last:border-r-0 transition ${
+                    className={`py-2 text-center border-r border-slate-200/50 last:border-r-0 transition ${
                       isNow
-                        ? 'bg-[#3B82F6]/15 text-[#E6EDF3] font-bold'
+                        ? 'bg-[#3B82F6]/15 text-[#0d3f3a] font-bold'
                         : isBest
                         ? 'bg-[#10B981]/10 text-[#10B981] font-semibold'
-                        : 'text-[#8B949E] hover:text-[#E6EDF3] hover:bg-[#161D29]'
+                        : 'text-slate-500 hover:text-[#0d3f3a] hover:bg-slate-100'
                     }`}
                   >
                     {String(pt.hour).padStart(2, '0')}:00
@@ -899,10 +902,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
             {/* Row 2: Carbon Intensity (gCO2/kWh) */}
             <div
-              className="grid bg-[#0D1117] border-b border-[#1E2633] text-[10px] font-mono"
+              className="grid bg-white border-b border-slate-200 text-[10px] font-mono"
               style={{ gridTemplateColumns: '76px repeat(24, minmax(0, 1fr))' }}
             >
-              <div className="px-2 py-2 text-[#8B949E] border-r border-[#1E2633]">
+              <div className="px-2 py-2 text-slate-500 border-r border-slate-200">
                 CARBON
               </div>
               {forecast24h.map((pt) => {
@@ -919,12 +922,12 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   <button
                     key={`carbon-${pt.hour}`}
                     onClick={() => onSelectHour(pt.hour)}
-                    className={`py-2 text-center border-r border-[#1E2633]/50 last:border-r-0 transition ${colorClass} ${
+                    className={`py-2 text-center border-r border-slate-200/50 last:border-r-0 transition ${colorClass} ${
                       isNow
                         ? 'bg-[#3B82F6]/15 font-bold'
                         : isBest
                         ? 'bg-[#10B981]/10 font-bold'
-                        : 'hover:bg-[#161D29]'
+                        : 'hover:bg-slate-100'
                     }`}
                   >
                     {c}
@@ -935,10 +938,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
             {/* Row 3: Renewable Share (%) */}
             <div
-              className="grid bg-[#0D1117] text-[10px] font-mono"
+              className="grid bg-white text-[10px] font-mono"
               style={{ gridTemplateColumns: '76px repeat(24, minmax(0, 1fr))' }}
             >
-              <div className="px-2 py-2 text-[#8B949E] border-r border-[#1E2633]">
+              <div className="px-2 py-2 text-slate-500 border-r border-slate-200">
                 RENEW.
               </div>
               {forecast24h.map((pt) => {
@@ -949,14 +952,14 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   <button
                     key={`ren-${pt.hour}`}
                     onClick={() => onSelectHour(pt.hour)}
-                    className={`py-2 text-center border-r border-[#1E2633]/50 last:border-r-0 transition ${
-                      r >= 38 ? 'text-[#10B981]' : 'text-[#8B949E]'
+                    className={`py-2 text-center border-r border-slate-200/50 last:border-r-0 transition ${
+                      r >= 38 ? 'text-[#10B981]' : 'text-slate-500'
                     } ${
                       isNow
-                        ? 'bg-[#3B82F6]/15 font-bold text-[#E6EDF3]'
+                        ? 'bg-[#3B82F6]/15 font-bold text-[#0d3f3a]'
                         : isBest
                         ? 'bg-[#10B981]/10 font-bold'
-                        : 'hover:bg-[#161D29]'
+                        : 'hover:bg-slate-100'
                     }`}
                   >
                     {r}%

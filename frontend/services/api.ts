@@ -69,6 +69,22 @@ export interface WorkloadJob {
   confidence?: number;
   region: string;
   is_protected_service: boolean;
+  candidate_windows?: CandidateWindow[];
+}
+
+export interface CandidateWindow {
+  start_hour: number;
+  start_time: string;
+  end_hour: number;
+  end_time: string;
+  avg_carbon_intensity: number;
+  avg_solar_mw: number;
+  avg_renewable_pct: number;
+  avg_price_usd_kwh: number;
+  estimated_emissions_gco2: number;
+  estimated_cost_usd: number;
+  composite_score?: number;
+  meets_deadline?: boolean;
 }
 
 export interface AgentActivityEvent {
@@ -246,6 +262,14 @@ export const api = {
         recommended_start_time: recommendedStartTime,
       }),
     }),
+
+  // Runs the full multi-agent pipeline (PERCEIVE -> REASON -> SAFETY -> EXECUTE)
+  // for a single workload. Backed by POST /workloads/{job_id}/orchestrate.
+  orchestrateWorkload: (jobId: string) =>
+    requestJson<unknown>(
+      `/workloads/${encodeURIComponent(jobId)}/orchestrate`,
+      { method: 'POST' }
+    ),
 
   runScenario: (scenarioId: string, resetFirst = false) =>
     requestJson<unknown>(

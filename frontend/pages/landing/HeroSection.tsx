@@ -365,10 +365,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ data }) => (
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </a>
               <a
-                href="#technology"
+                href="#how-it-works"
                 className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-7 py-3.5 text-sm font-bold text-slate-700 transition hover:border-emerald-400 hover:text-emerald-700"
               >
-                View Architecture
+                How It Works
               </a>
             </div>
           </Reveal>

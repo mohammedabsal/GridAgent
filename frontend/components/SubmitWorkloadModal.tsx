@@ -15,11 +15,11 @@ interface SubmitWorkloadModalProps {
     deadline: string;
     energy_kwh: number;
     estimated_cloud_cost_usd?: number;
-  }) => Promise<void>;
+  }) => Promise<unknown>;
   onOverrideGrid: (payload: {
     override_current_carbon?: number;
     override_current_solar_mw?: number;
-  }) => Promise<void>;
+  }) => Promise<unknown>;
 }
 
 export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({

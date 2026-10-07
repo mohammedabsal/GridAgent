@@ -7,7 +7,6 @@ export const APP_ROUTE = '/app';
 export const NAV_LINKS: { label: string; href: string }[] = [
   { label: 'Home', href: '#home' },
   { label: 'Features', href: '#features' },
-  { label: 'Technology', href: '#technology' },
   { label: 'Use Cases', href: '#use-cases' },
   { label: 'About', href: '#about' },
 ];

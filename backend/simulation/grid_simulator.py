@@ -217,18 +217,25 @@ class SimulatedGridDataProvider(GridDataProvider):
 class ElectricityMapsLiveAdapter(GridDataProvider):
     """
     Pluggable live grid telemetry adapter for Electricity Maps API.
-    If credentials are not configured or live API is unreachable, raises a clear error
-    or falls back explicitly with warning logs.
+    Caches live telemetry for 60 seconds to avoid rate-limiting during multi-agent orchestration.
     """
+
+    _cache_carbon: Optional[float] = None
+    _cache_ts: float = 0.0
 
     def __init__(self, api_key: str, zone: str, fallback: SimulatedGridDataProvider) -> None:
         self.api_key = api_key
         self.zone = zone
         self.fallback = fallback
 
-    def get_current_status(self) -> GridStatusResponse:
+    def _fetch_live_carbon(self) -> Optional[float]:
+        import time
+
+        now = time.time()
+        if self._cache_carbon is not None and (now - self._cache_ts) < 60.0:
+            return self._cache_carbon
         if not self.api_key:
-            return self.fallback.get_current_status()
+            return None
         try:
             resp = httpx.get(
                 f"https://api.electricitymap.org/v3/carbon-intensity/latest?zone={self.zone}",
@@ -238,16 +245,194 @@ class ElectricityMapsLiveAdapter(GridDataProvider):
             resp.raise_for_status()
             data = resp.json()
             carbon = float(data.get("carbonIntensity", 500.0))
-            base = self.fallback.get_current_status()
-            base.carbon_intensity_gco2_kwh = carbon
+            ElectricityMapsLiveAdapter._cache_carbon = carbon
+            ElectricityMapsLiveAdapter._cache_ts = now
+            return carbon
+        except Exception:
+            return self._cache_carbon
+
+    def get_current_status(self) -> GridStatusResponse:
+        base = self.fallback.get_current_status()
+        carbon = self._fetch_live_carbon()
+        if carbon is not None:
+            base.carbon_intensity_gco2_kwh = round(carbon, 1)
             base.data_source = f"LIVE_API (ElectricityMaps:{self.zone})"
             base.is_simulated = False
-            return base
-        except Exception:
-            return self.fallback.get_current_status()
+        return base
 
     def get_24h_forecast(self) -> List[GridHourlyPoint]:
-        return self.fallback.get_24h_forecast()
+        pts = self.fallback.get_24h_forecast()
+        carbon = self._fetch_live_carbon()
+        if carbon is not None:
+            curr_h = self.fallback.current_hour
+            for pt in pts:
+                if pt.hour == curr_h:
+                    pt.carbon_intensity_gco2_kwh = round(carbon, 1)
+                    pt.is_simulated = False
+        return pts
+
+    def get_historical_24h(self) -> List[GridHourlyPoint]:
+        return self.fallback.get_historical_24h()
+
+
+class WattTimeLiveAdapter(GridDataProvider):
+    """
+    Pluggable live grid telemetry adapter for WattTime v3 API.
+    Supports:
+    - Free tier full forecast endpoint (`/v3/forecast?region=CAISO_NORTH&signal_type=co2_moer`)
+    - Global signal index endpoint (`/v3/signal-index`) when querying regions outside CAISO_NORTH on a Free plan
+    - Automatic JWT token refresh via `https://api.watttime.org/login` when WATTTIME_USERNAME & WATTTIME_PASSWORD are set
+    - 60-second response caching for fast multi-agent tool calls.
+    """
+
+    LBS_PER_MWH_TO_G_PER_KWH = 0.45359237
+    _cached_token: str = ""
+    _cache_hourly_carbon: Dict[int, float] = {}
+    _cache_current_carbon: Optional[float] = None
+    _cache_source_label: str = ""
+    _cache_ts: float = 0.0
+
+    def __init__(
+        self,
+        username: str,
+        password: str,
+        token: str,
+        region: str,
+        fallback: SimulatedGridDataProvider,
+    ) -> None:
+        self.username = username
+        self.password = password
+        self.token = token or WattTimeLiveAdapter._cached_token
+        self.region = region or "CAISO_NORTH"
+        self.fallback = fallback
+
+    def _get_valid_token(self) -> str:
+        if self.token:
+            return self.token
+        if self.username and self.password:
+            resp = httpx.get(
+                "https://api.watttime.org/login",
+                auth=(self.username, self.password),
+                timeout=5.0,
+            )
+            resp.raise_for_status()
+            self.token = resp.json().get("token", "")
+            WattTimeLiveAdapter._cached_token = self.token
+            return self.token
+        return ""
+
+    def _refresh_token(self) -> str:
+        self.token = ""
+        WattTimeLiveAdapter._cached_token = ""
+        return self._get_valid_token()
+
+    def _request_watttime(self, url: str, params: Dict[str, str]) -> Dict[str, object]:
+        token = self._get_valid_token()
+        if not token:
+            raise RuntimeError("No WattTime token or credentials configured")
+        resp = httpx.get(
+            url,
+            params=params,
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=6.0,
+        )
+        if resp.status_code == 401 and self.username and self.password:
+            token = self._refresh_token()
+            resp = httpx.get(
+                url,
+                params=params,
+                headers={"Authorization": f"Bearer {token}"},
+                timeout=6.0,
+            )
+        resp.raise_for_status()
+        return resp.json()
+
+    def _ensure_live_data(self) -> None:
+        import time
+        from datetime import datetime
+
+        now = time.time()
+        if WattTimeLiveAdapter._cache_current_carbon is not None and (now - WattTimeLiveAdapter._cache_ts) < 60.0:
+            return
+
+        try:
+            if self.region.upper() == "CAISO_NORTH":
+                payload = self._request_watttime(
+                    "https://api.watttime.org/v3/forecast",
+                    {"region": "CAISO_NORTH", "signal_type": "co2_moer"},
+                )
+                data_list = payload.get("data", [])
+                if isinstance(data_list, list) and data_list:
+                    first_val = float(data_list[0].get("value", 850.0))
+                    WattTimeLiveAdapter._cache_current_carbon = max(
+                        45.0, round(first_val * self.LBS_PER_MWH_TO_G_PER_KWH, 1)
+                    )
+                    WattTimeLiveAdapter._cache_source_label = "LIVE_API (WattTime:CAISO_NORTH)"
+                    hourly_buckets: Dict[int, List[float]] = {}
+                    for item in data_list:
+                        pt_time = str(item.get("point_time", ""))
+                        val = max(
+                            45.0,
+                            float(item.get("value", first_val)) * self.LBS_PER_MWH_TO_G_PER_KWH,
+                        )
+                        try:
+                            dt = datetime.fromisoformat(pt_time.replace("Z", "+00:00"))
+                            hourly_buckets.setdefault(dt.hour, []).append(val)
+                        except Exception:
+                            continue
+                    WattTimeLiveAdapter._cache_hourly_carbon = {
+                        h: round(sum(vals) / len(vals), 1)
+                        for h, vals in hourly_buckets.items()
+                        if vals
+                    }
+                    WattTimeLiveAdapter._cache_ts = now
+                    return
+
+            idx_payload = self._request_watttime(
+                "https://api.watttime.org/v3/signal-index",
+                {"region": self.region, "signal_type": "co2_moer"},
+            )
+            idx_list = idx_payload.get("data", [])
+            if isinstance(idx_list, list) and idx_list:
+                pct_val = float(idx_list[0].get("value", 50.0))
+                WattTimeLiveAdapter._cache_current_carbon = round(
+                    200.0 + (pct_val / 100.0) * 600.0, 1
+                )
+                WattTimeLiveAdapter._cache_source_label = f"LIVE_API (WattTime-Index:{self.region})"
+                WattTimeLiveAdapter._cache_ts = now
+        except Exception:
+            pass
+
+    def get_current_status(self) -> GridStatusResponse:
+        base = self.fallback.get_current_status()
+        self._ensure_live_data()
+        curr_h = self.fallback.current_hour
+        if curr_h in WattTimeLiveAdapter._cache_hourly_carbon:
+            base.carbon_intensity_gco2_kwh = WattTimeLiveAdapter._cache_hourly_carbon[curr_h]
+            base.data_source = WattTimeLiveAdapter._cache_source_label
+            base.is_simulated = False
+        elif WattTimeLiveAdapter._cache_current_carbon is not None:
+            base.carbon_intensity_gco2_kwh = WattTimeLiveAdapter._cache_current_carbon
+            base.data_source = WattTimeLiveAdapter._cache_source_label
+            base.is_simulated = False
+        return base
+
+    def get_24h_forecast(self) -> List[GridHourlyPoint]:
+        pts = self.fallback.get_24h_forecast()
+        self._ensure_live_data()
+        if WattTimeLiveAdapter._cache_hourly_carbon:
+            for pt in pts:
+                if pt.hour in WattTimeLiveAdapter._cache_hourly_carbon:
+                    c = WattTimeLiveAdapter._cache_hourly_carbon[pt.hour]
+                    pt.carbon_intensity_gco2_kwh = c
+                    pt.is_simulated = False
+                    if c <= 380:
+                        pt.grid_regime = "CLEAN_RENEWABLE_WINDOW"
+                    elif c >= 550:
+                        pt.grid_regime = "HIGH_CARBON_PEAK"
+                    else:
+                        pt.grid_regime = "MODERATE_MIX"
+        return pts
 
     def get_historical_24h(self) -> List[GridHourlyPoint]:
         return self.fallback.get_historical_24h()
@@ -258,7 +443,18 @@ simulated_grid_provider = SimulatedGridDataProvider()
 
 
 def get_grid_provider() -> GridDataProvider:
-    if settings.grid_data_provider.upper() == "LIVE_API" and settings.electricity_maps_api_key:
+    mode = settings.grid_data_provider.upper()
+    if mode in ("LIVE_API", "WATTTIME") and (
+        settings.watttime_token or (settings.watttime_username and settings.watttime_password)
+    ):
+        return WattTimeLiveAdapter(
+            username=settings.watttime_username,
+            password=settings.watttime_password,
+            token=settings.watttime_token,
+            region=settings.watttime_region,
+            fallback=simulated_grid_provider,
+        )
+    if mode in ("LIVE_API", "ELECTRICITY_MAPS") and settings.electricity_maps_api_key:
         return ElectricityMapsLiveAdapter(
             api_key=settings.electricity_maps_api_key,
             zone=settings.electricity_maps_zone,

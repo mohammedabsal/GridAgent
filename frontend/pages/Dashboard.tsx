@@ -464,7 +464,6 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
                 {governanceState === 'BLOCKED' && (<span className="text-[#EF4444]">✕ Protected — blocked by policy</span>)}
               </div>
             </div>
-PLACEHOLDER_B
           </section>
           )}
           {activeNav === 'workloads' && (

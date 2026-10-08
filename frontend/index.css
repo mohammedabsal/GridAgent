@@ -20,21 +20,20 @@
   background: #475569;
 }
 
-/* ------------------------------------------------------------------ */
-/* Global motion system — pure CSS, no layout or logic changes          */
-/* Landing: rise-on-enter + scroll reveal + float.                       */
-/* App (/app tabbed console): opacity-only fades (no transforms on      */
-/* layout shells, canvas, charts, or live-updating panels).              */
-/* ------------------------------------------------------------------ */
+/* ==========================================================================
+   FINAL VISUAL POLISH PASS
+   Digital Twin + Climate Technology + AI Control Center
+   Smooth GPU-accelerated transforms, depth lighting, and glass hierarchy.
+   ========================================================================== */
 
 @keyframes ga-rise {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(14px) scale(0.99);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -47,17 +46,237 @@
   }
 }
 
+@keyframes ga-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.982);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes ga-float {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-5px);
   }
 }
 
-/* Landing scroll-reveal (was referenced by Reveal but never defined). */
+@keyframes ga-scan {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(220%);
+    opacity: 0;
+  }
+}
+
+@keyframes ga-soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes ga-breathe {
+  0%,
+  100% {
+    opacity: 0.92;
+  }
+  50% {
+    opacity: 0.42;
+  }
+}
+
+@keyframes ga-rec-reveal {
+  0% {
+    opacity: 0.75;
+    transform: scale(0.982);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Section 17: Subtle Atmospheric Application Background */
+.ga-app-bg {
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(at 18% 0%, rgba(16, 185, 129, 0.065) 0px, transparent 52%),
+    radial-gradient(at 85% 12%, rgba(14, 165, 233, 0.055) 0px, transparent 48%),
+    linear-gradient(to right, rgba(203, 213, 225, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(203, 213, 225, 0.22) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+}
+
+/* Section 16: Glass / Depth Card Effect */
+.ga-glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.03),
+    0 10px 28px -10px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Section 20: Staggered Scroll / Section Reveal */
+.ga-stage-1 {
+  animation: ga-fade 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.02s both;
+}
+.ga-stage-2 {
+  animation: ga-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+.ga-stage-3 {
+  animation: ga-scale-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+.ga-stage-4 {
+  animation: ga-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+}
+.ga-stage-5 {
+  animation: ga-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+.ga-stage-6 {
+  animation: ga-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both;
+}
+
+/* Section 7: Digital Twin Carbon Atmosphere System */
+.ga-twin-surface {
+  transition:
+    background 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ga-twin-atmosphere-clean {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(16, 185, 129, 0.14), transparent 64%),
+    radial-gradient(circle at 82% 76%, rgba(6, 182, 212, 0.08), transparent 55%),
+    linear-gradient(180deg, #f0fdf4 0%, #f1f5f9 100%);
+}
+
+.ga-twin-atmosphere-moderate {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(245, 158, 11, 0.12), transparent 64%),
+    linear-gradient(180deg, #fffbeb 0%, #f1f5f9 100%);
+}
+
+.ga-twin-atmosphere-high {
+  background:
+    radial-gradient(circle at 50% 22%, rgba(239, 68, 68, 0.13), transparent 64%),
+    radial-gradient(circle at 20% 70%, rgba(245, 158, 11, 0.08), transparent 55%),
+    linear-gradient(180deg, #fef2f2 0%, #f1f5f9 100%);
+}
+
+/* Section 19: Focus Mode & Dimming */
+.ga-focus-region {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ga-focus-active {
+  transform: scale(1.01);
+  box-shadow:
+    0 22px 48px -15px rgba(16, 185, 129, 0.2),
+    0 0 0 2px rgba(16, 185, 129, 0.45);
+  z-index: 20;
+}
+
+.ga-focus-dimmed {
+  opacity: 0.54;
+  transform: scale(0.996);
+}
+
+/* Section 11: AI Recommendation Card Illumination & Reveal */
+.ga-ai-rec-card {
+  animation: ga-rec-reveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  background: linear-gradient(
+    135deg,
+    rgba(236, 253, 245, 0.85) 0%,
+    rgba(240, 253, 250, 0.55) 100%
+  );
+  box-shadow:
+    0 8px 24px -8px rgba(16, 185, 129, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Section 12: Safety Visual Polish States (ALLOW / ASK USER / BLOCK) */
+.ga-safety-allow {
+  box-shadow:
+    0 0 0 1px rgba(16, 185, 129, 0.35),
+    0 8px 20px -6px rgba(16, 185, 129, 0.18);
+}
+
+.ga-safety-ask {
+  box-shadow:
+    0 0 0 1px rgba(245, 158, 11, 0.4),
+    0 8px 20px -6px rgba(245, 158, 11, 0.18);
+}
+
+.ga-safety-block {
+  box-shadow:
+    0 0 0 1px rgba(239, 68, 68, 0.45),
+    0 8px 20px -6px rgba(239, 68, 68, 0.18);
+}
+
+/* AI Analysis Scanning Line */
+.ga-scan-bar {
+  position: relative;
+  overflow: hidden;
+}
+.ga-scan-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 185, 129, 0.28),
+    transparent
+  );
+  animation: ga-scan 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.ga-breathing-led {
+  animation: ga-breathe 3.2s ease-in-out infinite;
+}
+
+/* Section 14 & 25: Micro-interactions for cards and controls */
+.ga-card-hover {
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s ease;
+}
+.ga-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 32px -10px rgba(15, 23, 42, 0.09),
+    0 2px 6px -1px rgba(16, 185, 129, 0.06);
+}
+
+.ga-pulse-subtle {
+  animation: ga-soft-pulse 2.2s ease-in-out infinite;
+}
+
+/* Landing scroll-reveal */
 .ga-reveal {
   opacity: 0;
   transform: translateY(18px);
@@ -72,70 +291,38 @@
   transform: translateY(0);
 }
 
-/* Landing decorative float (was referenced as ga-float, never defined). */
 .ga-float {
   animation: ga-float 7s ease-in-out infinite;
   will-change: transform;
 }
 
-/* Every landing section rises in with a stagger. */
 .landing-main > section,
 .landing-main > div > section,
 footer > div {
   animation: ga-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.landing-main > section:nth-of-type(2),
-.landing-main > div > section:nth-of-type(2) {
-  animation-delay: 0.06s;
-}
-
-.landing-main > section:nth-of-type(3),
-.landing-main > div > section:nth-of-type(3) {
-  animation-delay: 0.12s;
-}
-
-.landing-main > section:nth-of-type(n + 4),
-.landing-main > div > section:nth-of-type(n + 4) {
-  animation-delay: 0.18s;
-}
-
-/* App console: gentle opacity-only entrance on the page shell and its
-   direct panels. Attribute selector avoids touching recharts internals
-   (which use inline transform/width on SVG nodes). */
-div[class*='max-w-[1600px]'] {
-  animation: ga-fade 0.45s ease-out both;
-}
-
-div[class*='max-w-[1600px]'] > div[class*='space-y-5'] > div {
-  animation: ga-fade 0.5s ease-out both;
-}
-
-div[class*='max-w-[1600px]'] > div[class*='space-y-5'] > div:nth-child(2) {
-  animation-delay: 0.07s;
-}
-
-div[class*='max-w-[1600px]'] > div[class*='space-y-5'] > div:nth-child(n + 3) {
-  animation-delay: 0.14s;
-}
-
-/* Banner / toast entrance (key change only, no layout shift). */
-div[class*='max-w-[1600px]'] div[class*='rounded-xl'][class*='emerald-500/15'] {
-  animation: ga-fade 0.35s ease-out both;
-}
-
-/* Buttons + links: soft press, transform-only. */
+/* Buttons + links: responsive physical press & hover */
 button {
   transition:
-    transform 0.16s ease,
+    transform 0.15s cubic-bezier(0.22, 1, 0.36, 1),
     background-color 0.2s ease,
     border-color 0.2s ease,
     color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-button:active {
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
   transform: scale(0.975);
+}
+
+.ga-timeline-cell:hover:not(:disabled),
+.ga-timeline-cell:active:not(:disabled) {
+  transform: none !important;
 }
 
 a {
@@ -146,23 +333,36 @@ a {
     transform 0.2s ease;
 }
 
-/* Respect users who prefer no motion. */
+/* Section 29: Accessibility: Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .ga-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .ga-reveal,
+  .ga-stage-1,
+  .ga-stage-2,
+  .ga-stage-3,
+  .ga-stage-4,
+  .ga-stage-5,
+  .ga-stage-6,
+  .ga-focus-region,
+  .ga-focus-active,
+  .ga-focus-dimmed,
+  .ga-card-hover,
+  .ga-ai-rec-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
   }
   .ga-float,
+  .ga-pulse-subtle,
+  .ga-breathing-led,
+  .ga-scan-bar::after,
   .landing-main > section,
   .landing-main > div > section,
-  footer > div,
-  div[class*='max-w-[1600px]'],
-  div[class*='max-w-[1600px]'] > div[class*='space-y-5'] > div {
-    animation: none;
+  footer > div {
+    animation: none !important;
   }
-  button:active {
-    transform: none;
+  button:hover:not(:disabled),
+  button:active:not(:disabled) {
+    transform: none !important;
   }
 }
-

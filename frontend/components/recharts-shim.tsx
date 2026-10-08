@@ -15,6 +15,7 @@ export const Tooltip: React.FC<Record<string, unknown>> = () => null;
 export const Legend: React.FC<Record<string, unknown>> = () => null;
 export const ReferenceArea: React.FC<Record<string, unknown>> = () => null;
 export const ReferenceLine: React.FC<Record<string, unknown>> = () => null;
+export const ReferenceDot: React.FC<Record<string, unknown>> = () => null;
 export const Area: React.FC<Record<string, unknown>> = () => null;
 export const Line: React.FC<Record<string, unknown>> = () => null;
 export const Bar: React.FC<Record<string, unknown>> = () => null;
@@ -29,6 +30,22 @@ interface HourlyDataPoint {
   [key: string]: unknown;
 }
 
+/**
+ * Generates a smooth monotone cubic Bezier SVG path through a list of [x, y] points.
+ */
+function buildSmoothCurvePath(pts: [number, number][]): string {
+  if (pts.length === 0) return '';
+  if (pts.length === 1) return `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  let d = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [x0, y0] = pts[i];
+    const [x1, y1] = pts[i + 1];
+    const cx = ((x0 + x1) / 2).toFixed(1);
+    d += ` C ${cx} ${y0.toFixed(1)}, ${cx} ${y1.toFixed(1)}, ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+  }
+  return d;
+}
+
 export const ComposedChart: React.FC<{
   data?: HourlyDataPoint[];
   onClick?: (state: { activeTooltipIndex?: number }) => void;
@@ -40,11 +57,11 @@ export const ComposedChart: React.FC<{
   if (!data.length) return null;
 
   const width = 900;
-  const height = 240;
-  const padLeft = 44;
+  const height = 250;
+  const padLeft = 46;
   const padRight = 44;
-  const padTop = 24;
-  const padBottom = 32;
+  const padTop = 26;
+  const padBottom = 34;
   const plotW = width - padLeft - padRight;
   const plotH = height - padTop - padBottom;
 
@@ -57,51 +74,66 @@ export const ComposedChart: React.FC<{
   const getYRen = (pct: number) =>
     padTop + plotH - (Math.min(100, Math.max(0, pct)) / 100) * plotH;
 
-  const carbonPoints = data
-    .map(
-      (d, i) =>
-        `${getX(i).toFixed(1)},${getYCarbon(
-          Number(d.carbon_intensity_gco2_kwh || 0)
-        ).toFixed(1)}`
-    )
-    .join(' ');
+  const carbonPts: [number, number][] = data.map((d, i) => [
+    getX(i),
+    getYCarbon(Number(d.carbon_intensity_gco2_kwh || 0)),
+  ]);
+  const renPts: [number, number][] = data.map((d, i) => [
+    getX(i),
+    getYRen(Number(d.renewable_percentage || 0)),
+  ]);
 
-  const carbonAreaPoints = `${getX(0).toFixed(1)},${(padTop + plotH).toFixed(
+  const carbonSmoothPath = buildSmoothCurvePath(carbonPts);
+  const carbonAreaPath = `${carbonSmoothPath} L ${getX(data.length - 1).toFixed(
     1
-  )} ${carbonPoints} ${getX(data.length - 1).toFixed(1)},${(
+  )} ${(padTop + plotH).toFixed(1)} L ${getX(0).toFixed(1)} ${(
     padTop + plotH
-  ).toFixed(1)}`;
+  ).toFixed(1)} Z`;
 
-  const renPoints = data
-    .map(
-      (d, i) =>
-        `${getX(i).toFixed(1)},${getYRen(
-          Number(d.renewable_percentage || 0)
-        ).toFixed(1)}`
-    )
-    .join(' ');
+  const renSmoothPath = buildSmoothCurvePath(renPts);
 
   // Clean window 16:00 - 18:00 highlight
   const x16 = getX(16);
   const x18 = getX(18);
+  const x17 = getX(17);
+  const y17 = getYCarbon(Number(data[17]?.carbon_intensity_gco2_kwh || 390));
 
   const hovered = hoverIdx !== null ? data[hoverIdx] : null;
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full relative" onMouseLeave={() => setHoverIdx(null)}>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className="w-full h-full overflow-visible"
       >
         <defs>
           <linearGradient id="svgCarbonFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.38" />
-            <stop offset="60%" stopColor="#f59e0b" stopOpacity="0.16" />
-            <stop offset="100%" stopColor="#10b981" stopOpacity="0.03" />
+            <stop offset="0%" stopColor="#EF4444" stopOpacity="0.28" />
+            <stop offset="52%" stopColor="#F59E0B" stopOpacity="0.14" />
+            <stop offset="100%" stopColor="#10B981" stopOpacity="0.03" />
           </linearGradient>
+          <linearGradient id="svgCleanZone" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#10B981" stopOpacity="0.04" />
+          </linearGradient>
+          <filter
+            id="chartPointGlow"
+            x="-40%"
+            y="-40%"
+            width="180%"
+            height="180%"
+          >
+            <feDropShadow
+              dx="0"
+              dy="2"
+              stdDeviation="3.5"
+              floodColor="#10B981"
+              floodOpacity="0.45"
+            />
+          </filter>
         </defs>
 
-        {/* Horizontal Grid Lines */}
+        {/* Horizontal Scientific Grid Lines */}
         {[0, 200, 400, 600, 800].map((val) => {
           const y = getYCarbon(val);
           return (
@@ -111,15 +143,17 @@ export const ComposedChart: React.FC<{
                 y1={y}
                 x2={width - padRight}
                 y2={y}
-                stroke="#1e293b"
-                strokeDasharray="3 3"
+                stroke="#E2E8F0"
+                strokeDasharray="3 4"
+                strokeWidth="1"
               />
               <text
-                x={padLeft - 6}
-                y={y + 4}
+                x={padLeft - 8}
+                y={y + 3.5}
                 textAnchor="end"
-                fill="#94a3b8"
+                fill="#64748B"
                 fontSize="10"
+                fontFamily="monospace"
               >
                 {val}
               </text>
@@ -133,50 +167,93 @@ export const ComposedChart: React.FC<{
           y={padTop}
           width={Math.max(0, x18 - x16)}
           height={plotH}
-          fill="#10b981"
-          fillOpacity="0.14"
-          stroke="#10b981"
+          rx="4"
+          fill="url(#svgCleanZone)"
+          stroke="#10B981"
+          strokeOpacity="0.45"
           strokeDasharray="3 3"
         />
         <text
           x={(x16 + x18) / 2}
-          y={padTop + 12}
+          y={padTop + 13}
           textAnchor="middle"
-          fill="#34d399"
-          fontSize="10"
+          fill="#059669"
+          fontSize="9.5"
+          fontFamily="monospace"
           fontWeight="bold"
         >
-          Clean Window (17:00)
+          ★ CLEAN WINDOW (17:00)
         </text>
 
-        {/* Carbon Intensity Area & Line */}
-        <polygon points={carbonAreaPoints} fill="url(#svgCarbonFill)" />
-        <polyline
+        {/* Hover Vertical Cursor Line */}
+        {hoverIdx !== null && (
+          <line
+            x1={getX(hoverIdx)}
+            y1={padTop}
+            x2={getX(hoverIdx)}
+            y2={padTop + plotH}
+            stroke="#0D3F3A"
+            strokeWidth="1.2"
+            strokeDasharray="3 3"
+            opacity="0.55"
+            pointerEvents="none"
+          />
+        )}
+
+        {/* Smooth Carbon Intensity Area & Curve */}
+        <path d={carbonAreaPath} fill="url(#svgCarbonFill)" pointerEvents="none" />
+        <path
+          d={carbonSmoothPath}
           fill="none"
-          stroke="#f43f5e"
-          strokeWidth="2.5"
-          points={carbonPoints}
+          stroke="#0D3F3A"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          pointerEvents="none"
         />
 
-        {/* Renewable Share Line */}
-        <polyline
+        {/* Smooth Renewable Share Curve */}
+        <path
+          d={renSmoothPath}
           fill="none"
-          stroke="#10b981"
+          stroke="#10B981"
           strokeWidth="2"
-          points={renPoints}
+          strokeDasharray="5 3"
+          strokeLinecap="round"
+          pointerEvents="none"
         />
+
+        {/* Recommended Window Reference Dot at 17:00 */}
+        {data[17] && (
+          <g filter="url(#chartPointGlow)" pointerEvents="none">
+            <circle
+              cx={x17}
+              cy={y17}
+              r="7"
+              fill="#10B981"
+              fillOpacity="0.25"
+            />
+            <circle
+              cx={x17}
+              cy={y17}
+              r="4.5"
+              fill="#10B981"
+              stroke="#FFFFFF"
+              strokeWidth="1.8"
+            />
+          </g>
+        )}
 
         {/* Data points & X-axis labels */}
         {data.map((d, i) => {
           const cx = getX(i);
           const cy = getYCarbon(Number(d.carbon_intensity_gco2_kwh || 0));
           const ry = getYRen(Number(d.renewable_percentage || 0));
+          const isHovered = hoverIdx === i;
           return (
             <g
               key={i}
               className="cursor-pointer"
               onMouseEnter={() => setHoverIdx(i)}
-              onMouseLeave={() => setHoverIdx(null)}
               onClick={() => onClick?.({ activeTooltipIndex: i })}
             >
               <rect
@@ -186,15 +263,35 @@ export const ComposedChart: React.FC<{
                 height={plotH}
                 fill="transparent"
               />
-              <circle cx={cx} cy={cy} r={hoverIdx === i ? 5 : 2.5} fill="#f43f5e" />
-              <circle cx={cx} cy={ry} r={hoverIdx === i ? 4.5 : 2} fill="#10b981" />
+              <circle
+                cx={cx}
+                cy={cy}
+                r={isHovered ? 5.5 : 2.5}
+                fill={
+                  Number(d.carbon_intensity_gco2_kwh || 0) <= 420
+                    ? '#10B981'
+                    : Number(d.carbon_intensity_gco2_kwh || 0) >= 550
+                    ? '#EF4444'
+                    : '#0D3F3A'
+                }
+                stroke={isHovered ? '#FFFFFF' : 'none'}
+                strokeWidth={isHovered ? 1.8 : 0}
+              />
+              <circle
+                cx={cx}
+                cy={ry}
+                r={isHovered ? 4.5 : 2}
+                fill="#10B981"
+              />
               {i % 2 === 0 && (
                 <text
                   x={cx}
                   y={height - 8}
                   textAnchor="middle"
-                  fill="#94a3b8"
+                  fill={isHovered ? '#0D3F3A' : '#64748B'}
+                  fontWeight={isHovered ? '700' : '400'}
                   fontSize="10"
+                  fontFamily="monospace"
                 >
                   {String(d.time_str || `${i}:00`)}
                 </text>
@@ -205,14 +302,14 @@ export const ComposedChart: React.FC<{
       </svg>
 
       {hovered && (
-        <div className="absolute top-2 right-3 bg-slate-950/95 border border-slate-700 rounded-xl px-3 py-2 text-xs shadow-xl pointer-events-none">
-          <div className="font-mono font-bold text-white">
+        <div className="absolute top-2 right-3 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs shadow-xl pointer-events-none">
+          <div className="font-mono font-bold text-[#0d3f3a]">
             {String(hovered.time_str)} — {String(hovered.grid_regime || '')}
           </div>
-          <div className="text-rose-300 font-mono">
+          <div className="text-rose-600 font-mono font-semibold mt-0.5">
             Carbon: {String(hovered.carbon_intensity_gco2_kwh)} gCO₂/kWh
           </div>
-          <div className="text-emerald-300 font-mono">
+          <div className="text-emerald-600 font-mono font-semibold">
             Renewable: {String(hovered.renewable_percentage)}%
           </div>
         </div>
@@ -250,13 +347,13 @@ export const BarChart: React.FC<{
             key={idx}
             className="flex flex-col items-center gap-2 flex-1 max-w-[140px]"
           >
-            <div className="flex items-end gap-2 h-44 w-full justify-center">
+            <div className="flex items-end gap-2.5 h-44 w-full justify-center">
               <div className="flex flex-col items-center">
                 <span className="text-[10px] font-mono text-rose-300 mb-1">
                   {baseVal}kg
                 </span>
                 <div
-                  className="w-7 sm:w-9 rounded-t-lg bg-rose-500/85 transition-all"
+                  className="w-7 sm:w-9 rounded-t-lg bg-gradient-to-t from-rose-600/80 to-rose-400 border-t border-rose-300/60 transition-all duration-500 shadow-[0_0_14px_rgba(244,63,94,0.2)]"
                   style={{ height: `${baseH}px` }}
                   title={`Baseline: ${baseVal} kgCO₂`}
                 />
@@ -266,7 +363,7 @@ export const BarChart: React.FC<{
                   {optVal}kg
                 </span>
                 <div
-                  className="w-7 sm:w-9 rounded-t-lg bg-emerald-500 transition-all"
+                  className="w-7 sm:w-9 rounded-t-lg bg-gradient-to-t from-emerald-600 to-emerald-400 border-t border-emerald-200/70 transition-all duration-500 shadow-[0_0_16px_rgba(16,185,129,0.28)]"
                   style={{ height: `${optH}px` }}
                   title={`Optimized: ${optVal} kgCO₂`}
                 />
@@ -281,4 +378,3 @@ export const BarChart: React.FC<{
     </div>
   );
 };
-

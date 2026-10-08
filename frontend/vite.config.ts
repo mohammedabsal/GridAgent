@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -24,6 +25,12 @@ export default defineConfig({
     },
     react(),
   ],
+  resolve: {
+    alias: {
+      'lucide-react': path.resolve(__dirname, './components/icons.tsx'),
+      recharts: path.resolve(__dirname, './components/recharts-shim.tsx'),
+    },
+  },
   server: {
     port: 5173,
     host: true,
@@ -35,3 +42,4 @@ export default defineConfig({
     },
   },
 });
+

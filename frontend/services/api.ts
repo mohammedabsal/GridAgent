@@ -195,7 +195,9 @@ export interface DashboardState {
   mcp_tools: MCPToolSchema[];
 }
 
-const API_BASE = '/api';
+const API_BASE =
+  (import.meta as unknown as { env?: { VITE_API_BASE_URL?: string } }).env
+    ?.VITE_API_BASE_URL || '/api';
 
 async function requestJson<T>(url: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${url}`, {

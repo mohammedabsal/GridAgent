@@ -8,6 +8,7 @@ import {
   TrendingUp,
   Zap,
 } from 'lucide-react';
+import { AnimatedNumber } from './motion';
 
 interface RecommendedDashboardLayoutProps {
   data: DashboardState;
@@ -143,7 +144,7 @@ export const RecommendedDashboardLayout: React.FC<RecommendedDashboardLayoutProp
               </span>
             </div>
             <div
-              className={`flex items-center gap-2 bg-slate-50 border rounded-xl px-3 py-2 ${
+              className={`flex items-center gap-2 bg-slate-50 border rounded-xl px-3 py-2 transition-colors duration-500 ${
                 isCleanWindow
                   ? 'border-emerald-300'
                   : isHighCarbon
@@ -161,13 +162,21 @@ export const RecommendedDashboardLayout: React.FC<RecommendedDashboardLayoutProp
                 }`}
               />
               <span className="font-mono font-semibold text-[#0d3f3a]">
-                {Math.round(grid.carbon_intensity_gco2_kwh)} gCO2/kWh
+                <AnimatedNumber
+                  value={grid.carbon_intensity_gco2_kwh}
+                  decimals={0}
+                  suffix=" gCO2/kWh"
+                />
               </span>
             </div>
             <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
               <span className="text-slate-500">Region</span>
               <span className="font-mono text-[#0d3f3a]">
-                {grid.renewable_percentage}% renewable
+                <AnimatedNumber
+                  value={grid.renewable_percentage}
+                  decimals={1}
+                  suffix="% renewable"
+                />
               </span>
             </div>
             <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
@@ -181,7 +190,7 @@ export const RecommendedDashboardLayout: React.FC<RecommendedDashboardLayoutProp
 
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="border border-slate-200/80 bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
+        <div className="border border-slate-200/80 bg-white rounded-2xl p-5 sm:p-6 shadow-sm ga-card-hover">
           <div className="flex items-center gap-2 mb-4">
             <FlaskConical className="h-4 w-4 text-emerald-600" />
             <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-[#0d3f3a]">
@@ -228,19 +237,35 @@ export const RecommendedDashboardLayout: React.FC<RecommendedDashboardLayoutProp
               <div className="flex items-center justify-between">
                 <span className="text-slate-500">Current Carbon</span>
                 <span className="font-mono text-[#0d3f3a]">
-                  {Math.round(latestDecision.currentCarbon)} gCO2/kWh
+                  <AnimatedNumber
+                    value={latestDecision.currentCarbon}
+                    decimals={0}
+                    suffix=" gCO2/kWh"
+                  />
                 </span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-slate-500">Predicted Carbon</span>
                 <span className="font-mono text-emerald-700">
-                  {Math.round(latestDecision.predictedCarbon)} gCO2/kWh
+                  <AnimatedNumber
+                    value={latestDecision.predictedCarbon}
+                    decimals={0}
+                    suffix=" gCO2/kWh"
+                  />
                 </span>
               </div>
               <div className="flex items-center justify-between border-t border-slate-200 pt-3">
                 <span className="text-slate-500">Carbon Saved</span>
                 <span className="font-mono font-semibold text-emerald-700">
-                  {formatKgCO2(latestDecision.baselineEmissions - latestDecision.optimizedEmissions)}
+                  <AnimatedNumber
+                    value={
+                      (latestDecision.baselineEmissions -
+                        latestDecision.optimizedEmissions) /
+                      1000
+                    }
+                    decimals={2}
+                    suffix=" kgCO2"
+                  />
                 </span>
               </div>
               {latestDecision.reason && (
@@ -266,7 +291,7 @@ export const RecommendedDashboardLayout: React.FC<RecommendedDashboardLayoutProp
 
 
 
-        <div className="border border-slate-200/80 bg-white rounded-2xl p-5 sm:p-6 shadow-sm">
+        <div className="border border-slate-200/80 bg-white rounded-2xl p-5 sm:p-6 shadow-sm ga-card-hover">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="h-4 w-4 text-emerald-600" />
             <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-[#0d3f3a]">
@@ -278,25 +303,43 @@ export const RecommendedDashboardLayout: React.FC<RecommendedDashboardLayoutProp
               <div className="flex items-baseline justify-between">
                 <span className="text-slate-500">Total Carbon Saved</span>
                 <span className="font-mono font-bold text-emerald-700">
-                  {formatKgCO2(comparison.total_carbon_saved_gco2)}
+                  <AnimatedNumber
+                    value={comparison.total_carbon_saved_gco2 / 1000}
+                    decimals={2}
+                    suffix=" kgCO2"
+                  />
                 </span>
               </div>
               <div className="flex items-baseline justify-between">
                 <span className="text-slate-500">Cost Saved</span>
                 <span className="font-mono font-bold text-teal-700">
-                  {formatUsd(comparison.total_cost_saved_usd)}
+                  <AnimatedNumber
+                    value={comparison.total_cost_saved_usd}
+                    decimals={2}
+                    prefix="$"
+                  />
                 </span>
               </div>
               <div className="flex items-baseline justify-between">
                 <span className="text-slate-500">Carbon Reduction</span>
                 <span className="font-mono font-bold text-emerald-700">
-                  -{comparison.carbon_reduction_percentage.toFixed(1)}%
+                  <AnimatedNumber
+                    value={comparison.carbon_reduction_percentage}
+                    decimals={1}
+                    prefix="-"
+                    suffix="%"
+                  />
                 </span>
               </div>
               <div className="flex items-baseline justify-between">
                 <span className="text-slate-500">Cost Reduction</span>
                 <span className="font-mono font-bold text-teal-700">
-                  -{comparison.cost_reduction_percentage.toFixed(1)}%
+                  <AnimatedNumber
+                    value={comparison.cost_reduction_percentage}
+                    decimals={1}
+                    prefix="-"
+                    suffix="%"
+                  />
                 </span>
               </div>
               <div className="flex items-center justify-between border-t border-slate-200 pt-3">

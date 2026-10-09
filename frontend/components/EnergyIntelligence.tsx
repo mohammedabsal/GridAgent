@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import { Activity, Gauge, Sun, Wind as WindIcon } from 'lucide-react';
 import { GridHourlyPoint, GridStatus } from '../services/api';
+import { AnimatedNumber } from './motion';
 
 interface EnergyIntelligenceProps {
   grid: GridStatus;
@@ -42,7 +43,7 @@ const ChartTooltip: React.FC<{
 }> = ({ active, payload, label }) => {
   if (!active || !payload || payload.length === 0) return null;
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-lg">
+    <div className="rounded-xl border border-slate-200 bg-white/95 backdrop-blur-md px-3 py-2 shadow-lg">
       <div className="text-xs font-mono font-bold text-[#0d3f3a]">{label}</div>
       {payload.map((entry, i) => (
         <div key={i} className="flex items-center gap-2 text-[11px] font-mono text-slate-600">
@@ -102,12 +103,12 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
 
   const tone = carbonTone(grid.carbon_intensity_gco2_kwh);
 
-
   const cards = [
     {
       key: 'carbon',
       label: 'Current Carbon',
-      value: Math.round(grid.carbon_intensity_gco2_kwh).toLocaleString(),
+      numValue: grid.carbon_intensity_gco2_kwh,
+      decimals: 0,
       unit: 'gCO₂/kWh',
       sub: grid.grid_status_label,
       Icon: Activity,
@@ -117,7 +118,8 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
     {
       key: 'renew',
       label: 'Renewable Share',
-      value: grid.renewable_percentage.toFixed(1),
+      numValue: grid.renewable_percentage,
+      decimals: 1,
       unit: '%',
       sub: 'of total generation',
       Icon: Gauge,
@@ -127,7 +129,8 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
     {
       key: 'solar',
       label: 'Solar',
-      value: Math.round(grid.solar_generation_mw).toLocaleString(),
+      numValue: grid.solar_generation_mw,
+      decimals: 0,
       unit: 'MW',
       sub: grid.weather_condition,
       Icon: Sun,
@@ -137,7 +140,8 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
     {
       key: 'wind',
       label: 'Wind',
-      value: Math.round(grid.wind_generation_mw).toLocaleString(),
+      numValue: grid.wind_generation_mw,
+      decimals: 0,
       unit: 'MW',
       sub: grid.grid_regime,
       Icon: WindIcon,
@@ -171,11 +175,11 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-mono text-slate-500">
+          <span className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-mono text-slate-500 shadow-sm">
             {grid.current_time} · now
           </span>
           <span
-            className={`rounded-lg border px-2.5 py-1 text-[11px] font-mono font-semibold ${tone.chip}`}
+            className={`rounded-lg border px-2.5 py-1 text-[11px] font-mono font-semibold shadow-sm ${tone.chip}`}
           >
             {tone.label} CARBON
           </span>
@@ -184,10 +188,10 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
 
       {/* Top cards */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {cards.map(({ key, label, value, unit, sub, Icon, valueClass, IconClass }) => (
+        {cards.map(({ key, label, numValue, decimals, unit, sub, Icon, valueClass, IconClass }) => (
           <div
             key={key}
-            className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md"
+            className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm ga-card-hover ga-glass-card"
           >
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
@@ -196,8 +200,15 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
               <Icon className={`h-4 w-4 ${IconClass}`} />
             </div>
             <div className="mt-2 flex items-baseline gap-1.5">
+<<<<<<< HEAD
               <span className={`text-2xl font-mono font-bold ${valueClass}`}>{value}</span>
               <span className="text-xs font-mono text-slate-500">{unit}</span>
+=======
+              <span className={`text-2xl font-mono font-bold ${valueClass}`}>
+                <AnimatedNumber value={numValue} decimals={decimals} />
+              </span>
+              <span className="text-xs font-mono text-slate-400">{unit}</span>
+>>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
             </div>
             <div className="mt-1 truncate text-[11px] text-slate-500">{sub}</div>
           </div>
@@ -205,7 +216,7 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
       </div>
 
       {/* Central chart */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm ga-glass-card">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <div>
             <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-[#0d3f3a]">

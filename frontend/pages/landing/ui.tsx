@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Zap } from 'lucide-react';
 
 /** Route of the existing, fully functional GridAgent application. */
-export const APP_ROUTE = '/app';
+export const APP_ROUTE = '/app/dashboard';
 
 export const NAV_LINKS: { label: string; href: string }[] = [
   { label: 'Home', href: '#home' },

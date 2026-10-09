@@ -197,9 +197,9 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
             </div>
             <div className="mt-2 flex items-baseline gap-1.5">
               <span className={`text-2xl font-mono font-bold ${valueClass}`}>{value}</span>
-              <span className="text-xs font-mono text-slate-400">{unit}</span>
+              <span className="text-xs font-mono text-slate-500">{unit}</span>
             </div>
-            <div className="mt-1 truncate text-[11px] text-slate-400">{sub}</div>
+            <div className="mt-1 truncate text-[11px] text-slate-500">{sub}</div>
           </div>
         ))}
       </div>
@@ -211,7 +211,7 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
             <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-[#0d3f3a]">
               Carbon Intensity — 24 Hours
             </h3>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-slate-500">
               gCO₂/kWh · click any hour to move the simulation clock
             </p>
           </div>
@@ -352,7 +352,7 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
 
           <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="rounded-xl border border-slate-200 bg-white p-3">
-              <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+              <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
                 Renewables at {cleanPoint.time_str}
               </div>
               <div className="mt-1 text-lg font-mono font-bold text-[#10B981]">
@@ -364,7 +364,7 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
               </div>
             </div>
             <div className="rounded-xl border border-slate-200 bg-white p-3">
-              <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+              <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
                 Contrast · peak carbon {peakPoint.time_str}
               </div>
               <div className="mt-1 text-lg font-mono font-bold text-[#EF4444]">
@@ -375,7 +375,7 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
               </div>
             </div>
             <div className="rounded-xl border border-slate-200 bg-white p-3">
-              <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">
+              <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">
                 Cleaner by
               </div>
               <div className="mt-1 text-lg font-mono font-bold text-[#0d3f3a]">

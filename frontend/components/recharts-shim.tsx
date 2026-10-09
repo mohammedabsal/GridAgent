@@ -205,14 +205,14 @@ export const ComposedChart: React.FC<{
       </svg>
 
       {hovered && (
-        <div className="absolute top-2 right-3 bg-slate-950/95 border border-slate-700 rounded-xl px-3 py-2 text-xs shadow-xl pointer-events-none">
-          <div className="font-mono font-bold text-white">
+        <div className="absolute top-2 right-3 bg-white/95 border border-slate-300 rounded-xl px-3 py-2 text-xs shadow-xl pointer-events-none">
+          <div className="font-mono font-bold text-[#0d3f3a]">
             {String(hovered.time_str)} — {String(hovered.grid_regime || '')}
           </div>
-          <div className="text-rose-300 font-mono">
+          <div className="text-rose-600 font-mono">
             Carbon: {String(hovered.carbon_intensity_gco2_kwh)} gCO₂/kWh
           </div>
-          <div className="text-emerald-300 font-mono">
+          <div className="text-emerald-600 font-mono">
             Renewable: {String(hovered.renewable_percentage)}%
           </div>
         </div>
@@ -252,7 +252,7 @@ export const BarChart: React.FC<{
           >
             <div className="flex items-end gap-2 h-44 w-full justify-center">
               <div className="flex flex-col items-center">
-                <span className="text-[10px] font-mono text-rose-300 mb-1">
+                <span className="text-[10px] font-mono text-rose-600 mb-1">
                   {baseVal}kg
                 </span>
                 <div
@@ -262,7 +262,7 @@ export const BarChart: React.FC<{
                 />
               </div>
               <div className="flex flex-col items-center">
-                <span className="text-[10px] font-mono text-emerald-300 mb-1">
+                <span className="text-[10px] font-mono text-emerald-600 mb-1">
                   {optVal}kg
                 </span>
                 <div
@@ -272,7 +272,7 @@ export const BarChart: React.FC<{
                 />
               </div>
             </div>
-            <div className="text-[11px] font-mono text-slate-300 truncate max-w-full">
+            <div className="text-[11px] font-mono text-slate-600 truncate max-w-full">
               {String(item.job_id || '')}
             </div>
           </div>

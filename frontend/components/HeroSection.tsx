@@ -74,25 +74,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-slate-800/80 bg-gradient-to-b from-slate-900/90 via-slate-950/95 to-slate-950 p-6 sm:p-10 shadow-2xl">
+    <section className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-b from-slate-100 via-slate-50 to-slate-50 p-6 sm:p-10 shadow-2xl">
       {/* Subtle Ambient Glows */}
       <div className="pointer-events-none absolute -top-28 -left-28 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-28 -right-28 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
 
       <div className="relative z-10 max-w-4xl mx-auto text-center space-y-5">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-medium text-emerald-300 shadow-inner">
-          <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300/70 text-xs font-medium text-emerald-600 shadow-inner">
+          <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
           <span>Digital Twin Control Center for Carbon-Aware Cloud Computing</span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#0d3f3a] leading-[1.1]">
           Run Cloud Workloads When{' '}
           <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
             Energy Is Cleaner.
           </span>
         </h1>
 
-        <p className="text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
           GridAgent-AI creates a digital twin of your cloud infrastructure and
           simulates the best time to run each workload — balancing carbon, cost,
           performance, and deadlines.
@@ -104,37 +104,37 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div
             className={`rounded-2xl p-4 border backdrop-blur-md transition-all ${
               isHighCarbon
-                ? 'bg-rose-950/25 border-rose-500/35 shadow-lg shadow-rose-950/20'
+                ? 'bg-rose-950/25 border-rose-500/35 shadow-lg shadow-rose-600/20'
                 : isLowCarbon
-                ? 'bg-emerald-950/25 border-emerald-500/35 shadow-lg shadow-emerald-950/20'
+                ? 'bg-emerald-950/25 border-emerald-500/35 shadow-lg shadow-emerald-600/20'
                 : 'bg-amber-950/20 border-amber-500/30'
             }`}
           >
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-500">
               <span>Carbon</span>
               <Flame
                 className={`h-4 w-4 ${
                   isHighCarbon
-                    ? 'text-rose-400'
+                    ? 'text-rose-600'
                     : isLowCarbon
-                    ? 'text-emerald-400'
-                    : 'text-amber-400'
+                    ? 'text-emerald-600'
+                    : 'text-amber-600'
                 }`}
               />
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-white mt-1.5">
+            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-[#0d3f3a] mt-1.5">
               {carbon}{' '}
-              <span className="text-sm font-normal text-slate-400">
+              <span className="text-sm font-normal text-slate-500">
                 gCO₂/kWh
               </span>
             </div>
             <div
               className={`text-xs font-semibold mt-1 inline-flex items-center gap-1.5 ${
                 isHighCarbon
-                  ? 'text-rose-300'
+                  ? 'text-rose-600'
                   : isLowCarbon
-                  ? 'text-emerald-300'
-                  : 'text-amber-300'
+                  ? 'text-emerald-600'
+                  : 'text-amber-600'
               }`}
             >
               <span
@@ -151,30 +151,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Metric 2: RENEWABLE ENERGY */}
-          <div className="rounded-2xl p-4 border border-slate-800 bg-slate-900/75 backdrop-blur-md">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="rounded-2xl p-4 border border-slate-200 bg-white backdrop-blur-md">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-500">
               <span>Renewable Energy</span>
-              <Sun className="h-4 w-4 text-amber-400" />
+              <Sun className="h-4 w-4 text-amber-600" />
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-400 mt-1.5">
+            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-600 mt-1.5">
               {renewable}%
             </div>
-            <div className="text-xs font-semibold text-slate-300 mt-1 flex items-center gap-1.5">
-              <Leaf className="h-3.5 w-3.5 text-emerald-400" />
+            <div className="text-xs font-semibold text-slate-600 mt-1 flex items-center gap-1.5">
+              <Leaf className="h-3.5 w-3.5 text-emerald-600" />
               {renewableStatusText}
             </div>
           </div>
 
           {/* Metric 3: AI RECOMMENDATION */}
-          <div className="rounded-2xl p-4 border border-emerald-500/40 bg-gradient-to-br from-emerald-950/40 via-slate-900/90 to-cyan-950/30 backdrop-blur-md shadow-lg shadow-emerald-950/30">
-            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-emerald-300">
+          <div className="rounded-2xl p-4 border border-emerald-500/40 bg-gradient-to-br from-emerald-50 via-slate-100 to-cyan-50 backdrop-blur-md shadow-lg shadow-emerald-600/30">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-emerald-600">
               <span>AI Recommendation</span>
-              <Clock className="h-4 w-4 text-emerald-400" />
+              <Clock className="h-4 w-4 text-emerald-600" />
             </div>
-            <div className="text-xl sm:text-2xl font-extrabold text-white mt-1.5 truncate">
+            <div className="text-xl sm:text-2xl font-extrabold text-[#0d3f3a] mt-1.5 truncate">
               {aiHeadline}
             </div>
-            <div className="text-xs font-semibold text-emerald-300 mt-1">
+            <div className="text-xs font-semibold text-emerald-600 mt-1">
               {aiSubtext}
             </div>
           </div>
@@ -197,15 +197,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             onClick={onOpenJudgeMode}
             className="flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-200 border border-indigo-400/40 font-bold text-sm transition"
           >
-            <Film className="h-4 w-4 text-indigo-300" />
+            <Film className="h-4 w-4 text-indigo-600" />
             🎬 Demo Mode (30s Guided Tour)
           </button>
 
           <button
             onClick={onScrollToHowItWorks}
-            className="flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-sm transition"
+            className="flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-semibold text-sm transition"
           >
-            <HelpCircle className="h-4 w-4 text-slate-400" />
+            <HelpCircle className="h-4 w-4 text-slate-500" />
             View How It Works
           </button>
         </div>

@@ -5,6 +5,10 @@ import { BeforeAfterComparison } from '../components/BeforeAfterComparison';
 import { DigitalTwinCanvas } from '../components/DigitalTwinCanvas';
 import { EnergyIntelligence } from '../components/EnergyIntelligence';
 import { PageHeroArt, ScreenIllustration } from '../components/ScreenIllustrations';
+import { ImpactHero } from '../components/ImpactHero';
+import { IndiaContextStrip } from '../components/IndiaContextStrip';
+import { JuryEmptyState } from '../components/JuryEmptyState';
+import { JuryToast } from '../components/JuryToast';
 import { SafetyAndMcpPanel } from '../components/SafetyAndMcpPanel';
 import { SafetyExtraPanels } from '../components/SafetyExtraPanels';
 import { SubmitWorkloadModal } from '../components/SubmitWorkloadModal';
@@ -155,6 +159,35 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
     }
   };
 
+  // Keyboard shortcuts for jury demos: ←/→ scrub timeline, Space plays/pauses
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const cur = data?.grid_status.current_hour ?? 15;
+        const delta = e.key === 'ArrowRight' ? 1 : 23;
+        handleSelectHour((cur + delta) % 24);
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        setIsPlaying((p) => !p);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.grid_status.current_hour]);
+
+  const handleChangeProfile = (profile: string) => {
+    withBusy(
+      async () => {
+        await api.updateSimulation({ profile });
+      },
+      `Switched grid to '${profile}' profile.`,
+    );
+  };
+
   if (loading && !data) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 text-[#0d3f3a] p-6">
@@ -288,7 +321,7 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
                     title={route.label}
                     className={`flex items-center gap-2.5 rounded-2xl px-2.5 py-2 transition ${sidebarOpen ? 'justify-start' : 'justify-center'} ${active ? 'text-[#0d3f3a] bg-emerald-100 font-medium border border-slate-200' : 'text-slate-500 hover:text-[#0d3f3a] hover:bg-slate-50 border border-transparent'}`}
                   >
-                    <span className={`h-2 w-2 rounded-full shrink-0 ${active ? 'bg-[#10B981]' : 'bg-[#263244]'}`} />
+                    <span className={`h-2 w-2 rounded-full shrink-0 ${active ? 'bg-[#10B981]' : 'bg-slate-300'}`} />
                     {sidebarOpen && <span>{route.label}</span>}
                   </button>
                 );
@@ -297,12 +330,14 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
           </div>
         </aside>
         <main className="flex-1 w-full min-w-0 max-w-[1440px] mx-auto px-4 md:px-6 py-5 space-y-5">
+          <IndiaContextStrip data={data} busy={busy} onChangeProfile={handleChangeProfile} />
           {toastMessage && (
             <div className="bg-slate-50 border border-[#10B981]/50 text-[#0d3f3a] px-4 py-2.5 rounded-2xl text-xs font-mono flex items-center justify-between">
               <span>{toastMessage}</span>
               <button onClick={() => setToastMessage(null)} className="text-slate-500 hover:text-[#0d3f3a]">✕</button>
             </div>
           )}
+          <JuryToast message={toastMessage} note={bannerNote} onDismiss={() => { setToastMessage(null); setBannerNote(null); }} />
           {activeNav === 'dashboard' && (
           <div className="space-y-5">
             <section id="console-header" className="border border-slate-200/80 bg-white rounded-2xl p-5 shadow-xl shadow-emerald-900/5">
@@ -368,6 +403,7 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
               <button onClick={() => setIsPlaying(true)} disabled={isPlaying} className={`px-2.5 py-1 rounded-2xl text-xs font-mono inline-flex items-center gap-1.5 border transition ${isPlaying ? 'bg-[#10B981]/20 border-[#10B981] text-[#10B981]' : 'bg-white border-slate-200 text-[#0d3f3a] hover:bg-emerald-100'}`}>▶ Play</button>
               <button onClick={() => setIsPlaying(false)} disabled={!isPlaying} className="px-2.5 py-1 rounded-2xl text-xs font-mono inline-flex items-center gap-1.5 bg-white border border-slate-200 text-[#0d3f3a] hover:bg-emerald-100 disabled:opacity-40 transition">⏸ Pause</button>
               <button onClick={() => { setIsPlaying(false); withBusy(async () => { await api.resetSimulation(false); }, 'Simulation reset to baseline state (15:00)'); }} className="px-2.5 py-1 rounded-2xl text-xs font-mono inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-500 hover:text-[#0d3f3a] transition">↺ Reset</button>
+              <span className="hidden md:inline text-[10px] font-mono text-slate-400 border border-dashed border-slate-200 rounded-lg px-1.5 py-0.5" title="Keyboard shortcuts">←/→ hour · Space play</span>
               <span className="h-4 w-px bg-slate-200 mx-1" />
               <span className="text-xs font-mono text-slate-500">Time</span>
               <span className="px-2 py-1 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono font-semibold text-[#0d3f3a]">{grid.current_time}</span>
@@ -404,6 +440,9 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
           )}
           {activeNav === 'impact' && (
             <PageHeroArt kind="impact" eyebrow="Impact · Before vs after" title="Same workload, cleaner execution" description="Fixed-schedule baseline against the carbon-aware decision — every kilogram accounted for." />
+          )}
+          {activeNav === 'impact' && (
+            <ImpactHero comparison={data.comparison} />
           )}
           {activeNav === 'impact' && (
           <section id="what-if-section" className="grid grid-cols-1 lg:grid-cols-12 gap-5">

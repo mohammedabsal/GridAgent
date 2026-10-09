@@ -3,16 +3,12 @@ import {
   ArrowDown,
   ArrowRight,
   CheckCircle2,
-  DollarSign,
-  Leaf,
   MessageSquare,
   Sparkles,
-  Terminal,
-  TrendingUp,
   XCircle,
 } from 'lucide-react';
 import { APP_ROUTE, Reveal, SectionHeading } from './ui';
-import type { DashboardState } from '../../services/api';
+import { ImpactGaugeIllustration } from './illustrations';
 
 /* ------------------------------------------------------------------ */
 /* Safety & Governance                                                 */
@@ -161,32 +157,7 @@ const AFTER_STEPS: string[] = [
   'Measured impact',
 ];
 
-const Stat: React.FC<{
-  label: string;
-  value: string;
-  icon: React.ReactNode;
-}> = ({ label, value, icon }) => (
-  <div className="rounded-2xl border border-emerald-200/70 bg-white p-4">
-    <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
-      {icon}
-    </span>
-    <p className="mt-3 text-xl font-extrabold tracking-tight text-[#0d3f3a]">
-      {value}
-    </p>
-    <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-      {label}
-    </p>
-  </div>
-);
-
-interface ImpactSectionProps {
-  data: DashboardState | null;
-}
-
-export const ImpactSection: React.FC<ImpactSectionProps> = ({ data }) => {
-  const c = data?.comparison;
-
-  return (
+export const ImpactSection: React.FC = () => (
     <section id="impact" className="ga-section bg-white py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
@@ -259,61 +230,18 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ data }) => {
 
         </div>
 
-        {/* Live comparison metrics read from the existing application */}
-        {c ? (
-          <Reveal delay={120}>
-            <div className="mt-8 rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50/60 p-7">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-700">
-                  Example simulation — current Simulation Lab run
-                </p>
-                <p className="text-xs font-medium text-slate-500">
-                  {c.total_jobs_evaluated} workload
-                  {c.total_jobs_evaluated === 1 ? '' : 's'} evaluated
-                </p>
-              </div>
-              <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <Stat
-                  label="Carbon reduction"
-                  value={`${c.carbon_reduction_percentage.toFixed(1)}%`}
-                  icon={<TrendingUp className="h-4 w-4" />}
-                />
-                <Stat
-                  label="CO₂ saved"
-                  value={`${(c.total_carbon_saved_gco2 / 1000).toFixed(2)} kg`}
-                  icon={<Leaf className="h-4 w-4" />}
-                />
-                <Stat
-                  label="Cost saved"
-                  value={`$${c.total_cost_saved_usd.toFixed(2)}`}
-                  icon={<DollarSign className="h-4 w-4" />}
-                />
-                <Stat
-                  label="Baseline → Optimized"
-                  value={`${(c.baseline_total_emissions_gco2 / 1000).toFixed(1)} → ${(c.optimized_total_emissions_gco2 / 1000).toFixed(1)} kg`}
-                  icon={<Sparkles className="h-4 w-4" />}
-                />
-              </div>
-              <p className="mt-4 text-[11px] leading-relaxed text-slate-500">
-                Computed deterministically from simulated workload energy (kWh)
-                and hourly carbon intensity (gCO₂/kWh). These figures belong to
-                one example simulation run — not a universal product claim.
-              </p>
-            </div>
-          </Reveal>
-        ) : (
-          <Reveal delay={120}>
-            <p className="mt-8 text-center text-sm text-slate-400">
-              Launch the demo to generate a measured before / after comparison.
-            </p>
-          </Reveal>
-        )}
-
-
+        <Reveal delay={160}>
+          <div className="mx-auto mt-12 max-w-xl">
+            <ImpactGaugeIllustration />
+          </div>
+          <p className="mt-2 text-center text-[11px] leading-relaxed text-slate-400">
+            Illustrative emissions curve as flexible workloads shift from a dirty
+            baseline into progressively cleaner execution windows.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
-};
 
 /* ------------------------------------------------------------------ */
 /* About                                                               */
@@ -329,12 +257,6 @@ const ABOUT_POINTS: {
     caption:
       'PERCEIVE → REASON → SAFETY CHECK → EXECUTE, with specialised agents for perception, reasoning, safety and execution.',
     icon: <Sparkles className="h-5 w-5" />,
-  },
-  {
-    title: 'Simulation Lab & Judge Walkthrough',
-    caption:
-      '24-hour Indian grid profiles, 5 demonstration scenarios and a guided Judge Lifecycle Walkthrough.',
-    icon: <Terminal className="h-5 w-5" />,
   },
   {
     title: 'Explainable, validated decisions',
@@ -411,11 +333,138 @@ export const AboutSection: React.FC = () => (
 /* Final CTA                                                           */
 /* ------------------------------------------------------------------ */
 
+/* Decorative clean-energy scene etched into the gradient panel:
+   solar array, transmission towers with flowing power, and wind
+   turbines. Decorative only — hidden from assistive tech. */
+const CtaIllustration: React.FC = () => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 1200 220"
+    preserveAspectRatio="xMidYMax slice"
+    className="pointer-events-none absolute inset-x-0 bottom-0 h-40 w-full sm:h-48"
+  >
+    {/* Sun with slow-rotating rays */}
+    <g transform="translate(1062 52)">
+      <circle r="20" fill="#ffffff" fillOpacity="0.16" />
+      <circle r="28" fill="none" stroke="#ffffff" strokeOpacity="0.16" strokeWidth="1.5" />
+      <g className="ga-spin-slow" style={{ animationDuration: '60s' }}>
+        {Array.from({ length: 12 }, (_, i) => (
+          <line
+            key={i}
+            x1="0"
+            y1="-34"
+            x2="0"
+            y2="-40"
+            stroke="#ffffff"
+            strokeOpacity="0.28"
+            strokeWidth="2"
+            strokeLinecap="round"
+            transform={`rotate(${i * 30})`}
+          />
+        ))}
+      </g>
+    </g>
+
+    {/* Ground line */}
+    <path
+      d="M0 198 Q300 186 600 194 T1200 190"
+      fill="none"
+      stroke="#ffffff"
+      strokeOpacity="0.25"
+      strokeWidth="1.5"
+    />
+
+    {/* Solar array (left) */}
+    <g stroke="#ffffff" strokeOpacity="0.32" strokeWidth="1.5" fill="#ffffff" fillOpacity="0.07">
+      {[80, 200, 320].map((x) => (
+        <g key={x}>
+          <path d={`M${x} 190 L${x + 14} 156 L${x + 96} 156 L${x + 82} 190 Z`} />
+          <line x1={x + 30} y1="156" x2={x + 18} y2="190" strokeOpacity="0.2" />
+          <line x1={x + 52} y1="156" x2={x + 40} y2="190" strokeOpacity="0.2" />
+          <line x1={x + 74} y1="156" x2={x + 62} y2="190" strokeOpacity="0.2" />
+          <line x1={x + 7} y1="173" x2={x + 89} y2="173" strokeOpacity="0.2" />
+        </g>
+      ))}
+    </g>
+
+    {/* Transmission towers + flowing power lines (center) */}
+    <g
+      fill="none"
+      stroke="#ffffff"
+      strokeOpacity="0.32"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    >
+      {/* towers */}
+      <path d="M470 196 L492 96 M530 196 L508 96" />
+      <path d="M478 160 L522 160 M483 138 L517 138 M488 116 L512 116" />
+      <path d="M470 120 L530 120 M478 120 L474 132 M522 120 L526 132" />
+      <path d="M476 104 L524 104 M482 104 L479 114 M518 104 L521 114" />
+      <path d="M500 96 L500 86" />
+
+      <path d="M620 196 L642 108 M680 196 L658 108" />
+      <path d="M628 166 L672 166 M633 146 L667 146 M638 126 L662 126" />
+      <path d="M630 130 L670 130 M638 130 L635 140 M662 130 L665 140" />
+      <path d="M636 114 L664 114 M642 114 L640 122 M658 114 L660 122" />
+      <path d="M650 108 L650 98" />
+
+      {/* sagging power lines — animated flow */}
+      <path className="ga-flow" d="M380 132 Q435 152 470 122" strokeOpacity="0.5" />
+      <path className="ga-flow" d="M500 86 Q575 128 650 98" strokeOpacity="0.5" />
+      <path className="ga-flow" d="M530 122 Q575 148 620 130" strokeOpacity="0.5" />
+      <path className="ga-flow" d="M670 130 Q725 150 770 128" strokeOpacity="0.5" />
+      <path className="ga-flow" d="M470 122 Q485 132 500 120" strokeOpacity="0.5" />
+    </g>
+
+    {/* Wind turbines (right) */}
+    {[
+      { x: 850, hub: 92, r: 40, dur: '11s' },
+      { x: 960, hub: 120, r: 30, dur: '14s' },
+      { x: 1140, hub: 104, r: 34, dur: '12.5s' },
+    ].map((t) => (
+      <g key={t.x}>
+        <path
+          d={`M${t.x - 4} 196 L${t.x - 1.5} ${t.hub} L${t.x + 1.5} ${t.hub} L${t.x + 4} 196 Z`}
+          fill="#ffffff"
+          fillOpacity="0.14"
+          stroke="#ffffff"
+          strokeOpacity="0.3"
+          strokeWidth="1.2"
+        />
+        <g transform={`translate(${t.x} ${t.hub})`}>
+          <g
+            className="ga-spin-slow"
+            style={{ animationDuration: t.dur }}
+            fill="#ffffff"
+            fillOpacity="0.2"
+            stroke="#ffffff"
+            strokeOpacity="0.38"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+          >
+            <path d={`M0 -3 L-4 -${t.r} L4 -${t.r} Z`} />
+            <path d={`M0 -3 L-4 -${t.r} L4 -${t.r} Z`} transform="rotate(120)" />
+            <path d={`M0 -3 L-4 -${t.r} L4 -${t.r} Z`} transform="rotate(240)" />
+          </g>
+          <circle r="4" fill="#ffffff" fillOpacity="0.35" stroke="#ffffff" strokeOpacity="0.4" strokeWidth="1" />
+        </g>
+      </g>
+    ))}
+
+    {/* Two distant birds */}
+    <g fill="none" stroke="#ffffff" strokeOpacity="0.3" strokeWidth="1.4" strokeLinecap="round">
+      <path d="M180 60 Q187 53 194 60 Q201 53 208 60" />
+      <path d="M240 44 Q245 39 250 44 Q255 39 260 44" />
+    </g>
+  </svg>
+);
+
 export const FinalCtaSection: React.FC = () => (
   <section className="relative bg-white py-16 lg:py-24">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <Reveal>
-        <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 px-6 py-14 text-center shadow-2xl shadow-emerald-900/20 sm:px-12">
+        <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 px-6 pb-52 pt-14 text-center shadow-2xl shadow-emerald-900/20 sm:px-12 sm:pb-60">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-white/10 blur-2xl"
@@ -424,6 +473,7 @@ export const FinalCtaSection: React.FC = () => (
             aria-hidden="true"
             className="pointer-events-none absolute -bottom-20 -right-10 h-72 w-72 rounded-full bg-teal-300/20 blur-3xl"
           />
+          <CtaIllustration />
 
           <h2 className="relative mx-auto max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
             Make computing cleaner, without compromising what matters.

@@ -86,15 +86,15 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
             Cloud workload <span className="text-[#3B82F6]">→</span> Simulated
             workload
           </span>
-          <span className="text-slate-300">|</span>
+          <span className="text-slate-600">|</span>
           <span>
             Energy grid <span className="text-[#3B82F6]">→</span> Simulated grid
           </span>
-          <span className="text-slate-300">|</span>
+          <span className="text-slate-600">|</span>
           <span>
             Renewable energy <span className="text-[#3B82F6]">→</span> Forecast
           </span>
-          <span className="text-slate-300">|</span>
+          <span className="text-slate-600">|</span>
           <span>
             Execution <span className="text-[#3B82F6]">→</span> What-if
             simulation
@@ -366,18 +366,13 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   x2="440"
                   y2="104"
                   stroke="#10B981"
-                  strokeWidth="2"
-                  strokeDasharray="4 4"
+                  strokeWidth="2.5"
+                  className={`ga-flow ${renewable >= 50 ? 'ga-flow-fast' : ''}`}
                   markerEnd="url(#arrow-green)"
-                >
-                  <animate
-                    attributeName="stroke-dashoffset"
-                    from="16"
-                    to="0"
-                    dur="1.4s"
-                    repeatCount="indefinite"
-                  />
-                </line>
+                />
+                <circle r="3.5" fill="#10B981" className="ga-node-live">
+                  <animateMotion dur={renewable >= 50 ? '0.9s' : '1.4s'} repeatCount="indefinite" path="M 440 76 L 440 104" />
+                </circle>
               </g>
 
               {/* =============================================================
@@ -453,18 +448,13 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   x2="440"
                   y2="206"
                   stroke={gridStateColor}
-                  strokeWidth="2"
-                  strokeDasharray="4 4"
+                  strokeWidth="2.5"
+                  className={`ga-flow ${isHighCarbon ? 'ga-flow-fast' : ''}`}
                   markerEnd="url(#arrow-state)"
-                >
-                  <animate
-                    attributeName="stroke-dashoffset"
-                    from="16"
-                    to="0"
-                    dur="1.2s"
-                    repeatCount="indefinite"
-                  />
-                </line>
+                />
+                <circle r="3.5" fill={gridStateColor} className="ga-node-live">
+                  <animateMotion dur={isHighCarbon ? '0.8s' : '1.2s'} repeatCount="indefinite" path="M 440 178 L 440 206" />
+                </circle>
               </g>
 
               {/* =============================================================
@@ -576,24 +566,20 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   x2="440"
                   y2="340"
                   stroke={isExecutingAtCurrentHour ? '#10B981' : '#3B82F6'}
-                  strokeWidth="2"
-                  strokeDasharray={isExecutingAtCurrentHour ? '4 4' : '2 4'}
+                  strokeWidth="2.5"
+                  strokeDasharray={isExecutingAtCurrentHour ? undefined : '2 4'}
+                  className={isExecutingAtCurrentHour ? 'ga-flow ga-flow-fast' : 'ga-flow-paused'}
                   markerEnd={
                     isExecutingAtCurrentHour
                       ? 'url(#arrow-green)'
                       : 'url(#arrow-blue)'
                   }
-                >
-                  {isExecutingAtCurrentHour && (
-                    <animate
-                      attributeName="stroke-dashoffset"
-                      from="16"
-                      to="0"
-                      dur="1s"
-                      repeatCount="indefinite"
-                    />
-                  )}
-                </line>
+                />
+                {isExecutingAtCurrentHour && (
+                  <circle r="3.5" fill="#10B981" className="ga-node-live">
+                    <animateMotion dur="0.9s" repeatCount="indefinite" path="M 440 316 L 440 340" />
+                  </circle>
+                )}
               </g>
 
               {/* =============================================================
@@ -788,7 +774,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
       {/* =====================================================================
           INTERACTIVE TIME SIMULATION TIMELINE (SECTION 7)
       ===================================================================== */}
-      <div className="p-5 bg-white">
+      <div className="p-5 bg-white overflow-x-auto">
+        <div className="min-w-[720px] space-y-0">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
           <div className="flex items-center gap-3">
             <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#0d3f3a]">
@@ -968,6 +955,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               })}
             </div>
           </div>
+        </div>{/* /min-w timeline scroll wrapper */}
         </div>
       </div>
     </div>

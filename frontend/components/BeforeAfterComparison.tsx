@@ -45,26 +45,26 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
       {/* Architecture Pipeline Comparison Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Traditional Scheduler */}
-        <div className="bg-slate-900/90 border border-rose-500/30 rounded-2xl p-5">
+        <div className="bg-white border border-rose-500/30 rounded-2xl p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-600 border border-rose-500/30">
               BEFORE: TRADITIONAL STATIC SCHEDULER
             </span>
-            <span className="text-xs font-mono text-slate-400">
+            <span className="text-xs font-mono text-slate-500">
               Carbon-Blind Execution
             </span>
           </div>
 
           <div className="flex flex-col items-center py-3 space-y-1.5 text-xs font-mono">
-            <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-slate-200">
+            <div className="w-full max-w-md p-2.5 rounded-xl bg-white border border-slate-200 text-center text-slate-700">
               1. Fixed Schedule (Immediate FIFO Execution at 15:00)
             </div>
-            <ArrowDown className="h-4 w-4 text-rose-400" />
-            <div className="w-full max-w-md p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-center text-slate-200">
+            <ArrowDown className="h-4 w-4 text-rose-600" />
+            <div className="w-full max-w-md p-2.5 rounded-xl bg-white border border-slate-200 text-center text-slate-700">
               2. Runs During Peak Thermal Grid (700 gCO₂/kWh)
             </div>
-            <ArrowDown className="h-4 w-4 text-rose-400" />
-            <div className="w-full max-w-md p-2.5 rounded-xl bg-rose-950/40 border border-rose-500/40 text-center text-rose-200 font-bold">
+            <ArrowDown className="h-4 w-4 text-rose-600" />
+            <div className="w-full max-w-md p-2.5 rounded-xl bg-rose-50 border border-rose-500/40 text-center text-rose-700 font-bold">
               3. High Carbon &amp; Peak Tariff Impact: {baseKg} kgCO₂ / $
               {comparison.baseline_total_cost_usd.toFixed(2)}
             </div>
@@ -72,30 +72,30 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
         </div>
 
         {/* GridAgent-AI */}
-        <div className="bg-slate-900/90 border border-emerald-500/30 rounded-2xl p-5">
+        <div className="bg-white border border-emerald-500/30 rounded-2xl p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-600 border border-emerald-500/30">
               AFTER: GRIDAGENT-AI ORCHESTRATOR
             </span>
-            <span className="text-xs font-mono text-emerald-400">
+            <span className="text-xs font-mono text-emerald-600">
               Multi-Agent Carbon-Aware
             </span>
           </div>
 
           <div className="flex flex-col items-center py-1 space-y-1 text-xs font-mono">
-            <div className="w-full max-w-md p-2 rounded-xl bg-slate-950 border border-slate-800 text-center text-sky-300">
+            <div className="w-full max-w-md p-2 rounded-xl bg-white border border-slate-200 text-center text-sky-600">
               1. Grid Perception &amp; 24-Hour Solar/Wind Forecast (MCP)
             </div>
-            <ArrowDown className="h-3.5 w-3.5 text-emerald-400" />
-            <div className="w-full max-w-md p-2 rounded-xl bg-slate-950 border border-slate-800 text-center text-purple-300">
+            <ArrowDown className="h-3.5 w-3.5 text-emerald-600" />
+            <div className="w-full max-w-md p-2 rounded-xl bg-white border border-slate-200 text-center text-purple-600">
               2. AI Reasoning &amp; Optimal Window Search (17:00 @ 390 gCO₂/kWh)
             </div>
-            <ArrowDown className="h-3.5 w-3.5 text-emerald-400" />
-            <div className="w-full max-w-md p-2 rounded-xl bg-slate-950 border border-slate-800 text-center text-amber-300">
+            <ArrowDown className="h-3.5 w-3.5 text-emerald-600" />
+            <div className="w-full max-w-md p-2 rounded-xl bg-white border border-slate-200 text-center text-amber-600">
               3. Safety Governance Policy Validation (ALLOW / DENY / ASK_USER)
             </div>
-            <ArrowDown className="h-3.5 w-3.5 text-emerald-400" />
-            <div className="w-full max-w-md p-2 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-center text-emerald-300 font-bold">
+            <ArrowDown className="h-3.5 w-3.5 text-emerald-600" />
+            <div className="w-full max-w-md p-2 rounded-xl bg-emerald-50 border border-emerald-500/40 text-center text-emerald-600 font-bold">
               4. Reduced Carbon Impact: {optKg} kgCO₂ (-
               {comparison.carbon_reduction_percentage}%) / $
               {comparison.optimized_total_cost_usd.toFixed(2)} (-
@@ -107,9 +107,9 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
 
       {/* 6 Calculated Comparison Metrics Summary */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5">
-          <div className="text-xs text-slate-400">Baseline Emissions</div>
-          <div className="text-xl font-extrabold font-mono text-rose-300 mt-1">
+        <div className="bg-white border border-slate-200 rounded-xl p-3.5">
+          <div className="text-xs text-slate-500">Baseline Emissions</div>
+          <div className="text-xl font-extrabold font-mono text-rose-600 mt-1">
             {baseKg} kg
           </div>
           <div className="text-[11px] text-slate-500">
@@ -117,9 +117,9 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5">
-          <div className="text-xs text-slate-400">Optimized Emissions</div>
-          <div className="text-xl font-extrabold font-mono text-emerald-400 mt-1">
+        <div className="bg-white border border-slate-200 rounded-xl p-3.5">
+          <div className="text-xs text-slate-500">Optimized Emissions</div>
+          <div className="text-xl font-extrabold font-mono text-emerald-600 mt-1">
             {optKg} kg
           </div>
           <div className="text-[11px] text-slate-500">
@@ -127,56 +127,56 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-emerald-500/30 rounded-xl p-3.5">
-          <div className="text-xs text-emerald-300 flex items-center gap-1">
+        <div className="bg-white border border-emerald-500/30 rounded-xl p-3.5">
+          <div className="text-xs text-emerald-600 flex items-center gap-1">
             <Leaf className="h-3.5 w-3.5" /> Carbon Reduction %
           </div>
-          <div className="text-xl font-extrabold font-mono text-emerald-400 mt-1">
+          <div className="text-xl font-extrabold font-mono text-emerald-600 mt-1">
             {comparison.carbon_reduction_percentage}%
           </div>
-          <div className="text-[11px] text-emerald-300/80">
+          <div className="text-[11px] text-emerald-600/80">
             Saved {savedKg} kgCO₂
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5">
-          <div className="text-xs text-slate-400">Baseline Est. Cost</div>
-          <div className="text-xl font-extrabold font-mono text-rose-300 mt-1">
+        <div className="bg-white border border-slate-200 rounded-xl p-3.5">
+          <div className="text-xs text-slate-500">Baseline Est. Cost</div>
+          <div className="text-xl font-extrabold font-mono text-rose-600 mt-1">
             ${comparison.baseline_total_cost_usd.toFixed(2)}
           </div>
           <div className="text-[11px] text-slate-500">Fixed Tariff</div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5">
-          <div className="text-xs text-slate-400">Optimized Est. Cost</div>
-          <div className="text-xl font-extrabold font-mono text-teal-400 mt-1">
+        <div className="bg-white border border-slate-200 rounded-xl p-3.5">
+          <div className="text-xs text-slate-500">Optimized Est. Cost</div>
+          <div className="text-xl font-extrabold font-mono text-teal-600 mt-1">
             ${comparison.optimized_total_cost_usd.toFixed(2)}
           </div>
           <div className="text-[11px] text-slate-500">Dynamic Solar Tariff</div>
         </div>
 
-        <div className="bg-slate-900 border border-teal-500/30 rounded-xl p-3.5">
-          <div className="text-xs text-teal-300 flex items-center gap-1">
+        <div className="bg-white border border-teal-500/30 rounded-xl p-3.5">
+          <div className="text-xs text-teal-600 flex items-center gap-1">
             <DollarSign className="h-3.5 w-3.5" /> Cost Reduction %
           </div>
-          <div className="text-xl font-extrabold font-mono text-teal-400 mt-1">
+          <div className="text-xl font-extrabold font-mono text-teal-600 mt-1">
             {comparison.cost_reduction_percentage}%
           </div>
-          <div className="text-[11px] text-teal-300/80">
+          <div className="text-[11px] text-teal-600/80">
             Saved ${comparison.total_cost_saved_usd.toFixed(2)}
           </div>
         </div>
       </div>
 
       {/* Bar Chart Comparing Per-Job Emissions */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+      <div className="bg-white border border-slate-200 rounded-2xl p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <BarChart3 className="h-4 w-4 text-emerald-400" />
+            <h3 className="text-base font-bold text-[#0d3f3a] flex items-center gap-2">
+              <BarChart3 className="h-4 w-4 text-emerald-600" />
               Per-Workload Emissions Comparison (Baseline vs GridAgent-AI)
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               All values computed deterministically from actual simulated workload energy (kWh) and hourly carbon intensity (gCO₂/kWh).
             </p>
           </div>

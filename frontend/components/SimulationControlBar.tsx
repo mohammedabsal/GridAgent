@@ -37,10 +37,10 @@ export const SimulationControlBar: React.FC<SimulationControlBarProps> = ({
 }) => {
   return (
     <div className="fixed bottom-4 inset-x-0 z-40 px-4 pointer-events-none">
-      <div className="max-w-5xl mx-auto rounded-2xl border border-slate-700/80 bg-slate-950/90 backdrop-blur-xl px-4 py-3 shadow-2xl shadow-black/80 pointer-events-auto flex flex-wrap items-center justify-between gap-3">
+      <div className="max-w-5xl mx-auto rounded-2xl border border-slate-300/80 bg-white backdrop-blur-xl px-4 py-3 shadow-2xl shadow-black/80 pointer-events-auto flex flex-wrap items-center justify-between gap-3">
         {/* Label + Play/Pause/Reset */}
         <div className="flex items-center gap-2">
-          <span className="hidden sm:inline-block text-[11px] font-extrabold uppercase tracking-wider text-emerald-400 mr-1">
+          <span className="hidden sm:inline-block text-[11px] font-extrabold uppercase tracking-wider text-emerald-600 mr-1">
             Digital Twin Simulation
           </span>
 
@@ -66,7 +66,7 @@ export const SimulationControlBar: React.FC<SimulationControlBarProps> = ({
           <button
             onClick={onReset}
             disabled={busy}
-            className="flex items-center gap-1 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition"
+            className="flex items-center gap-1 px-3 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-xs font-semibold text-slate-700 transition"
           >
             <RotateCcw className="h-3.5 w-3.5" /> RESET
           </button>
@@ -77,15 +77,15 @@ export const SimulationControlBar: React.FC<SimulationControlBarProps> = ({
           <button
             onClick={() => onStepHour(-1)}
             disabled={busy}
-            className="px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono font-bold text-slate-200 transition"
+            className="px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-xs font-mono font-bold text-slate-700 transition"
           >
             - 1 HOUR
           </button>
 
-          <div className="px-3.5 py-1.5 rounded-xl bg-slate-900 border border-slate-700 flex items-center gap-2">
-            <Clock className="h-3.5 w-3.5 text-emerald-400" />
-            <span className="text-xs text-slate-400">Time:</span>
-            <span className="text-sm font-mono font-extrabold text-white">
+          <div className="px-3.5 py-1.5 rounded-xl bg-white border border-slate-300 flex items-center gap-2">
+            <Clock className="h-3.5 w-3.5 text-emerald-600" />
+            <span className="text-xs text-slate-500">Time:</span>
+            <span className="text-sm font-mono font-extrabold text-[#0d3f3a]">
               {currentTime}
             </span>
           </div>
@@ -93,7 +93,7 @@ export const SimulationControlBar: React.FC<SimulationControlBarProps> = ({
           <button
             onClick={() => onStepHour(1)}
             disabled={busy}
-            className="px-2.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono font-bold text-emerald-300 transition"
+            className="px-2.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-xs font-mono font-bold text-emerald-600 transition"
           >
             + 1 HOUR
           </button>
@@ -101,7 +101,7 @@ export const SimulationControlBar: React.FC<SimulationControlBarProps> = ({
 
         {/* Speed Selector + Simulate AI Decision */}
         <div className="flex items-center gap-2.5">
-          <div className="flex items-center bg-slate-900 border border-slate-800 rounded-xl p-0.5 text-xs font-mono">
+          <div className="flex items-center bg-white border border-slate-200 rounded-xl p-0.5 text-xs font-mono">
             {([1, 2, 5] as const).map((s) => (
               <button
                 key={s}
@@ -109,7 +109,7 @@ export const SimulationControlBar: React.FC<SimulationControlBarProps> = ({
                 className={`px-2 py-1 rounded-lg transition ${
                   speed === s
                     ? 'bg-emerald-500 text-slate-950 font-bold'
-                    : 'text-slate-400 hover:text-white'
+                    : 'text-slate-500 hover:text-[#0d3f3a]'
                 }`}
               >
                 {s}x

@@ -154,43 +154,43 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
   return (
     <section
       id="digital-twin-section"
-      className="rounded-3xl border border-slate-800/90 bg-slate-900/75 backdrop-blur-xl p-5 sm:p-8 shadow-2xl space-y-6"
+      className="rounded-3xl border border-slate-200 bg-white backdrop-blur-xl p-5 sm:p-8 shadow-2xl space-y-6"
     >
       {/* Section Header + Live Sync Indicator */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-800/80 pb-5">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-600 border border-emerald-500/30">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
               ● Synchronized · LIVE DIGITAL TWIN
             </span>
-            <span className="text-xs font-mono text-slate-400">
+            <span className="text-xs font-mono text-slate-500">
               Simulation Time: {gridStatus.current_time}
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-2">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0d3f3a] mt-2">
             DIGITAL TWIN
           </h2>
-          <p className="text-sm text-slate-300 mt-0.5">
+          <p className="text-sm text-slate-600 mt-0.5">
             A live simulation of your cloud workload and the energy grid around
             it.
           </p>
         </div>
 
         {/* Physical World <-> Digital Twin Bridge Badge */}
-        <div className="flex items-center gap-2.5 bg-slate-950/90 border border-slate-800 rounded-2xl px-4 py-2.5 text-xs">
-          <div className="text-slate-300">
-            <div className="font-bold text-white">Physical World</div>
-            <div className="text-[11px] text-slate-400">
+        <div className="flex items-center gap-2.5 bg-white border border-slate-200 rounded-2xl px-4 py-2.5 text-xs">
+          <div className="text-slate-600">
+            <div className="font-bold text-[#0d3f3a]">Physical World</div>
+            <div className="text-[11px] text-slate-500">
               ☀ Solar · ⚡ Grid · 🏢 Data Center
             </div>
           </div>
-          <div className="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 font-mono font-bold border border-emerald-500/30">
+          <div className="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-600 font-mono font-bold border border-emerald-500/30">
             ⇅ LIVE SYNC
           </div>
-          <div className="text-slate-300">
-            <div className="font-bold text-emerald-300">Digital Twin</div>
-            <div className="text-[11px] text-slate-400">
+          <div className="text-slate-600">
+            <div className="font-bold text-emerald-600">Digital Twin</div>
+            <div className="text-[11px] text-slate-500">
               Simulates Carbon, Cost &amp; Best Time
             </div>
           </div>
@@ -201,12 +201,12 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
       {simulationStepLabel && (
         <div className="rounded-2xl bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 border border-emerald-400/50 p-4 flex items-center justify-between animate-pulse">
           <div className="flex items-center gap-3">
-            <Brain className="h-5 w-5 text-emerald-300" />
-            <span className="text-sm font-bold text-white">
+            <Brain className="h-5 w-5 text-emerald-600" />
+            <span className="text-sm font-bold text-[#0d3f3a]">
               {simulationStepLabel}
             </span>
           </div>
-          <span className="text-xs font-mono text-emerald-300">
+          <span className="text-xs font-mono text-emerald-600">
             LIVE SIMULATION ACTIVE
           </span>
         </div>
@@ -214,7 +214,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
 
       {/* Workload Selector Pills */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 mr-1">
+        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 mr-1">
           Inspect Workload in Twin:
         </span>
         {workloads.map((w) => {
@@ -226,15 +226,15 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-2 border ${
                 active
                   ? 'bg-emerald-500 text-slate-950 border-emerald-400 font-bold shadow-lg shadow-emerald-500/20'
-                  : 'bg-slate-950/80 text-slate-300 border-slate-800 hover:border-slate-700'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
               }`}
             >
               <span>{w.name.replace(/\s*\([^)]*\)/, '')}</span>
               <span
                 className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
                   active
-                    ? 'bg-slate-950/20 text-slate-950'
-                    : 'bg-slate-800 text-slate-400'
+                    ? 'bg-white/20 text-slate-950'
+                    : 'bg-slate-100 text-slate-500'
                 }`}
               >
                 {w.energy_kwh} kWh
@@ -247,63 +247,63 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
       {/* Main 2-Column Digital Twin Environment: LEFT/CENTER Infrastructure + RIGHT AI Brain & Controls */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-stretch">
         {/* LEFT / CENTER (7 cols): Living Infrastructure Diagram */}
-        <div className="xl:col-span-7 rounded-2xl border border-slate-800 bg-slate-950/90 p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden">
+        <div className="xl:col-span-7 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden">
           {/* Top Row: Renewable Energy Source (Solar + Wind) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-950/30 to-slate-900/90 p-4">
+            <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-50 to-slate-100 p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Sun className="h-5 w-5 text-amber-400" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
+                  <Sun className="h-5 w-5 text-amber-600" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
                     ☀ Solar &amp; Wind Farm
                   </span>
                 </div>
-                <span className="text-xs font-mono font-bold text-emerald-400">
+                <span className="text-xs font-mono font-bold text-emerald-600">
                   {gridStatus.renewable_percentage}% Clean
                 </span>
               </div>
               <div className="mt-2 flex items-baseline justify-between">
                 <div>
-                  <span className="text-xl font-extrabold font-mono text-white">
+                  <span className="text-xl font-extrabold font-mono text-[#0d3f3a]">
                     {gridStatus.solar_generation_mw} MW
                   </span>
-                  <span className="text-xs text-slate-400 ml-1">Solar</span>
+                  <span className="text-xs text-slate-500 ml-1">Solar</span>
                 </div>
                 <div>
-                  <span className="text-xl font-extrabold font-mono text-cyan-300">
+                  <span className="text-xl font-extrabold font-mono text-cyan-600">
                     {gridStatus.wind_generation_mw} MW
                   </span>
-                  <span className="text-xs text-slate-400 ml-1">Wind</span>
+                  <span className="text-xs text-slate-500 ml-1">Wind</span>
                 </div>
               </div>
-              <div className="text-[11px] text-slate-400 mt-1">
+              <div className="text-[11px] text-slate-500 mt-1">
                 Weather: {gridStatus.weather_condition}
               </div>
             </div>
 
             {/* Battery / Clean Storage Node */}
-            <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-950/25 to-slate-900/90 p-4">
+            <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-50 to-slate-100 p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <BatteryCharging className="h-5 w-5 text-emerald-400" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                  <BatteryCharging className="h-5 w-5 text-emerald-600" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
                     🔋 Clean Energy Storage
                   </span>
                 </div>
-                <span className="text-xs font-mono text-emerald-300">
+                <span className="text-xs font-mono text-emerald-600">
                   {isLowCarbon ? 'Charging' : 'Buffering'}
                 </span>
               </div>
               <div className="mt-2 flex items-center justify-between">
-                <span className="text-xl font-extrabold font-mono text-white">
+                <span className="text-xl font-extrabold font-mono text-[#0d3f3a]">
                   {batteryReservePct}%
                 </span>
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-slate-500">
                   Grid Tariff: ${gridStatus.electricity_price_usd_kwh.toFixed(2)}
                   /kWh
                 </span>
               </div>
-              <div className="w-full h-2 rounded-full bg-slate-800 mt-2 overflow-hidden">
+              <div className="w-full h-2 rounded-full bg-slate-100 mt-2 overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
                   style={{ width: `${batteryReservePct}%` }}
@@ -314,26 +314,26 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
 
           {/* Animated Energy Flow Conduit: Solar/Wind -> Energy Grid */}
           <div className="my-3 flex flex-col items-center justify-center">
-            <div className="relative h-8 w-1 bg-slate-800 rounded-full overflow-hidden">
+            <div className="relative h-8 w-1 bg-slate-100 rounded-full overflow-hidden">
               <div className="absolute inset-x-0 h-4 bg-emerald-400 rounded-full animate-flow-v" />
             </div>
             <div
               className={`w-full max-w-md rounded-2xl px-4 py-3 border flex items-center justify-between transition-all ${
                 isHighCarbon
-                  ? 'bg-rose-950/35 border-rose-500/50 text-rose-200'
+                  ? 'bg-rose-950/35 border-rose-500/50 text-rose-700'
                   : isLowCarbon
-                  ? 'bg-emerald-950/35 border-emerald-500/50 text-emerald-200'
-                  : 'bg-amber-950/30 border-amber-500/40 text-amber-200'
+                  ? 'bg-emerald-950/35 border-emerald-500/50 text-emerald-700'
+                  : 'bg-amber-950/30 border-amber-500/40 text-amber-700'
               }`}
             >
               <div className="flex items-center gap-2.5">
                 <Zap
                   className={`h-5 w-5 ${
                     isHighCarbon
-                      ? 'text-rose-400'
+                      ? 'text-rose-600'
                       : isLowCarbon
-                      ? 'text-emerald-400'
-                      : 'text-amber-400'
+                      ? 'text-emerald-600'
+                      : 'text-amber-600'
                   }`}
                 />
                 <div>
@@ -346,7 +346,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-lg font-extrabold font-mono text-white">
+                <div className="text-lg font-extrabold font-mono text-[#0d3f3a]">
                   {carbon} gCO₂/kWh
                 </div>
                 <div className="text-[11px] font-bold">
@@ -358,7 +358,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                 </div>
               </div>
             </div>
-            <div className="relative h-8 w-1 bg-slate-800 rounded-full overflow-hidden">
+            <div className="relative h-8 w-1 bg-slate-100 rounded-full overflow-hidden">
               <div
                 className={`absolute inset-x-0 h-4 rounded-full animate-flow-v ${
                   isHighCarbon
@@ -372,29 +372,29 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
           </div>
 
           {/* Center / Bottom: CLOUD DATA CENTER Isometric Infrastructure Block */}
-          <div className="rounded-2xl border border-cyan-500/35 bg-gradient-to-b from-slate-900/95 to-slate-950 p-5 shadow-xl">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3 mb-4">
+          <div className="rounded-2xl border border-cyan-500/35 bg-gradient-to-b from-slate-100 to-slate-50 p-5 shadow-xl">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3 mb-4">
               <div className="flex items-center gap-2.5">
-                <Building2 className="h-5 w-5 text-cyan-400" />
+                <Building2 className="h-5 w-5 text-cyan-600" />
                 <div>
-                  <h3 className="text-sm font-extrabold uppercase tracking-wider text-white">
+                  <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#0d3f3a]">
                     CLOUD DATA CENTER
                   </h3>
-                  <p className="text-[11px] text-slate-400">
+                  <p className="text-[11px] text-slate-500">
                     4 Compute Racks · Live Power &amp; Thermal Twin
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
-                <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-cyan-300">
+                <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-cyan-600">
                   ⚡ Power: {selectedWorkload.energy_kwh} kWh
                 </span>
-                <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center gap-1.5">
-                  <Fan className="h-3.5 w-3.5 text-cyan-400 animate-spin-slow" />
+                <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-600 flex items-center gap-1.5">
+                  <Fan className="h-3.5 w-3.5 text-cyan-600 animate-spin-slow" />
                   🌡 Cooling: Normal
                 </span>
-                <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-emerald-300">
+                <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-emerald-600">
                   🌱 Renewable: {gridStatus.renewable_percentage}%
                 </span>
               </div>
@@ -407,13 +407,13 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                   key={srv.id}
                   className={`rounded-xl p-3 border transition-all ${
                     srv.active
-                      ? 'bg-cyan-950/25 border-cyan-500/40 shadow-md shadow-cyan-950/30'
-                      : 'bg-slate-900/70 border-slate-800 opacity-75'
+                      ? 'bg-cyan-950/25 border-cyan-500/40 shadow-md shadow-cyan-600/30'
+                      : 'bg-white/70 border-slate-200 opacity-75'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                      <Server className="h-3.5 w-3.5 text-cyan-400" />
+                    <span className="text-xs font-bold text-[#0d3f3a] flex items-center gap-1.5">
+                      <Server className="h-3.5 w-3.5 text-cyan-600" />
                       {srv.id}
                     </span>
                     <span
@@ -424,18 +424,18 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                       }`}
                     />
                   </div>
-                  <div className="text-[11px] text-slate-400">{srv.role}</div>
+                  <div className="text-[11px] text-slate-500">{srv.role}</div>
                   {/* Server Blade LED bars */}
                   <div className="mt-2 space-y-1">
-                    <div className="h-1.5 w-full rounded bg-slate-800 overflow-hidden">
+                    <div className="h-1.5 w-full rounded bg-slate-100 overflow-hidden">
                       <div
                         className="h-full bg-cyan-400 transition-all duration-500"
                         style={{ width: srv.load }}
                       />
                     </div>
-                    <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                    <div className="flex justify-between text-[10px] font-mono text-slate-500">
                       <span>Load</span>
-                      <span className="text-cyan-300">{srv.load}</span>
+                      <span className="text-cyan-600">{srv.load}</span>
                     </div>
                   </div>
                 </div>
@@ -467,7 +467,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                         : 'bg-amber-400'
                     }`}
                   />
-                  <span className="text-xs font-extrabold uppercase tracking-wider text-white">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-[#0d3f3a]">
                     {isCompletedNow
                       ? `✅ WORKLOAD COMPLETED (${selectedWorkload.name})`
                       : isRunningNow
@@ -479,12 +479,12 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                       : `⏳ WORKLOAD QUEUED FOR CLEAN WINDOW AT ${recStart} (${selectedWorkload.name})`}
                   </span>
                 </div>
-                <span className="text-xs font-mono font-bold text-slate-200">
+                <span className="text-xs font-mono font-bold text-slate-700">
                   {progressPct}%
                 </span>
               </div>
 
-              <div className="w-full h-2.5 rounded-full bg-slate-800 overflow-hidden">
+              <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
                 <div
                   className={`h-full transition-all duration-700 ${
                     isCompletedNow
@@ -499,14 +499,14 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                 />
               </div>
 
-              <div className="mt-2 flex flex-wrap items-center justify-between text-[11px] text-slate-300">
+              <div className="mt-2 flex flex-wrap items-center justify-between text-[11px] text-slate-600">
                 <span>
                   Duration: <strong>{selectedWorkload.duration_minutes} min</strong> ·
                   Deadline: <strong>{selectedWorkload.deadline}</strong>
                 </span>
                 <span>
                   Scheduled Window:{' '}
-                  <strong className="text-emerald-300">
+                  <strong className="text-emerald-600">
                     {recStart} – {String(recEndHour).padStart(2, '0')}:00
                   </strong>
                 </span>
@@ -518,17 +518,17 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
         {/* RIGHT (5 cols): AI Brain + Interactive Simulation Parameter Controls */}
         <div className="xl:col-span-5 flex flex-col justify-between gap-4">
           {/* AI Brain Recommendation Card */}
-          <div className="rounded-2xl border border-emerald-500/35 bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/30 p-5 shadow-xl space-y-4">
+          <div className="rounded-2xl border border-emerald-500/35 bg-gradient-to-br from-slate-100 via-slate-100 to-emerald-50 p-5 shadow-xl space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="h-9 w-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
-                  <Brain className="h-5 w-5 text-emerald-400" />
+                  <Brain className="h-5 w-5 text-emerald-600" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+                  <div className="text-xs font-bold uppercase tracking-wider text-emerald-600">
                     AI Decision Brain
                   </div>
-                  <div className="text-sm font-bold text-white">
+                  <div className="text-sm font-bold text-[#0d3f3a]">
                     Current Recommendation
                   </div>
                 </div>
@@ -542,11 +542,11 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
               </button>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2">
-              <div className="text-xs text-slate-400">
+            <div className="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+              <div className="text-xs text-slate-500">
                 For <strong>{selectedWorkload.name}</strong>:
               </div>
-              <div className="text-2xl font-extrabold text-emerald-400">
+              <div className="text-2xl font-extrabold text-emerald-600">
                 {selectedWorkload.status === 'BLOCKED'
                   ? 'DO NOT DELAY (Protected)'
                   : selectedWorkload.status === 'AWAITING_APPROVAL'
@@ -555,21 +555,21 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                   ? `WAIT UNTIL ${recStart}`
                   : `RUN IMMEDIATELY (${recStart})`}
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 {selectedWorkload.decision_reason}
               </p>
             </div>
 
             {/* Quick Impact Pills */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-                <div className="text-[11px] text-slate-400">
+              <div className="p-3 rounded-xl bg-white border border-slate-200">
+                <div className="text-[11px] text-slate-500">
                   Carbon Reduction
                 </div>
-                <div className="text-lg font-extrabold font-mono text-emerald-400 mt-0.5">
+                <div className="text-lg font-extrabold font-mono text-emerald-600 mt-0.5">
                   {selectedWorkload.carbon_reduction_pct}%
                 </div>
-                <div className="text-[11px] text-slate-400">
+                <div className="text-[11px] text-slate-500">
                   Saves{' '}
                   {(
                     selectedWorkload.estimated_carbon_savings_gco2 / 1000
@@ -577,12 +577,12 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                   kgCO₂
                 </div>
               </div>
-              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
-                <div className="text-[11px] text-slate-400">Cost Reduction</div>
-                <div className="text-lg font-extrabold font-mono text-teal-400 mt-0.5">
+              <div className="p-3 rounded-xl bg-white border border-slate-200">
+                <div className="text-[11px] text-slate-500">Cost Reduction</div>
+                <div className="text-lg font-extrabold font-mono text-teal-600 mt-0.5">
                   {selectedWorkload.cost_reduction_pct}%
                 </div>
-                <div className="text-[11px] text-slate-400">
+                <div className="text-[11px] text-slate-500">
                   Saves ${selectedWorkload.estimated_cost_savings_usd.toFixed(2)}
                 </div>
               </div>
@@ -590,15 +590,15 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
           </div>
 
           {/* Interactive Live Parameter Controls (Section 17) */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-950/90 p-5 space-y-4">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sliders className="h-4 w-4 text-cyan-400" />
-                <h3 className="text-sm font-bold text-white">
+                <Sliders className="h-4 w-4 text-cyan-600" />
+                <h3 className="text-sm font-bold text-[#0d3f3a]">
                   Interactive Twin Parameters (Try Changing!)
                 </h3>
               </div>
-              <span className="text-[11px] font-mono text-cyan-300">
+              <span className="text-[11px] font-mono text-cyan-600">
                 Live Recalculation
               </span>
             </div>
@@ -606,7 +606,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               {/* 1. Workload Duration */}
               <div>
-                <label className="block text-slate-400 mb-1">
+                <label className="block text-slate-500 mb-1">
                   Duration
                 </label>
                 <select
@@ -618,7 +618,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                       duration_minutes: Number(e.target.value),
                     })
                   }
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 font-mono text-white"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-2 font-mono text-[#0d3f3a]"
                 >
                   <option value={60}>60 min (1 hr)</option>
                   <option value={120}>120 min (2 hrs)</option>
@@ -629,7 +629,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
 
               {/* 2. Workload Deadline */}
               <div>
-                <label className="block text-slate-400 mb-1">
+                <label className="block text-slate-500 mb-1">
                   Deadline
                 </label>
                 <select
@@ -641,7 +641,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                       deadline: e.target.value,
                     })
                   }
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 font-mono text-white"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-2 font-mono text-[#0d3f3a]"
                 >
                   {[
                     '16:00',
@@ -662,7 +662,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
 
               {/* 3. Workload Priority */}
               <div>
-                <label className="block text-slate-400 mb-1">
+                <label className="block text-slate-500 mb-1">
                   Priority
                 </label>
                 <select
@@ -674,7 +674,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                       priority: e.target.value,
                     })
                   }
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-2 font-mono text-white"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-2 font-mono text-[#0d3f3a]"
                 >
                   <option value="LOW">LOW (Flexible)</option>
                   <option value="MEDIUM">MEDIUM (Standard)</option>
@@ -685,16 +685,16 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
             </div>
 
             {/* Grid Carbon & Solar Sliders */}
-            <div className="space-y-3 pt-1 border-t border-slate-800/80 text-xs">
+            <div className="space-y-3 pt-1 border-t border-slate-200 text-xs">
               <div>
-                <div className="flex justify-between text-slate-300 mb-1">
+                <div className="flex justify-between text-slate-600 mb-1">
                   <span>
                     Grid Carbon at {gridStatus.current_time}:{' '}
-                    <strong className="font-mono text-white">
+                    <strong className="font-mono text-[#0d3f3a]">
                       {localCarbon} gCO₂/kWh
                     </strong>
                   </span>
-                  <span className="text-[11px] text-slate-400">
+                  <span className="text-[11px] text-slate-500">
                     Drag to test grid spikes
                   </span>
                 </div>
@@ -716,14 +716,14 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
               </div>
 
               <div>
-                <div className="flex justify-between text-slate-300 mb-1">
+                <div className="flex justify-between text-slate-600 mb-1">
                   <span>
                     Solar Generation at {gridStatus.current_time}:{' '}
-                    <strong className="font-mono text-amber-300">
+                    <strong className="font-mono text-amber-600">
                       {localSolar} MW
                     </strong>
                   </span>
-                  <span className="text-[11px] text-slate-400">
+                  <span className="text-[11px] text-slate-500">
                     Adjust clean energy supply
                   </span>
                 </div>
@@ -749,22 +749,22 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
       </div>
 
       {/* BOTTOM: Interactive 24-Hour Digital Twin Timeline Slider (Section 4) */}
-      <div className="rounded-2xl border border-slate-800 bg-slate-950/90 p-4 sm:p-5 space-y-3">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
               Interactive Simulation Timeline
             </span>
-            <h3 className="text-sm sm:text-base font-bold text-white">
+            <h3 className="text-sm sm:text-base font-bold text-[#0d3f3a]">
               Drag the time slider to see how the Digital Twin responds across 24
               hours
             </h3>
           </div>
           <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-300">
+            <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-amber-600">
               Now: {gridStatus.current_time}
             </span>
-            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
+            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-600">
               Best Window: {recStart}
             </span>
           </div>
@@ -778,7 +778,7 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
           step={1}
           value={gridStatus.current_hour}
           onChange={(e) => onChangeHour(Number(e.target.value))}
-          className="w-full h-2.5 bg-slate-800 rounded-lg accent-emerald-400 cursor-pointer"
+          className="w-full h-2.5 bg-slate-100 rounded-lg accent-emerald-400 cursor-pointer"
         />
 
         {/* Quick Time Checkpoints */}
@@ -797,22 +797,22 @@ export const DigitalTwin: React.FC<DigitalTwinProps> = ({
                 onClick={() => onChangeHour(h)}
                 className={`p-2 rounded-xl border text-left transition ${
                   isCurr
-                    ? 'bg-slate-800 border-amber-400 ring-1 ring-amber-400/50'
+                    ? 'bg-slate-100 border-amber-400 ring-1 ring-amber-400/50'
                     : isBest
                     ? 'bg-emerald-950/30 border-emerald-500/50 hover:bg-emerald-950/50'
-                    : 'bg-slate-900/70 border-slate-800/80 hover:bg-slate-800/60'
+                    : 'bg-white/70 border-slate-200 hover:bg-slate-100/60'
                 }`}
               >
-                <div className="flex items-center justify-between text-[11px] font-mono font-bold text-white">
+                <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#0d3f3a]">
                   <span>{pt.time_str}</span>
                   <span>
                     {ptHigh ? '🔴' : ptClean ? '🟢' : '🟡'}
                   </span>
                 </div>
-                <div className="text-[10px] font-mono text-slate-300 mt-0.5">
+                <div className="text-[10px] font-mono text-slate-600 mt-0.5">
                   {pt.carbon_intensity_gco2_kwh} gCO₂
                 </div>
-                <div className="text-[10px] text-emerald-400">
+                <div className="text-[10px] text-emerald-600">
                   🌱 {pt.renewable_percentage}%
                 </div>
               </button>

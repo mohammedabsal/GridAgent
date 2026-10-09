@@ -23,6 +23,9 @@ import {
 export const Landing: React.FC = () => {
   const [data, setData] = useState<DashboardState | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [activeSection, setActiveSection] = useState<string>(
+    NAV_LINKS[0].href.replace('#', '')
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -36,6 +39,45 @@ export const Landing: React.FC = () => {
       });
     return () => {
       cancelled = true;
+    };
+  }, []);
+
+  /* Scroll-spy: keep the nav highlight on the section currently in view. */
+  useEffect(() => {
+    const HEADER_OFFSET = 96; // sticky 64px header + breathing room
+    const ids = NAV_LINKS.map((link) => link.href.replace('#', ''));
+    let frame = 0;
+
+    const updateActive = () => {
+      frame = 0;
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 4;
+      if (atBottom) {
+        setActiveSection(ids[ids.length - 1]);
+        return;
+      }
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= HEADER_OFFSET) {
+          current = id;
+        }
+      }
+      setActiveSection(current);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateActive);
+    };
+
+    updateActive();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
     };
   }, []);
 
@@ -54,9 +96,9 @@ export const Landing: React.FC = () => {
                 key={link.label}
                 href={link.href}
                 className={
-                  link.label === 'Home'
+                  activeSection === link.href.replace('#', '')
                     ? 'border-b-2 border-emerald-600 pb-0.5 text-sm font-semibold text-emerald-700'
-                    : 'text-sm font-medium text-slate-600 transition hover:text-emerald-700'
+                    : 'border-b-2 border-transparent pb-0.5 text-sm font-medium text-slate-600 transition hover:text-emerald-700'
                 }
               >
                 {link.label}
@@ -100,7 +142,11 @@ export const Landing: React.FC = () => {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700"
+                  className={`rounded-lg px-3 py-2.5 text-sm font-semibold transition ${
+                    activeSection === link.href.replace('#', '')
+                      ? 'bg-emerald-50 text-emerald-700'
+                      : 'text-slate-700 hover:bg-emerald-50 hover:text-emerald-700'
+                  }`}
                 >
                   {link.label}
                 </a>
@@ -123,7 +169,7 @@ export const Landing: React.FC = () => {
         <HowItWorksSection />
         <UseCasesSection />
         <SafetySection />
-        <ImpactSection data={data} />
+        <ImpactSection />
         <AboutSection />
         <FinalCtaSection />
 

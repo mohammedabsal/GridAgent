@@ -107,10 +107,10 @@ export const EnergyMap24h: React.FC<EnergyMap24hProps> = ({
       {/* Header Row */}
       <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
         <div className="flex items-center gap-2">
-          <Activity className="h-4 w-4 text-emerald-400" />
-          <h3 className="text-sm sm:text-base font-bold text-white">
+          <Activity className="h-4 w-4 text-emerald-600" />
+          <h3 className="text-sm sm:text-base font-bold text-[#0d3f3a]">
             24-Hour Energy Map{' '}
-            <span className="text-xs font-normal text-slate-400">
+            <span className="text-xs font-normal text-slate-500">
               (Carbon Intensity, Renewable Energy &amp; Cost)
             </span>
           </h3>
@@ -122,8 +122,8 @@ export const EnergyMap24h: React.FC<EnergyMap24hProps> = ({
             onClick={() => setShowCarbon(!showCarbon)}
             className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border font-semibold transition ${
               showCarbon
-                ? 'bg-rose-950/60 border-rose-500/50 text-rose-200'
-                : 'bg-slate-900 border-slate-800 text-slate-500'
+                ? 'bg-rose-950/60 border-rose-500/50 text-rose-700'
+                : 'bg-white border-slate-200 text-slate-500'
             }`}
           >
             <span className="h-3.5 w-3.5 rounded bg-rose-500 text-slate-950 flex items-center justify-center">
@@ -136,8 +136,8 @@ export const EnergyMap24h: React.FC<EnergyMap24hProps> = ({
             onClick={() => setShowRenewable(!showRenewable)}
             className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border font-semibold transition ${
               showRenewable
-                ? 'bg-emerald-950/60 border-emerald-500/50 text-emerald-200'
-                : 'bg-slate-900 border-slate-800 text-slate-500'
+                ? 'bg-emerald-950/60 border-emerald-500/50 text-emerald-700'
+                : 'bg-white border-slate-200 text-slate-500'
             }`}
           >
             <span className="h-3.5 w-3.5 rounded bg-emerald-500 text-slate-950 flex items-center justify-center">
@@ -150,8 +150,8 @@ export const EnergyMap24h: React.FC<EnergyMap24hProps> = ({
             onClick={() => setShowCost(!showCost)}
             className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border font-semibold transition ${
               showCost
-                ? 'bg-sky-950/60 border-sky-500/50 text-sky-200'
-                : 'bg-slate-900 border-slate-800 text-slate-500'
+                ? 'bg-sky-950/60 border-sky-500/50 text-sky-700'
+                : 'bg-white border-slate-200 text-slate-500'
             }`}
           >
             <span className="h-3.5 w-3.5 rounded bg-sky-500 text-slate-950 flex items-center justify-center">
@@ -478,17 +478,17 @@ export const EnergyMap24h: React.FC<EnergyMap24hProps> = ({
 
         {/* Hover Tooltip */}
         {hoverIdx !== null && forecast24h[hoverIdx] && (
-          <div className="absolute bottom-8 left-14 bg-[#081224]/95 border border-slate-700 rounded-xl px-3 py-1.5 text-[11px] pointer-events-none flex items-center gap-3 shadow-xl">
-            <span className="font-mono font-bold text-white">
+          <div className="absolute bottom-8 left-14 bg-[#081224]/95 border border-slate-300 rounded-xl px-3 py-1.5 text-[11px] pointer-events-none flex items-center gap-3 shadow-xl">
+            <span className="font-mono font-bold text-[#0d3f3a]">
               {forecast24h[hoverIdx].time_str}
             </span>
-            <span className="text-rose-300 font-mono">
+            <span className="text-rose-600 font-mono">
               {forecast24h[hoverIdx].carbon_intensity_gco2_kwh} gCO₂/kWh
             </span>
-            <span className="text-emerald-300 font-mono">
+            <span className="text-emerald-600 font-mono">
               🌱 {forecast24h[hoverIdx].renewable_percentage}%
             </span>
-            <span className="text-sky-300 font-mono">
+            <span className="text-sky-600 font-mono">
               ${forecast24h[hoverIdx].electricity_price_usd_kwh.toFixed(2)}/kWh
             </span>
           </div>

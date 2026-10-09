@@ -90,39 +90,39 @@ export const AIRecommendationAndSafety: React.FC<
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* LEFT CARD: WHY DID THE AI CHOOSE THIS? (Section 6) */}
-      <div className="rounded-3xl border border-slate-800/90 bg-slate-900/75 backdrop-blur-xl p-6 sm:p-7 shadow-2xl flex flex-col justify-between space-y-5">
+      <div className="rounded-3xl border border-slate-200 bg-white backdrop-blur-xl p-6 sm:p-7 shadow-2xl flex flex-col justify-between space-y-5">
         <div className="space-y-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-purple-300">
+            <span className="text-xs font-bold uppercase tracking-wider text-purple-600">
               Plain-English AI Explanation
             </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#0d3f3a] mt-1">
               WHY DID THE AI CHOOSE THIS?
             </h2>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-950/90 border border-slate-800 flex items-center justify-between">
+          <div className="p-4 rounded-2xl bg-white border border-slate-200 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-400">
+              <div className="text-xs text-slate-500">
                 🤖 GridAgent-AI recommends:
               </div>
-              <div className="text-xl sm:text-2xl font-extrabold text-emerald-400 mt-0.5">
+              <div className="text-xl sm:text-2xl font-extrabold text-emerald-600 mt-0.5">
                 &ldquo;{recommendationLabel}&rdquo;
               </div>
             </div>
-            <Brain className="h-8 w-8 text-purple-400 shrink-0" />
+            <Brain className="h-8 w-8 text-purple-600 shrink-0" />
           </div>
 
           <div className="space-y-2.5">
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
               Why?
             </div>
             {reasons.map((item, idx) => (
               <div
                 key={idx}
-                className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs sm:text-sm text-slate-200 flex items-start gap-2.5"
+                className="p-3 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-700 flex items-start gap-2.5"
               >
-                <span className="font-mono font-bold text-emerald-400">
+                <span className="font-mono font-bold text-emerald-600">
                   {idx + 1}.
                 </span>
                 <span>{item}</span>
@@ -131,20 +131,20 @@ export const AIRecommendationAndSafety: React.FC<
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-emerald-950/25 border border-emerald-500/35 text-xs sm:text-sm text-emerald-200">
-          <span className="font-bold text-emerald-300">Therefore: </span>
+        <div className="p-4 rounded-2xl bg-emerald-950/25 border border-emerald-500/35 text-xs sm:text-sm text-emerald-700">
+          <span className="font-bold text-emerald-600">Therefore: </span>
           &ldquo;{conclusion}&rdquo;
         </div>
       </div>
 
       {/* RIGHT CARD: AI SAFETY CHECK (Section 8) */}
-      <div className="rounded-3xl border border-slate-800/90 bg-slate-900/75 backdrop-blur-xl p-6 sm:p-7 shadow-2xl flex flex-col justify-between space-y-5">
+      <div className="rounded-3xl border border-slate-200 bg-white backdrop-blur-xl p-6 sm:p-7 shadow-2xl flex flex-col justify-between space-y-5">
         <div className="space-y-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
               Is It Safe To Wait?
             </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#0d3f3a] mt-1">
               AI SAFETY CHECK
             </h2>
           </div>
@@ -155,10 +155,10 @@ export const AIRecommendationAndSafety: React.FC<
               className={`p-3 rounded-2xl border transition-all ${
                 isAllow && !isAskUser && !isDeny
                   ? 'bg-emerald-950/40 border-emerald-400 ring-1 ring-emerald-400/50 text-white'
-                  : 'bg-slate-950/60 border-slate-800/80 text-slate-400 opacity-60'
+                  : 'bg-white border-slate-200 text-slate-500 opacity-60'
               }`}
             >
-              <div className="font-extrabold text-emerald-400">🟢 ALLOW</div>
+              <div className="font-extrabold text-emerald-600">🟢 ALLOW</div>
               <div className="text-[11px] mt-0.5">
                 Safe to automatically schedule
               </div>
@@ -168,10 +168,10 @@ export const AIRecommendationAndSafety: React.FC<
               className={`p-3 rounded-2xl border transition-all ${
                 isAskUser
                   ? 'bg-amber-950/40 border-amber-400 ring-1 ring-amber-400/50 text-white'
-                  : 'bg-slate-950/60 border-slate-800/80 text-slate-400 opacity-60'
+                  : 'bg-white border-slate-200 text-slate-500 opacity-60'
               }`}
             >
-              <div className="font-extrabold text-amber-300">🟡 ASK USER</div>
+              <div className="font-extrabold text-amber-600">🟡 ASK USER</div>
               <div className="text-[11px] mt-0.5">
                 Requires human approval
               </div>
@@ -181,10 +181,10 @@ export const AIRecommendationAndSafety: React.FC<
               className={`p-3 rounded-2xl border transition-all ${
                 isDeny
                   ? 'bg-rose-950/40 border-rose-400 ring-1 ring-rose-400/50 text-white'
-                  : 'bg-slate-950/60 border-slate-800/80 text-slate-400 opacity-60'
+                  : 'bg-white border-slate-200 text-slate-500 opacity-60'
               }`}
             >
-              <div className="font-extrabold text-rose-400">🔴 BLOCK</div>
+              <div className="font-extrabold text-rose-600">🔴 BLOCK</div>
               <div className="text-[11px] mt-0.5">
                 Policy prevents modification
               </div>
@@ -202,8 +202,8 @@ export const AIRecommendationAndSafety: React.FC<
             }`}
           >
             <div className="flex items-center justify-between">
-              <div className="text-xs text-slate-300">
-                Workload: <strong className="text-white">{workload.name}</strong>
+              <div className="text-xs text-slate-600">
+                Workload: <strong className="text-[#0d3f3a]">{workload.name}</strong>
               </div>
               <span className="text-sm font-extrabold">
                 {isDeny
@@ -214,7 +214,7 @@ export const AIRecommendationAndSafety: React.FC<
               </span>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
               {isDeny
                 ? 'This workload is mission-critical and cannot be delayed automatically.'
                 : isAskUser
@@ -235,7 +235,7 @@ export const AIRecommendationAndSafety: React.FC<
                 <button
                   disabled={busy}
                   onClick={() => onAction(workload.job_id, 'reject')}
-                  className="px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-500/40 font-bold text-xs transition"
+                  className="px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-700 border border-rose-500/40 font-bold text-xs transition"
                 >
                   ✕ Reject &amp; Keep Current Schedule
                 </button>
@@ -248,7 +248,7 @@ export const AIRecommendationAndSafety: React.FC<
         <div>
           <button
             onClick={() => setShowPolicyRules(!showPolicyRules)}
-            className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition"
+            className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-600 hover:text-[#0d3f3a] transition"
           >
             <span>View Safety Policy Guardrails</span>
             {showPolicyRules ? (
@@ -259,32 +259,32 @@ export const AIRecommendationAndSafety: React.FC<
           </button>
 
           {showPolicyRules && (
-            <div className="mt-3 p-4 rounded-xl bg-slate-950 border border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px]">
+            <div className="mt-3 p-4 rounded-xl bg-white border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px]">
               <div>
-                <div className="font-bold text-emerald-400 mb-1">
+                <div className="font-bold text-emerald-600 mb-1">
                   🟢 Always Allowed
                 </div>
-                <ul className="space-y-0.5 text-slate-300">
+                <ul className="space-y-0.5 text-slate-600">
                   {policyRules.ALLOW.map((r) => (
                     <li key={r}>• {r}</li>
                   ))}
                 </ul>
               </div>
               <div>
-                <div className="font-bold text-amber-300 mb-1">
+                <div className="font-bold text-amber-600 mb-1">
                   🟡 Ask Human First
                 </div>
-                <ul className="space-y-0.5 text-slate-300">
+                <ul className="space-y-0.5 text-slate-600">
                   {policyRules.ASK_USER.map((r) => (
                     <li key={r}>• {r}</li>
                   ))}
                 </ul>
               </div>
               <div>
-                <div className="font-bold text-rose-400 mb-1">
+                <div className="font-bold text-rose-600 mb-1">
                   🔴 Protected (Never Delay)
                 </div>
-                <ul className="space-y-0.5 text-slate-300">
+                <ul className="space-y-0.5 text-slate-600">
                   {policyRules.DENY.map((r) => (
                     <li key={r}>• {r}</li>
                   ))}

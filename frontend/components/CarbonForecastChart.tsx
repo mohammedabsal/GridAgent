@@ -50,28 +50,28 @@ export const CarbonForecastChart: React.FC<CarbonForecastChartProps> = ({
   });
 
   return (
-    <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
+    <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xl">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base sm:text-lg font-bold text-white">
+            <h2 className="text-base sm:text-lg font-bold text-[#0d3f3a]">
               24-Hour Grid Carbon Intensity &amp; Renewable Forecast
             </h2>
-            <span className="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800 text-slate-300 border border-slate-700">
+            <span className="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-100 text-slate-600 border border-slate-300">
               Click any hour to move Sim Clock
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5">
             Displays current time ({gridStatus.current_time}), 24h carbon forecast (gCO₂/kWh), renewable generation share (%), and AI-recommended execution windows.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs">
-          <span className="flex items-center gap-1.5 text-amber-300">
+          <span className="flex items-center gap-1.5 text-amber-600">
             <span className="h-2.5 w-2.5 rounded-full bg-amber-400 inline-block" />
             Now ({gridStatus.current_time})
           </span>
-          <span className="flex items-center gap-1.5 text-emerald-300">
+          <span className="flex items-center gap-1.5 text-emerald-600">
             <span className="h-2.5 w-2.5 rounded-sm bg-emerald-500/40 border border-emerald-400 inline-block" />
             Clean Execution Window (12:00–13:00, 16:00–18:00)
           </span>
@@ -226,8 +226,8 @@ export const CarbonForecastChart: React.FC<CarbonForecastChartProps> = ({
       </div>
 
       {/* Scheduled Workload Execution Windows Bar */}
-      <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold text-slate-400">
+      <div className="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center gap-2">
+        <span className="text-xs font-semibold text-slate-500">
           Workload Execution Windows:
         </span>
         {workloads.map((w) => {
@@ -238,18 +238,18 @@ export const CarbonForecastChart: React.FC<CarbonForecastChartProps> = ({
           const endStr = `${String(endH).padStart(2, '0')}:00`;
 
           let badgeStyle =
-            'bg-slate-800 text-slate-300 border-slate-700';
+            'bg-slate-100 text-slate-600 border-slate-300';
           if (w.status === 'DEFERRED') {
             badgeStyle =
-              'bg-emerald-500/15 text-emerald-300 border-emerald-500/30';
+              'bg-emerald-500/15 text-emerald-600 border-emerald-500/30';
           } else if (w.status === 'RUNNING') {
-            badgeStyle = 'bg-sky-500/15 text-sky-300 border-sky-500/30';
+            badgeStyle = 'bg-sky-500/15 text-sky-600 border-sky-500/30';
           } else if (w.status === 'BLOCKED') {
-            badgeStyle = 'bg-rose-500/15 text-rose-300 border-rose-500/30';
+            badgeStyle = 'bg-rose-500/15 text-rose-600 border-rose-500/30';
           } else if (w.status === 'AWAITING_APPROVAL') {
-            badgeStyle = 'bg-amber-500/15 text-amber-300 border-amber-500/30';
+            badgeStyle = 'bg-amber-500/15 text-amber-600 border-amber-500/30';
           } else if (w.status === 'COMPLETED') {
-            badgeStyle = 'bg-teal-500/15 text-teal-300 border-teal-500/30';
+            badgeStyle = 'bg-teal-500/15 text-teal-600 border-teal-500/30';
           }
 
           return (

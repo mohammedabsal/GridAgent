@@ -15,6 +15,12 @@ import {
   Network,
 } from 'lucide-react';
 import { Reveal, SectionHeading } from './ui';
+import {
+  ChipBrainIllustration,
+  CleanEnergySkyline,
+  FlowNetworkBackdrop,
+  LayerStackIllustration,
+} from './illustrations';
 
 /* ------------------------------------------------------------------ */
 /* Key Features                                                        */
@@ -74,6 +80,11 @@ export const FeaturesSection: React.FC = () => (
               title="Intelligent. Autonomous. Climate-Aware."
               description="GridAgent combines grid intelligence, AI reasoning and safety policies to make computing cleaner, safer and more efficient."
             />
+          </Reveal>
+          <Reveal delay={140}>
+            <div className="mt-8 hidden max-w-sm lg:block">
+              <ChipBrainIllustration />
+            </div>
           </Reveal>
         </div>
 
@@ -139,9 +150,10 @@ const STAGES: { title: string; caption: string; icon: React.ReactNode }[] = [
 export const HowItWorksSection: React.FC = () => (
   <section
     id="how-it-works"
-    className="ga-section bg-gradient-to-b from-white via-emerald-50/50 to-white py-16 lg:py-24"
+    className="ga-section relative overflow-hidden bg-gradient-to-b from-white via-emerald-50/50 to-white py-16 lg:py-24"
   >
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <FlowNetworkBackdrop />
+    <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <Reveal>
         <SectionHeading
           eyebrow="How It Works"
@@ -306,6 +318,12 @@ export const TechnologySection: React.FC = () => (
                 technology listed exists in this repository.
               </p>
             </Reveal>
+
+            <Reveal delay={300}>
+              <div className="pt-4 sm:max-w-xs lg:max-w-sm">
+                <LayerStackIllustration />
+              </div>
+            </Reveal>
           </div>
         </div>
 
@@ -427,6 +445,12 @@ export const UseCasesSection: React.FC = () => (
           Demonstrated in GridAgent-AI&apos;s Simulation Lab — not a claim of
           production deployment.
         </p>
+      </Reveal>
+
+      <Reveal delay={180}>
+        <div className="mt-10">
+          <CleanEnergySkyline />
+        </div>
       </Reveal>
     </div>
   </section>

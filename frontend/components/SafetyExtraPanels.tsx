@@ -1,5 +1,6 @@
 import React from 'react';
 import type { DashboardState } from '../services/api';
+import { JuryEmptyState } from './JuryEmptyState';
 
 interface Props {
   data: DashboardState;
@@ -20,7 +21,7 @@ export const SafetyExtraPanels: React.FC<Props> = ({ data, selectedJobId, busy, 
         </div>
         <div className="divide-y divide-slate-100">
           {pending.length === 0 && (
-            <div className="px-5 py-4 text-xs text-slate-500">No workloads waiting for approval.</div>
+            <JuryEmptyState title="All clear ✓" hint="No workloads waiting for approval — high-cost jobs will appear here." />
           )}
           {pending.map((w) => (
             <div key={w.job_id} className={`px-5 py-3 flex flex-wrap items-center gap-3 ${w.job_id === selectedJobId ? 'bg-amber-50/60' : ''}`}>
@@ -66,13 +67,13 @@ export const SafetyExtraPanels: React.FC<Props> = ({ data, selectedJobId, busy, 
           {data.policy_audit_logs.slice(0, 8).map((log) => (
             <div key={log.id} className="px-5 py-2.5 flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <div className="text-xs font-mono font-bold text-[#0d3f3a]">{log.job_id} <span className="text-slate-400 font-normal">· {log.timestamp}</span></div>
+                <div className="text-xs font-mono font-bold text-[#0d3f3a]">{log.job_id} <span className="text-slate-500 font-normal">· {log.timestamp}</span></div>
                 <div className="text-[11px] text-slate-500 truncate">{log.rule_matched} — {log.reason}</div>
               </div>
               <span className={`shrink-0 px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold ${log.policy_decision === 'ALLOW' ? 'bg-[#10B981]/15 text-[#10B981]' : log.policy_decision === 'DENY' ? 'bg-[#EF4444]/15 text-[#EF4444]' : 'bg-[#F59E0B]/15 text-[#F59E0B]'}`}>{log.policy_decision}</span>
             </div>
           ))}
-          {data.policy_audit_logs.length === 0 && (<div className="px-5 py-4 text-xs text-slate-500">No rulings yet.</div>)}
+          {data.policy_audit_logs.length === 0 && (<JuryEmptyState title="No rulings yet" hint="Run orchestration to generate audit entries." />)}
         </div>
       </div>
     </div>

@@ -63,24 +63,24 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
         });
 
   return (
-    <section className="rounded-3xl border border-slate-800/90 bg-slate-900/75 backdrop-blur-xl p-6 sm:p-8 shadow-2xl space-y-6">
+    <section className="rounded-3xl border border-slate-200 bg-white backdrop-blur-xl p-6 sm:p-8 shadow-2xl space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
             Side-by-Side Scenario Simulation
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0d3f3a] mt-1">
             WHAT IF WE RUN THIS WORKLOAD?
           </h2>
-          <p className="text-sm text-slate-300 mt-0.5">
+          <p className="text-sm text-slate-600 mt-0.5">
             Comparing immediate execution vs. waiting for the cleanest safe
             window for <strong>{workload.name}</strong> ({workload.energy_kwh}{' '}
             kWh).
           </p>
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
-          <Info className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-[11px] text-slate-500">
+          <Info className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
           <span>
             Calculated from simulated workload energy + hourly grid intensity.
           </span>
@@ -90,45 +90,45 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
       {/* Two Large Comparison Cards + Center Animated Arrow */}
       <div className="grid grid-cols-1 lg:grid-cols-11 gap-5 items-center">
         {/* CARD 1: RUN NOW */}
-        <div className="lg:col-span-5 rounded-2xl border border-rose-500/40 bg-gradient-to-b from-rose-950/30 via-slate-950 to-slate-950 p-6 space-y-4 shadow-xl">
+        <div className="lg:col-span-5 rounded-2xl border border-rose-500/40 bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50 p-6 space-y-4 shadow-xl">
           <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/40">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold bg-rose-500/20 text-rose-600 border border-rose-500/40">
               🔴 RUN NOW
             </span>
-            <span className="text-xs font-mono text-slate-400">
+            <span className="text-xs font-mono text-slate-500">
               Without GridAgent-AI
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 pt-1">
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="text-xs text-slate-400">Start Time</div>
-              <div className="text-2xl font-extrabold font-mono text-white mt-0.5">
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="text-xs text-slate-500">Start Time</div>
+              <div className="text-2xl font-extrabold font-mono text-[#0d3f3a] mt-0.5">
                 {baselineTime}
               </div>
-              <div className="text-[11px] text-slate-400 mt-0.5">
+              <div className="text-[11px] text-slate-500 mt-0.5">
                 Deadline: {workload.deadline}
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="text-xs text-slate-400">Grid Carbon</div>
-              <div className="text-2xl font-extrabold font-mono text-rose-300 mt-0.5">
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="text-xs text-slate-500">Grid Carbon</div>
+              <div className="text-2xl font-extrabold font-mono text-rose-600 mt-0.5">
                 {baselineCarbon}{' '}
-                <span className="text-xs font-normal text-slate-400">
+                <span className="text-xs font-normal text-slate-500">
                   gCO₂/kWh
                 </span>
               </div>
-              <div className="text-[11px] text-rose-300/80 mt-0.5">
+              <div className="text-[11px] text-rose-600/80 mt-0.5">
                 Fossil-heavy grid
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="text-xs text-slate-400">Carbon Emissions</div>
-              <div className="text-2xl font-extrabold font-mono text-white mt-0.5">
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="text-xs text-slate-500">Carbon Emissions</div>
+              <div className="text-2xl font-extrabold font-mono text-[#0d3f3a] mt-0.5">
                 {baselineKg}{' '}
-                <span className="text-xs font-normal text-slate-400">
+                <span className="text-xs font-normal text-slate-500">
                   kgCO₂
                 </span>
               </div>
@@ -137,9 +137,9 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="text-xs text-slate-400">Electricity Cost</div>
-              <div className="text-2xl font-extrabold font-mono text-white mt-0.5">
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="text-xs text-slate-500">Electricity Cost</div>
+              <div className="text-2xl font-extrabold font-mono text-[#0d3f3a] mt-0.5">
                 ${workload.baseline_cost_usd.toFixed(2)}
               </div>
               <div className="text-[11px] text-slate-500 mt-0.5">
@@ -148,24 +148,24 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs font-bold text-rose-200 flex items-center justify-between">
+          <div className="p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-xs font-bold text-rose-700 flex items-center justify-between">
             <span>Result: High carbon impact</span>
-            <Flame className="h-4 w-4 text-rose-400" />
+            <Flame className="h-4 w-4 text-rose-600" />
           </div>
         </div>
 
         {/* CENTER ANIMATED FLOW BRIDGE */}
         <div className="lg:col-span-1 flex flex-col items-center justify-center py-2">
-          <div className="px-3 py-2 rounded-2xl bg-slate-950 border border-emerald-500/40 text-center space-y-1 shadow-lg">
-            <div className="text-[10px] font-mono font-bold text-slate-400">
+          <div className="px-3 py-2 rounded-2xl bg-white border border-emerald-500/40 text-center space-y-1 shadow-lg">
+            <div className="text-[10px] font-mono font-bold text-slate-500">
               RUN NOW
             </div>
-            <ArrowRight className="h-5 w-5 text-emerald-400 mx-auto animate-pulse" />
-            <div className="text-[10px] font-mono font-bold text-emerald-300">
+            <ArrowRight className="h-5 w-5 text-emerald-600 mx-auto animate-pulse" />
+            <div className="text-[10px] font-mono font-bold text-emerald-600">
               {hasSavings ? 'WAIT' : 'CHECK'}
             </div>
-            <ArrowRight className="h-5 w-5 text-emerald-400 mx-auto animate-pulse" />
-            <div className="text-[10px] font-mono font-extrabold text-white">
+            <ArrowRight className="h-5 w-5 text-emerald-600 mx-auto animate-pulse" />
+            <div className="text-[10px] font-mono font-extrabold text-[#0d3f3a]">
               {hasSavings ? 'SAVE' : 'SAFE'}
             </div>
           </div>
@@ -175,72 +175,72 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
         <div
           className={`lg:col-span-5 rounded-2xl border p-6 space-y-4 shadow-xl ${
             hasSavings
-              ? 'border-emerald-500/50 bg-gradient-to-b from-emerald-950/35 via-slate-950 to-slate-950'
-              : 'border-amber-500/40 bg-gradient-to-b from-amber-950/25 via-slate-950 to-slate-950'
+              ? 'border-emerald-500/50 bg-gradient-to-b from-emerald-50 via-slate-50 to-slate-50'
+              : 'border-amber-500/40 bg-gradient-to-b from-amber-50 via-slate-50 to-slate-50'
           }`}
         >
           <div className="flex items-center justify-between">
             <span
               className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold border ${
                 hasSavings
-                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                  : 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                  ? 'bg-emerald-500/20 text-emerald-600 border-emerald-500/40'
+                  : 'bg-amber-500/20 text-amber-600 border-amber-500/40'
               }`}
             >
               {hasSavings
                 ? '🟢 WAIT FOR CLEANER ENERGY'
                 : '🟡 CANNOT SAFELY DELAY'}
             </span>
-            <span className="text-xs font-mono text-emerald-300">
+            <span className="text-xs font-mono text-emerald-600">
               With GridAgent-AI
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 pt-1">
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="text-xs text-slate-400">Recommended Time</div>
-              <div className="text-2xl font-extrabold font-mono text-emerald-400 mt-0.5">
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="text-xs text-slate-500">Recommended Time</div>
+              <div className="text-2xl font-extrabold font-mono text-emerald-600 mt-0.5">
                 {recTime}
               </div>
-              <div className="text-[11px] text-slate-400 mt-0.5">
+              <div className="text-[11px] text-slate-500 mt-0.5">
                 Before {workload.deadline} deadline
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="text-xs text-slate-400">Expected Grid Carbon</div>
-              <div className="text-2xl font-extrabold font-mono text-emerald-400 mt-0.5">
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="text-xs text-slate-500">Expected Grid Carbon</div>
+              <div className="text-2xl font-extrabold font-mono text-emerald-600 mt-0.5">
                 {predictedCarbon}{' '}
-                <span className="text-xs font-normal text-slate-400">
+                <span className="text-xs font-normal text-slate-500">
                   gCO₂/kWh
                 </span>
               </div>
-              <div className="text-[11px] text-emerald-300/80 mt-0.5">
+              <div className="text-[11px] text-emerald-600/80 mt-0.5">
                 {hasSavings ? 'High wind + solar window' : 'Immediate window'}
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="text-xs text-slate-400">Carbon Emissions</div>
-              <div className="text-2xl font-extrabold font-mono text-emerald-400 mt-0.5">
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="text-xs text-slate-500">Carbon Emissions</div>
+              <div className="text-2xl font-extrabold font-mono text-emerald-600 mt-0.5">
                 {optimizedKg}{' '}
-                <span className="text-xs font-normal text-slate-400">
+                <span className="text-xs font-normal text-slate-500">
                   kgCO₂
                 </span>
               </div>
-              <div className="text-[11px] text-emerald-300/80 mt-0.5">
+              <div className="text-[11px] text-emerald-600/80 mt-0.5">
                 {hasSavings
                   ? `Saves ${savedKg} kgCO₂`
                   : 'No reduction possible'}
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800">
-              <div className="text-xs text-slate-400">Electricity Cost</div>
-              <div className="text-2xl font-extrabold font-mono text-teal-400 mt-0.5">
+            <div className="p-3.5 rounded-xl bg-white border border-slate-200">
+              <div className="text-xs text-slate-500">Electricity Cost</div>
+              <div className="text-2xl font-extrabold font-mono text-teal-600 mt-0.5">
                 ${workload.optimized_cost_usd.toFixed(2)}
               </div>
-              <div className="text-[11px] text-teal-300/80 mt-0.5">
+              <div className="text-[11px] text-teal-600/80 mt-0.5">
                 {hasSavings
                   ? `Saves $${workload.estimated_cost_savings_usd.toFixed(2)}`
                   : 'Standard tariff'}
@@ -251,8 +251,8 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
           <div
             className={`p-3 rounded-xl border text-xs font-bold flex items-center justify-between ${
               hasSavings
-                ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-200'
-                : 'bg-amber-500/15 border-amber-500/30 text-amber-200'
+                ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-700'
+                : 'bg-amber-500/15 border-amber-500/30 text-amber-700'
             }`}
           >
             <span>
@@ -262,18 +262,18 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
                 ? 'Result: Protected critical workload cannot be delayed'
                 : 'Result: Deadline does not allow safe deferral'}
             </span>
-            <Leaf className="h-4 w-4 text-emerald-400" />
+            <Leaf className="h-4 w-4 text-emerald-600" />
           </div>
         </div>
       </div>
 
       {/* Big Savings Callout Banner */}
-      <div className="rounded-2xl border border-slate-800 bg-slate-950/90 p-5 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
         <div className="text-center md:text-left">
-          <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
             Simulation Outcome
           </div>
-          <div className="text-sm text-slate-200 mt-1">
+          <div className="text-sm text-slate-700 mt-1">
             {hasSavings
               ? `By waiting from ${baselineTime} until ${recTime}, this workload finishes before its ${workload.deadline} deadline while using cleaner energy.`
               : isBlocked
@@ -283,13 +283,13 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
         </div>
 
         <div className="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-center">
-          <div className="text-xs font-bold uppercase tracking-wider text-emerald-300">
+          <div className="text-xs font-bold uppercase tracking-wider text-emerald-600">
             Potential Carbon Reduction
           </div>
-          <div className="text-3xl sm:text-4xl font-extrabold font-mono text-emerald-400 mt-1">
+          <div className="text-3xl sm:text-4xl font-extrabold font-mono text-emerald-600 mt-1">
             {workload.carbon_reduction_pct}%
           </div>
-          <div className="text-xs text-slate-300 mt-0.5">
+          <div className="text-xs text-slate-600 mt-0.5">
             {hasSavings
               ? `${baselineKg} kg → ${optimizedKg} kgCO₂`
               : '0% reduction (Immediate run required)'}
@@ -297,13 +297,13 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
         </div>
 
         <div className="p-4 rounded-xl bg-teal-950/30 border border-teal-500/30 text-center">
-          <div className="text-xs font-bold uppercase tracking-wider text-teal-300">
+          <div className="text-xs font-bold uppercase tracking-wider text-teal-600">
             Potential Cost Reduction
           </div>
-          <div className="text-3xl sm:text-4xl font-extrabold font-mono text-teal-400 mt-1">
+          <div className="text-3xl sm:text-4xl font-extrabold font-mono text-teal-600 mt-1">
             {workload.cost_reduction_pct}%
           </div>
-          <div className="text-xs text-slate-300 mt-0.5">
+          <div className="text-xs text-slate-600 mt-0.5">
             {hasSavings
               ? `$${workload.baseline_cost_usd.toFixed(2)} → $${workload.optimized_cost_usd.toFixed(2)}`
               : '0% reduction'}
@@ -314,10 +314,10 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
       {/* Candidate Execution Windows Evaluated (Section 18) */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between text-xs">
-          <span className="font-bold uppercase tracking-wider text-slate-400">
+          <span className="font-bold uppercase tracking-wider text-slate-500">
             Candidate Execution Windows Evaluated by Digital Twin
           </span>
-          <span className="text-slate-400">
+          <span className="text-slate-500">
             Formula: Energy ({workload.energy_kwh} kWh) × Grid Carbon = Emissions
           </span>
         </div>
@@ -334,10 +334,10 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
                 className={`p-3 rounded-xl border text-xs transition ${
                   isBest
                     ? 'bg-emerald-950/40 border-emerald-400 ring-1 ring-emerald-400/50'
-                    : 'bg-slate-950/80 border-slate-800'
+                    : 'bg-white border-slate-200'
                 }`}
               >
-                <div className="flex items-center justify-between font-mono font-bold text-white">
+                <div className="flex items-center justify-between font-mono font-bold text-[#0d3f3a]">
                   <span>
                     {win.start_time}–{win.end_time}
                   </span>
@@ -345,10 +345,10 @@ export const WhatIfSimulation: React.FC<WhatIfSimulationProps> = ({
                     {isBest ? '✅ Best' : highC ? '❌ High' : '✅ Valid'}
                   </span>
                 </div>
-                <div className="text-sm font-extrabold font-mono text-emerald-300 mt-1">
+                <div className="text-sm font-extrabold font-mono text-emerald-600 mt-1">
                   {kg} kgCO₂
                 </div>
-                <div className="text-[11px] text-slate-400 mt-0.5">
+                <div className="text-[11px] text-slate-500 mt-0.5">
                   {win.avg_carbon_intensity} gCO₂/kWh · $
                   {win.estimated_cost_usd.toFixed(2)}
                 </div>

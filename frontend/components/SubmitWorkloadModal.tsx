@@ -79,18 +79,18 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+      <div className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-3">
           <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-emerald-400" />
-            <h2 className="text-lg font-bold text-white">
+            <Zap className="h-5 w-5 text-emerald-600" />
+            <h2 className="text-lg font-bold text-[#0d3f3a]">
               Submit Enterprise Cloud Workload &amp; Simulation Tuning
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white"
+            className="p-1.5 rounded-lg bg-slate-100 text-slate-500 hover:text-[#0d3f3a]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -99,35 +99,35 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
         <form onSubmit={handleCreate} className="space-y-4 text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-slate-400 mb-1">Job ID</label>
+              <label className="block text-slate-500 mb-1">Job ID</label>
               <input
                 type="text"
                 value={jobId}
                 onChange={(e) => setJobId(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">Workload Name</label>
+              <label className="block text-slate-500 mb-1">Workload Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-[#0d3f3a]"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">
+              <label className="block text-slate-500 mb-1">
                 Workload Type (Policy Evaluated)
               </label>
               <select
                 value={workloadType}
                 onChange={(e) => setWorkloadType(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
               >
                 <optgroup label="ALLOW (Flexible Cloud Jobs)">
                   <option value="ai_model_training">ai_model_training</option>
@@ -154,11 +154,11 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">Job Priority</label>
+              <label className="block text-slate-500 mb-1">Job Priority</label>
               <select
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
               >
                 <option value="LOW">LOW (Maximum Carbon Flexibility)</option>
                 <option value="MEDIUM">MEDIUM (Standard Carbon Optimization)</option>
@@ -170,7 +170,7 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">
+              <label className="block text-slate-500 mb-1">
                 Execution Duration (Minutes)
               </label>
               <input
@@ -180,19 +180,19 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
                 step={15}
                 value={durationMinutes}
                 onChange={(e) => setDurationMinutes(Number(e.target.value))}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">
+              <label className="block text-slate-500 mb-1">
                 SLA Deadline (HH:00)
               </label>
               <select
                 value={deadline}
                 onChange={(e) => setDeadline(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
               >
                 {Array.from({ length: 24 }, (_, h) => {
                   const t = `${String(h).padStart(2, '0')}:00`;
@@ -206,7 +206,7 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">
+              <label className="block text-slate-500 mb-1">
                 Estimated Energy Consumption (kWh)
               </label>
               <input
@@ -215,13 +215,13 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
                 max={2000}
                 value={energyKwh}
                 onChange={(e) => setEnergyKwh(Number(e.target.value))}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 mb-1">
+              <label className="block text-slate-500 mb-1">
                 Estimated Cloud Cost ($ USD — &gt;$500 triggers ASK_USER)
               </label>
               <input
@@ -230,7 +230,7 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
                 max={5000}
                 value={estimatedCost}
                 onChange={(e) => setEstimatedCost(Number(e.target.value))}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
                 required
               />
             </div>
@@ -250,14 +250,14 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
         </form>
 
         {/* Custom Grid Parameter Overrides */}
-        <div className="border-t border-slate-800 pt-4 space-y-3 text-xs">
-          <div className="flex items-center gap-2 font-bold text-slate-200">
-            <Sliders className="h-4 w-4 text-sky-400" />
+        <div className="border-t border-slate-200 pt-4 space-y-3 text-xs">
+          <div className="flex items-center gap-2 font-bold text-slate-700">
+            <Sliders className="h-4 w-4 text-sky-600" />
             Custom Grid Telemetry Override (Current Hour)
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-slate-400 mb-1">
+              <label className="block text-slate-500 mb-1">
                 Override Current Carbon Intensity (gCO₂/kWh)
               </label>
               <input
@@ -266,11 +266,11 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
                 max={1000}
                 value={customCarbon}
                 onChange={(e) => setCustomCarbon(Number(e.target.value))}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
               />
             </div>
             <div>
-              <label className="block text-slate-400 mb-1">
+              <label className="block text-slate-500 mb-1">
                 Override Current Solar Generation (MW)
               </label>
               <input
@@ -279,7 +279,7 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
                 max={8000}
                 value={customSolar}
                 onChange={(e) => setCustomSolar(Number(e.target.value))}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 font-mono text-white"
+                className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 font-mono text-[#0d3f3a]"
               />
             </div>
           </div>
@@ -287,7 +287,7 @@ export const SubmitWorkloadModal: React.FC<SubmitWorkloadModalProps> = ({
             type="button"
             onClick={handleGridOverride}
             disabled={submitting}
-            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 font-semibold text-xs transition"
+            className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-sky-600 font-semibold text-xs transition"
           >
             Apply Grid Telemetry Override
           </button>

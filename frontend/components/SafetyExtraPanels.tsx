@@ -44,17 +44,17 @@ export const SafetyExtraPanels: React.FC<Props> = ({ data, selectedJobId, busy, 
           <span className="text-[11px] font-mono text-slate-500">ALLOW · ASK_USER · DENY</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-5 text-xs">
-          <div className="rounded-xl border border-[#10B981]/30 bg-[#10B981]/5 p-3">
+          <div className="rounded-xl border border-[#10B981]/30 bg-[#10B981]/5 p-3 min-w-0">
             <div className="font-mono font-bold text-[#10B981] mb-1.5">ALLOW ({data.policy_rules.ALLOW.length})</div>
-            <ul className="space-y-1 text-slate-600 leading-snug">{data.policy_rules.ALLOW.map((r) => (<li key={r}>· {r}</li>))}</ul>
+            <ul className="space-y-1.5 text-slate-600 leading-snug">{data.policy_rules.ALLOW.map((r) => (<li key={r} className="break-all font-mono text-[11px]">· {r}</li>))}</ul>
           </div>
-          <div className="rounded-xl border border-[#F59E0B]/30 bg-[#F59E0B]/5 p-3">
+          <div className="rounded-xl border border-[#F59E0B]/30 bg-[#F59E0B]/5 p-3 min-w-0">
             <div className="font-mono font-bold text-[#F59E0B] mb-1.5">ASK_USER ({data.policy_rules.ASK_USER.length})</div>
-            <ul className="space-y-1 text-slate-600 leading-snug">{data.policy_rules.ASK_USER.map((r) => (<li key={r}>· {r}</li>))}</ul>
+            <ul className="space-y-1.5 text-slate-600 leading-snug">{data.policy_rules.ASK_USER.map((r) => (<li key={r} className="break-all font-mono text-[11px]">· {r}</li>))}</ul>
           </div>
-          <div className="rounded-xl border border-[#EF4444]/30 bg-[#EF4444]/5 p-3">
+          <div className="rounded-xl border border-[#EF4444]/30 bg-[#EF4444]/5 p-3 min-w-0">
             <div className="font-mono font-bold text-[#EF4444] mb-1.5">DENY ({data.policy_rules.DENY.length})</div>
-            <ul className="space-y-1 text-slate-600 leading-snug">{data.policy_rules.DENY.map((r) => (<li key={r}>· {r}</li>))}</ul>
+            <ul className="space-y-1.5 text-slate-600 leading-snug">{data.policy_rules.DENY.map((r) => (<li key={r} className="break-all font-mono text-[11px]">· {r}</li>))}</ul>
           </div>
         </div>
       </div>

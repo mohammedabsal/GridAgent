@@ -440,10 +440,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 {/* Motion paths for electricity particles */}
                 <path id="path-solar-grid" d="M 440 76 L 440 108" />
                 <path id="path-grid-dc" d="M 440 178 L 440 212" />
-                <path id="path-dc-workload" d="M 440 316 L 440 346" />
+                <path id="path-dc-workload" d="M 440 316 L 440 342" />
                 <path
                   id="path-reschedule-arc"
-                  d="M 108 212 C 108 265, 165 265, 226 265"
+                  d="M 108 214 C 108 264, 170 264, 228 264"
                 />
               </defs>
 
@@ -451,7 +451,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   STAGE 1 (TOP): RENEWABLE GENERATION (SOLAR + WIND)
               ============================================================= */}
               <g
-                transform="translate(290, 12)"
+                transform="translate(275, 12)"
                 className="cursor-pointer"
                 onMouseEnter={() => setHoveredNode('solar')}
                 onMouseLeave={() => setHoveredNode(null)}
@@ -459,7 +459,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <rect
                   x="0"
                   y="0"
-                  width="300"
+                  width="330"
                   height="64"
                   rx="8"
                   fill="#FFFFFF"
@@ -479,7 +479,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 />
                 {/* Technical Corner Ticks */}
                 <path
-                  d="M 0 10 L 0 0 L 10 0 M 290 0 L 300 0 L 300 10"
+                  d="M 0 10 L 0 0 L 10 0 M 320 0 L 330 0 L 330 10"
                   stroke="#10B981"
                   strokeWidth="1.8"
                   fill="none"
@@ -558,8 +558,9 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   {renewable.toFixed(1)}% Renewable
                 </text>
                 <text
-                  x="208"
+                  x="312"
                   y="46"
+                  textAnchor="end"
                   fill="#10B981"
                   fontSize="12"
                   fontWeight="600"
@@ -639,7 +640,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   STAGE 2: ENERGY GRID SUBSTATION
               ============================================================= */}
               <g
-                transform="translate(290, 110)"
+                transform="translate(275, 110)"
                 className="cursor-pointer"
                 onMouseEnter={() => setHoveredNode('grid')}
                 onMouseLeave={() => setHoveredNode(null)}
@@ -647,7 +648,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <rect
                   x="0"
                   y="0"
-                  width="300"
+                  width="330"
                   height="68"
                   rx="8"
                   fill="#FFFFFF"
@@ -666,7 +667,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   ENERGY GRID
                 </text>
                 <text
-                  x="280"
+                  x="310"
                   y="24"
                   textAnchor="end"
                   fill={gridStateColor}
@@ -687,7 +688,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   {Math.round(carbon)} gCO₂/kWh
                 </text>
                 <text
-                  x="280"
+                  x="310"
                   y="49"
                   textAnchor="end"
                   fill="#64748B"
@@ -803,7 +804,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   fill="#64748B"
                   fontSize="10"
                   fontFamily="monospace"
-                  letterSpacing="1.2"
+                  letterSpacing="1.0"
                 >
                   DATA CENTER · COOLING NOMINAL
                 </text>
@@ -891,7 +892,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   x1="440"
                   y1="316"
                   x2="440"
-                  y2="346"
+                  y2="342"
                   stroke={isExecutingAtCurrentHour ? '#10B981' : '#3B82F6'}
                   strokeOpacity="0.2"
                   strokeWidth="6"
@@ -900,7 +901,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   x1="440"
                   y1="316"
                   x2="440"
-                  y2="342"
+                  y2="338"
                   stroke={isExecutingAtCurrentHour ? '#10B981' : '#3B82F6'}
                   strokeWidth="2.2"
                   strokeDasharray={isExecutingAtCurrentHour ? '4 4' : '2 4'}
@@ -941,7 +942,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   STAGE 4 (BOTTOM): WORKLOAD EXECUTION TARGET
               ============================================================= */}
               <g
-                transform="translate(250, 346)"
+                transform="translate(230, 342)"
                 className="cursor-pointer"
                 onMouseEnter={() => setHoveredNode('workload')}
                 onMouseLeave={() => setHoveredNode(null)}
@@ -949,8 +950,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <rect
                   x="0"
                   y="0"
-                  width="380"
-                  height="42"
+                  width="420"
+                  height="50"
                   rx="8"
                   fill="#FFFFFF"
                   filter={
@@ -972,8 +973,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   }
                 />
                 <circle
-                  cx="20"
-                  cy="21"
+                  cx="18"
+                  cy="25"
                   r="4.5"
                   fill={
                     isExecutingAtCurrentHour
@@ -985,28 +986,65 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   className={!reducedMotion ? 'ga-breathing-led' : ''}
                 />
                 <text
-                  x="34"
-                  y="25"
+                  x="32"
+                  y="19"
+                  fill="#64748B"
+                  fontSize="9.5"
+                  fontFamily="monospace"
+                  letterSpacing="0.8"
+                >
+                  WORKLOAD TARGET · {workload.job_id.toUpperCase()}
+                </text>
+                <text
+                  x="32"
+                  y="36"
                   fill="#0F172A"
-                  fontSize="12"
+                  fontSize="11.5"
                   fontWeight="700"
                   fontFamily="monospace"
                 >
-                  {workload.name.toUpperCase()}
+                  {(() => {
+                    const raw = workload.name
+                      .replace(/\s*\([^)]*\)\s*$/, '')
+                      .trim()
+                      .toUpperCase();
+                    return raw.length > 28 ? `${raw.slice(0, 27)}…` : raw;
+                  })()}
                 </text>
-                <text
-                  x="362"
-                  y="25"
-                  textAnchor="end"
+                <rect
+                  x="258"
+                  y="13"
+                  width="148"
+                  height="24"
+                  rx="6"
                   fill={
                     isExecutingAtCurrentHour
-                      ? '#10B981'
+                      ? '#ECFDF5'
                       : isDeferredWaiting
-                      ? '#D97706'
-                      : '#64748B'
+                      ? '#FFFBEB'
+                      : '#F8FAFC'
                   }
-                  fontSize="11"
-                  fontWeight="600"
+                  stroke={
+                    isExecutingAtCurrentHour
+                      ? '#10B98155'
+                      : isDeferredWaiting
+                      ? '#F59E0B66'
+                      : '#CBD5E1'
+                  }
+                />
+                <text
+                  x="332"
+                  y="29"
+                  textAnchor="middle"
+                  fill={
+                    isExecutingAtCurrentHour
+                      ? '#047857'
+                      : isDeferredWaiting
+                      ? '#B45309'
+                      : '#475569'
+                  }
+                  fontSize="10"
+                  fontWeight="700"
                   fontFamily="monospace"
                 >
                   {isExecutingAtCurrentHour

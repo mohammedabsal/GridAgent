@@ -204,33 +204,33 @@ export const RecommendedDashboardLayout: React.FC<RecommendedDashboardLayoutProp
           </div>
           {latestDecision ? (
             <div className="space-y-3 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-slate-500">Job</span>
-                <span className="font-mono font-semibold text-[#0d3f3a]">
+              <div className="flex items-start justify-between gap-4">
+                <span className="text-slate-500 shrink-0">Job</span>
+                <span className="font-mono font-semibold text-[#0d3f3a] text-right break-words min-w-0">
                   {latestDecision.name}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-slate-500">Type</span>
-                <span className="font-mono text-[#0d3f3a]">
+              <div className="flex items-start justify-between gap-4">
+                <span className="text-slate-500 shrink-0">Type</span>
+                <span className="font-mono text-[#0d3f3a] text-right break-all min-w-0">
                   {latestDecision.type}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-slate-500">Status</span>
-                <span className={`font-mono font-semibold ${getStatusColor(latestDecision.status)}`}>
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-slate-500 shrink-0">Status</span>
+                <span className={`font-mono font-semibold text-right ${getStatusColor(latestDecision.status)}`}>
                   {latestDecision.status}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-slate-500">Recommended Start</span>
-                <span className="font-mono font-semibold text-emerald-700">
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-slate-500 shrink-0">Recommended Start</span>
+                <span className="font-mono font-semibold text-emerald-700 text-right">
                   {formatTime(latestDecision.recommended ?? '—')}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-slate-500">Decision</span>
-                <span className="font-mono font-semibold text-[#0d3f3a]">
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-slate-500 shrink-0">Decision</span>
+                <span className="font-mono font-semibold text-[#0d3f3a] text-right">
                   {getDecisionChip(latestDecision.decision || null, latestDecision.policy || null)}
                 </span>
               </div>

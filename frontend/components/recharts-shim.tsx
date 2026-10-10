@@ -175,7 +175,7 @@ export const ComposedChart: React.FC<{
         />
         <text
           x={(x16 + x18) / 2}
-          y={padTop + 13}
+          y={padTop - 7}
           textAnchor="middle"
           fill="#059669"
           fontSize="9.5"

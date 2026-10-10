@@ -200,15 +200,10 @@ export const EnergyIntelligence: React.FC<EnergyIntelligenceProps> = ({
               <Icon className={`h-4 w-4 ${IconClass}`} />
             </div>
             <div className="mt-2 flex items-baseline gap-1.5">
-<<<<<<< HEAD
-              <span className={`text-2xl font-mono font-bold ${valueClass}`}>{value}</span>
-              <span className="text-xs font-mono text-slate-500">{unit}</span>
-=======
               <span className={`text-2xl font-mono font-bold ${valueClass}`}>
                 <AnimatedNumber value={numValue} decimals={decimals} />
               </span>
-              <span className="text-xs font-mono text-slate-400">{unit}</span>
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
+              <span className="text-xs font-mono text-slate-500">{unit}</span>
             </div>
             <div className="mt-1 truncate text-[11px] text-slate-500">{sub}</div>
           </div>

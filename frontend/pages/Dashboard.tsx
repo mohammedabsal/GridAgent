@@ -4,18 +4,13 @@ import { AgentActivityFeed } from '../components/AgentActivityFeed';
 import { BeforeAfterComparison } from '../components/BeforeAfterComparison';
 import { DigitalTwinCanvas } from '../components/DigitalTwinCanvas';
 import { EnergyIntelligence } from '../components/EnergyIntelligence';
-<<<<<<< HEAD
-import { PageHeroArt, ScreenIllustration } from '../components/ScreenIllustrations';
-import { ImpactHero } from '../components/ImpactHero';
-import { IndiaContextStrip } from '../components/IndiaContextStrip';
-import { JuryEmptyState } from '../components/JuryEmptyState';
-import { JuryToast } from '../components/JuryToast';
-=======
 import {
   PageHeroArt,
   ScreenIllustration,
 } from '../components/ScreenIllustrations';
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
+import { ImpactHero } from '../components/ImpactHero';
+import { IndiaContextStrip } from '../components/IndiaContextStrip';
+import { JuryToast } from '../components/JuryToast';
 import { SafetyAndMcpPanel } from '../components/SafetyAndMcpPanel';
 import { SafetyExtraPanels } from '../components/SafetyExtraPanels';
 import { SubmitWorkloadModal } from '../components/SubmitWorkloadModal';
@@ -484,17 +479,13 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
                         : 'text-slate-500 hover:text-[#0d3f3a] hover:bg-slate-50 border border-transparent'
                     }`}
                   >
-<<<<<<< HEAD
-                    <span className={`h-2 w-2 rounded-full shrink-0 ${active ? 'bg-[#10B981]' : 'bg-slate-300'}`} />
-=======
                     <span
                       className={`h-2 w-2 rounded-full shrink-0 ${
                         active
                           ? 'bg-[#10B981] shadow-[0_0_6px_rgba(16,185,129,0.6)]'
-                          : 'bg-[#263244]'
+                          : 'bg-slate-300'
                       }`}
                     />
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
                     {sidebarOpen && <span>{route.label}</span>}
                   </button>
                 );
@@ -504,20 +495,12 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
         </aside>
 
         <main className="flex-1 w-full min-w-0 max-w-[1440px] mx-auto px-4 md:px-6 py-5 space-y-5">
-<<<<<<< HEAD
-          <IndiaContextStrip data={data} busy={busy} onChangeProfile={handleChangeProfile} />
-          {toastMessage && (
-            <div className="bg-slate-50 border border-[#10B981]/50 text-[#0d3f3a] px-4 py-2.5 rounded-2xl text-xs font-mono flex items-center justify-between">
-              <span>{toastMessage}</span>
-              <button onClick={() => setToastMessage(null)} className="text-slate-500 hover:text-[#0d3f3a]">✕</button>
-            </div>
-          )}
-          <JuryToast message={toastMessage} note={bannerNote} onDismiss={() => { setToastMessage(null); setBannerNote(null); }} />
-          {activeNav === 'dashboard' && (
-          <div className="space-y-5">
-            <section id="console-header" className="border border-slate-200/80 bg-white rounded-2xl p-5 shadow-xl shadow-emerald-900/5">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 pb-5 border-b border-slate-200">
-=======
+          <IndiaContextStrip
+            data={data}
+            busy={busy}
+            onChangeProfile={handleChangeProfile}
+          />
+
           {/* Status / Toast / AI Scanning Feedback */}
           {(toastMessage || bannerNote || analysisStage) && (
             <div
@@ -541,10 +524,18 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
             </div>
           )}
 
+          <JuryToast
+            message={toastMessage}
+            note={bannerNote}
+            onDismiss={() => {
+              setToastMessage(null);
+              setBannerNote(null);
+            }}
+          />
+
           {/* Judge Mode Final Statement Banner (Scene 10) */}
           {judgeFinalBanner && (
             <div className="rounded-2xl border-2 border-emerald-500 bg-gradient-to-r from-emerald-950 via-[#0d3f3a] to-emerald-900 text-white p-6 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ga-stage-2">
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
               <div className="space-y-1">
                 <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-emerald-300">
                   JUDGE WALKTHROUGH COMPLETE ·{' '}
@@ -580,32 +571,6 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
           )}
 
           {activeNav === 'dashboard' && (
-<<<<<<< HEAD
-            <PageHeroArt kind="dashboard" eyebrow="Dashboard · Operations console" title="Carbon-aware operations at a glance" description="Live grid carbon, renewable share, active workload and the recommended clean window." />
-          )}
-          {activeNav === 'simulation' && (
-            <PageHeroArt kind="simulation" eyebrow="Simulation · Digital twin" title="Step the 24-hour grid and test decisions" description="Play, pause and scrub the twin to see how carbon intensity and renewables shift through the day." />
-          )}
-          {activeNav === 'simulation' && (
-          <section id="digital-twin-section" className="border border-slate-200 bg-slate-50 rounded-2xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-slate-500 mr-2">DIGITAL TWIN SIMULATION</span>
-              <button onClick={() => setIsPlaying(true)} disabled={isPlaying} className={`px-2.5 py-1 rounded-2xl text-xs font-mono inline-flex items-center gap-1.5 border transition ${isPlaying ? 'bg-[#10B981]/20 border-[#10B981] text-[#10B981]' : 'bg-white border-slate-200 text-[#0d3f3a] hover:bg-emerald-100'}`}>▶ Play</button>
-              <button onClick={() => setIsPlaying(false)} disabled={!isPlaying} className="px-2.5 py-1 rounded-2xl text-xs font-mono inline-flex items-center gap-1.5 bg-white border border-slate-200 text-[#0d3f3a] hover:bg-emerald-100 disabled:opacity-40 transition">⏸ Pause</button>
-              <button onClick={() => { setIsPlaying(false); withBusy(async () => { await api.resetSimulation(false); }, 'Simulation reset to baseline state (15:00)'); }} className="px-2.5 py-1 rounded-2xl text-xs font-mono inline-flex items-center gap-1.5 bg-white border border-slate-200 text-slate-500 hover:text-[#0d3f3a] transition">↺ Reset</button>
-              <span className="hidden md:inline text-[10px] font-mono text-slate-400 border border-dashed border-slate-200 rounded-lg px-1.5 py-0.5" title="Keyboard shortcuts">←/→ hour · Space play</span>
-              <span className="h-4 w-px bg-slate-200 mx-1" />
-              <span className="text-xs font-mono text-slate-500">Time</span>
-              <span className="px-2 py-1 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono font-semibold text-[#0d3f3a]">{grid.current_time}</span>
-              <button onClick={() => handleSelectHour((grid.current_hour + 23) % 24)} className="px-2 py-1 rounded-2xl bg-white border border-slate-200 text-xs font-mono text-[#0d3f3a] hover:bg-emerald-100 transition">- 1h</button>
-              <button onClick={() => handleSelectHour((grid.current_hour + 1) % 24)} className="px-2 py-1 rounded-2xl bg-white border border-slate-200 text-xs font-mono text-[#0d3f3a] hover:bg-emerald-100 transition">+ 1h</button>
-              <span className="h-4 w-px bg-slate-200 mx-1" />
-              <span className="text-xs font-mono text-slate-500">Speed</span>
-              <div className="inline-flex rounded-2xl border border-slate-200 bg-slate-50 p-0.5">
-                {([1, 2, 5] as const).map((s) => (
-                  <button key={s} onClick={() => setSpeed(s)} className={`px-2 py-0.5 text-xs font-mono rounded-lg transition ${speed === s ? 'bg-emerald-100 text-[#0d3f3a] font-semibold' : 'text-slate-500 hover:text-[#0d3f3a]'}`}>{s}×</button>
-                ))}
-=======
             <div className="space-y-5">
               {/* Operations Console Header + 4 Animated KPIs */}
               <section
@@ -755,7 +720,6 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
 
               <div className={`ga-stage-4 ${focusClass('decision')}`}>
                 <RecommendedDashboardLayout data={data} />
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
               </div>
             </div>
           )}
@@ -915,31 +879,10 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
           )}
 
           {activeNav === 'impact' && (
-<<<<<<< HEAD
             <ImpactHero comparison={data.comparison} />
           )}
+
           {activeNav === 'impact' && (
-          <section id="what-if-section" className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-            <div className="lg:col-span-6 border border-slate-200 bg-white rounded-2xl flex flex-col justify-between">
-              <div>
-                <div className="px-5 py-3 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-                  <h2 className="text-xs font-bold uppercase tracking-[0.14em] text-[#0d3f3a]">WHAT HAPPENS IF WE RUN THIS WORKLOAD?</h2>
-                  <span className="text-[11px] font-mono text-slate-500">{selectedWorkload?.name} ({selectedWorkload?.energy_kwh} kWh)</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-11 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-                  <div className="md:col-span-5 p-5 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-500">RUN NOW</span>
-                      <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono bg-[#EF4444]/15 text-[#EF4444] border border-[#EF4444]/30">HIGH CARBON</span>
-                    </div>
-                    <div className="text-2xl font-mono font-bold text-[#0d3f3a]">{submitTime}</div>
-                    <div className="space-y-2 pt-2 border-t border-slate-200 text-xs font-mono">
-                      <div className="flex justify-between"><span className="text-slate-500">Grid Intensity</span><span className="text-[#EF4444]">{Math.round(baselineCarbonIntensity)} gCO₂/kWh</span></div>
-                      <div className="flex justify-between"><span className="text-slate-500">Total Carbon</span><span className="text-[#0d3f3a] font-semibold">{baselineKg} kgCO₂</span></div>
-                      <div className="flex justify-between"><span className="text-slate-500">Energy Cost</span><span className="text-[#0d3f3a]">${baselineCost}</span></div>
-                      <div className="flex justify-between"><span className="text-slate-500">Deadline</span><span className="text-slate-500">{selectedWorkload?.deadline}</span></div>
-                    </div>
-=======
             <section
               id="what-if-section"
               className="grid grid-cols-1 lg:grid-cols-12 gap-5 ga-stage-3"
@@ -955,7 +898,6 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
                       {selectedWorkload?.name} ({selectedWorkload?.energy_kwh}{' '}
                       kWh)
                     </span>
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-11 divide-y md:divide-y-0 md:divide-x divide-slate-200">
                     {/* BEFORE / RUN NOW */}
@@ -1551,20 +1493,41 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
               id="technical-details-section"
               className="space-y-5 pt-4 border-t border-slate-200 ga-stage-5"
             >
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-sm font-mono font-bold uppercase tracking-[0.14em] text-[#0d3f3a]">
-                    TECHNICAL ARCHITECTURE &amp; TELEMETRY
-                  </h2>
-                  <p className="text-xs text-slate-500">Scoped to this page.</p>
+              {/* Technical Architecture Header Banner */}
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-sm ga-glass-card flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-mono font-bold text-[10px] uppercase tracking-wider">
+                      TECHNICAL VIEW
+                    </span>
+                    <h2 className="text-sm sm:text-base font-mono font-bold uppercase tracking-[0.12em] text-[#0d3f3a]">
+                      ARCHITECTURE, GOVERNANCE &amp; MCP TELEMETRY
+                    </h2>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    Inspect live Pydantic agent outputs, SQLite governance audit logs, and execute Model Context Protocol (MCP) tools directly against the backend.
+                  </p>
                 </div>
-                <button
-                  onClick={() => setViewMode('simple')}
-                  className="px-3 py-1.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-500 hover:text-[#0d3f3a]"
-                >
-                  Switch to Simple View
-                </button>
+
+                <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
+                  <span className="px-2.5 py-1 rounded-xl bg-slate-50 border border-slate-200 text-slate-600">
+                    Pipeline: <strong className="text-[#0d3f3a]">PERCEIVE → REASON → SAFETY → EXECUTE</strong>
+                  </span>
+                  <span className="px-2.5 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold">
+                    {data.mcp_tools.length} MCP Tools
+                  </span>
+                  <span className="px-2.5 py-1 rounded-xl bg-slate-50 border border-slate-200 text-slate-600">
+                    {data.policy_audit_logs.length} Audit Logs
+                  </span>
+                  <button
+                    onClick={() => setViewMode('simple')}
+                    className="px-3 py-1.5 rounded-xl bg-[#0d3f3a] text-white font-mono font-semibold text-xs hover:bg-emerald-800 transition shadow-2xs"
+                  >
+                    Switch to Simple View
+                  </button>
+                </div>
               </div>
+
               {(activeNav === 'workloads' || activeNav === 'dashboard') && (
                 <WorkloadTable
                   workloads={data.workloads}
@@ -1577,21 +1540,27 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
                   }
                 />
               )}
+
               {(activeNav === 'impact' || activeNav === 'dashboard') && (
                 <BeforeAfterComparison comparison={data.comparison} />
               )}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                {(activeNav === 'simulation' || activeNav === 'dashboard') && (
-                  <AgentActivityFeed events={data.agent_events} />
-                )}
-                {(activeNav === 'safety' || activeNav === 'dashboard') && (
-                  <SafetyAndMcpPanel
-                    policyRules={data.policy_rules}
-                    auditLogs={data.policy_audit_logs}
-                    mcpTools={data.mcp_tools}
-                  />
-                )}
-              </div>
+
+              {(activeNav === 'simulation' ||
+                activeNav === 'energy' ||
+                activeNav === 'dashboard') && (
+                <AgentActivityFeed events={data.agent_events} />
+              )}
+
+              {(activeNav === 'safety' ||
+                activeNav === 'simulation' ||
+                activeNav === 'energy' ||
+                activeNav === 'dashboard') && (
+                <SafetyAndMcpPanel
+                  policyRules={data.policy_rules}
+                  auditLogs={data.policy_audit_logs}
+                  mcpTools={data.mcp_tools}
+                />
+              )}
             </section>
           )}
         </main>

@@ -344,7 +344,6 @@ a {
     transform 0.2s ease;
 }
 
-<<<<<<< HEAD
 /* ------------------------------------------------------------------ */
 /* #2 — Light panel micro-interactions (border + shadow on hover).      */
 /*     Shadow/border only — no transform, so sticky children and      */
@@ -458,10 +457,7 @@ a {
   animation: ga-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Respect users who prefer no motion. */
-=======
 /* Section 29: Accessibility: Respect prefers-reduced-motion */
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
 @media (prefers-reduced-motion: reduce) {
   .ga-reveal,
   .ga-stage-1,
@@ -481,16 +477,13 @@ a {
     animation: none !important;
   }
   .ga-float,
-<<<<<<< HEAD
   .ga-flow,
   .ga-node-live,
   .ga-spin-slow,
   .ga-bar-grow,
-=======
   .ga-pulse-subtle,
   .ga-breathing-led,
   .ga-scan-bar::after,
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
   .landing-main > section,
   .landing-main > div > section,
   footer > div {

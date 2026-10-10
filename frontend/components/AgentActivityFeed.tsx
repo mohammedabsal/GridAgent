@@ -27,99 +27,121 @@ export const AgentActivityFeed: React.FC<AgentActivityFeedProps> = ({
     switch (stage) {
       case 'PERCEIVE':
         return {
-          badge: 'bg-sky-500/20 text-sky-600 border-sky-500/30',
+          badge: 'bg-sky-500/15 text-sky-700 border-sky-500/30',
           icon: <Eye className="h-3.5 w-3.5 text-sky-600" />,
-          label: '[PERCEIVE]',
+          label: 'PERCEIVE',
         };
       case 'WORKLOAD':
         return {
-          badge: 'bg-cyan-500/20 text-cyan-600 border-cyan-500/30',
+          badge: 'bg-cyan-500/15 text-cyan-700 border-cyan-500/30',
           icon: <Cpu className="h-3.5 w-3.5 text-cyan-600" />,
-          label: '[PERCEIVE:QUEUE]',
+          label: 'PERCEIVE:QUEUE',
         };
       case 'REASON':
         return {
-          badge: 'bg-purple-500/20 text-purple-600 border-purple-500/30',
+          badge: 'bg-purple-500/15 text-purple-700 border-purple-500/30',
           icon: <Brain className="h-3.5 w-3.5 text-purple-600" />,
-          label: '[REASON]',
+          label: 'REASON',
         };
       case 'SAFETY':
         return {
-          badge: 'bg-amber-500/20 text-amber-600 border-amber-500/30',
+          badge: 'bg-amber-500/15 text-amber-700 border-amber-500/30',
           icon: <ShieldCheck className="h-3.5 w-3.5 text-amber-600" />,
-          label: '[SAFETY]',
+          label: 'SAFETY CHECK',
         };
       case 'EXECUTE':
         return {
-          badge: 'bg-emerald-500/20 text-emerald-600 border-emerald-500/30',
+          badge: 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30',
           icon: <PlayCircle className="h-3.5 w-3.5 text-emerald-600" />,
-          label: '[EXECUTE]',
+          label: 'EXECUTE',
         };
     }
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xl flex flex-col h-full">
-      <div className="mb-3">
-        <div className="flex items-center justify-between gap-2">
-          <h2 className="text-base sm:text-lg font-bold text-[#0d3f3a]">
-            Live Multi-Agent Activity Stream
-          </h2>
-          <span className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-600">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-            ACTIVE
-          </span>
+    <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm ga-glass-card flex flex-col">
+      {/* Header + Interactive Pipeline Filter */}
+      <div className="px-5 py-4 border-b border-slate-200 bg-gradient-to-r from-slate-50 via-white to-emerald-50/30 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+        <div>
+          <div className="flex items-center gap-2.5">
+            <h3 className="text-sm sm:text-base font-bold text-[#0d3f3a]">
+              Live Multi-Agent Orchestration Stream
+            </h3>
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[10px] font-mono font-semibold text-emerald-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
+              {filteredEvents.length} EVENTS
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Filter real-time telemetry across the 4-stage autonomous agent pipeline.
+          </p>
         </div>
 
         {/* Visual Pipeline Step Indicator */}
-        <div className="mt-2.5 p-2.5 rounded-xl bg-white border border-slate-200 flex flex-wrap items-center justify-between gap-1 text-[11px] font-mono">
+        <div className="p-1.5 rounded-xl bg-slate-50 border border-slate-200/90 flex flex-wrap items-center gap-1 text-[11px] font-mono">
           <button
+            type="button"
+            onClick={() => setFilterStage('ALL')}
+            className={`px-2.5 py-1 rounded-lg transition ${
+              filterStage === 'ALL'
+                ? 'bg-[#0d3f3a] text-white font-semibold shadow-2xs'
+                : 'text-slate-600 hover:bg-white'
+            }`}
+          >
+            ALL ({events.length})
+          </button>
+          <span className="h-3.5 w-px bg-slate-200 mx-0.5" />
+          <button
+            type="button"
             onClick={() =>
               setFilterStage(filterStage === 'PERCEIVE' ? 'ALL' : 'PERCEIVE')
             }
-            className={`px-2 py-1 rounded flex items-center gap-1 transition ${
+            className={`px-2.5 py-1 rounded-lg flex items-center gap-1 transition ${
               filterStage === 'PERCEIVE'
-                ? 'bg-sky-500/30 text-sky-700 border border-sky-400'
-                : 'text-sky-600 hover:bg-slate-50'
+                ? 'bg-sky-500/20 text-sky-800 border border-sky-400 font-semibold'
+                : 'text-sky-700 hover:bg-white'
             }`}
           >
             <Eye className="h-3 w-3" /> PERCEIVE
           </button>
-          <ArrowRight className="h-3 w-3 text-slate-600" />
+          <ArrowRight className="h-3 w-3 text-slate-400" />
           <button
+            type="button"
             onClick={() =>
               setFilterStage(filterStage === 'REASON' ? 'ALL' : 'REASON')
             }
-            className={`px-2 py-1 rounded flex items-center gap-1 transition ${
+            className={`px-2.5 py-1 rounded-lg flex items-center gap-1 transition ${
               filterStage === 'REASON'
-                ? 'bg-purple-500/30 text-purple-700 border border-purple-400'
-                : 'text-purple-600 hover:bg-slate-50'
+                ? 'bg-purple-500/20 text-purple-800 border border-purple-400 font-semibold'
+                : 'text-purple-700 hover:bg-white'
             }`}
           >
             <Brain className="h-3 w-3" /> REASON
           </button>
-          <ArrowRight className="h-3 w-3 text-slate-600" />
+          <ArrowRight className="h-3 w-3 text-slate-400" />
           <button
+            type="button"
             onClick={() =>
               setFilterStage(filterStage === 'SAFETY' ? 'ALL' : 'SAFETY')
             }
-            className={`px-2 py-1 rounded flex items-center gap-1 transition ${
+            className={`px-2.5 py-1 rounded-lg flex items-center gap-1 transition ${
               filterStage === 'SAFETY'
-                ? 'bg-amber-500/30 text-amber-700 border border-amber-400'
-                : 'text-amber-600 hover:bg-slate-50'
+                ? 'bg-amber-500/20 text-amber-800 border border-amber-400 font-semibold'
+                : 'text-amber-700 hover:bg-white'
             }`}
           >
-            <ShieldCheck className="h-3 w-3" /> SAFETY CHECK
+            <ShieldCheck className="h-3 w-3" /> SAFETY
           </button>
-          <ArrowRight className="h-3 w-3 text-slate-600" />
+          <ArrowRight className="h-3 w-3 text-slate-400" />
           <button
+            type="button"
             onClick={() =>
               setFilterStage(filterStage === 'EXECUTE' ? 'ALL' : 'EXECUTE')
             }
-            className={`px-2 py-1 rounded flex items-center gap-1 transition ${
+            className={`px-2.5 py-1 rounded-lg flex items-center gap-1 transition ${
               filterStage === 'EXECUTE'
-                ? 'bg-emerald-500/30 text-emerald-700 border border-emerald-400'
-                : 'text-emerald-600 hover:bg-slate-50'
+                ? 'bg-emerald-500/20 text-emerald-800 border border-emerald-400 font-semibold'
+                : 'text-emerald-700 hover:bg-white'
             }`}
           >
             <PlayCircle className="h-3 w-3" /> EXECUTE
@@ -128,39 +150,45 @@ export const AgentActivityFeed: React.FC<AgentActivityFeedProps> = ({
       </div>
 
       {/* Scrollable Event List */}
-      <div className="space-y-2.5 overflow-y-auto max-h-[340px] pr-1">
+      <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-3 overflow-y-auto max-h-[380px]">
         {filteredEvents.map((evt) => {
           const st = getStageStyle(evt.stage);
           return (
             <div
               key={evt.id}
-              className="p-3 rounded-xl bg-white border border-slate-200 hover:border-slate-300 transition text-xs"
+              className="p-3.5 rounded-xl bg-slate-50/70 border border-slate-200/90 hover:border-emerald-300/80 hover:bg-white transition text-xs flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between gap-2 mb-1">
-                <div className="flex items-center gap-1.5">
-                  {st.icon}
-                  <span
-                    className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border ${st.badge}`}
-                  >
-                    {st.label}
-                  </span>
-                  <span className="font-mono text-[11px] text-slate-500">
-                    {evt.agent_name}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 font-mono text-[10px] text-slate-500">
-                  {evt.job_id && (
-                    <span className="px-1.5 py-0.5 rounded bg-white text-slate-600 border border-slate-200">
-                      {evt.job_id}
+              <div>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                  <div className="flex items-center gap-1.5">
+                    {st.icon}
+                    <span
+                      className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold border ${st.badge}`}
+                    >
+                      {st.label}
                     </span>
-                  )}
-                  <span>Sim {evt.simulation_time}</span>
+                    <span className="font-mono text-[11px] font-medium text-slate-600">
+                      {evt.agent_name}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500">
+                    {evt.job_id && (
+                      <span className="px-1.5 py-0.5 rounded bg-white text-[#0d3f3a] font-semibold border border-slate-200">
+                        {evt.job_id}
+                      </span>
+                    )}
+                    <span className="px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
+                      {evt.simulation_time}
+                    </span>
+                  </div>
                 </div>
+                <div className="font-semibold text-[#0d3f3a] text-xs">
+                  {evt.title}
+                </div>
+                <p className="text-slate-600 text-[11px] leading-relaxed mt-1">
+                  {evt.message}
+                </p>
               </div>
-              <div className="font-semibold text-[#0d3f3a]">{evt.title}</div>
-              <p className="text-slate-500 text-[11px] leading-relaxed mt-0.5">
-                {evt.message}
-              </p>
             </div>
           );
         })}

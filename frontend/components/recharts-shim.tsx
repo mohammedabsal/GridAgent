@@ -302,16 +302,6 @@ export const ComposedChart: React.FC<{
       </svg>
 
       {hovered && (
-<<<<<<< HEAD
-        <div className="absolute top-2 right-3 bg-white/95 border border-slate-300 rounded-xl px-3 py-2 text-xs shadow-xl pointer-events-none">
-          <div className="font-mono font-bold text-[#0d3f3a]">
-            {String(hovered.time_str)} — {String(hovered.grid_regime || '')}
-          </div>
-          <div className="text-rose-600 font-mono">
-            Carbon: {String(hovered.carbon_intensity_gco2_kwh)} gCO₂/kWh
-          </div>
-          <div className="text-emerald-600 font-mono">
-=======
         <div className="absolute top-2 right-3 bg-white/95 backdrop-blur-md border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs shadow-xl pointer-events-none">
           <div className="font-mono font-bold text-[#0d3f3a]">
             {String(hovered.time_str)} — {String(hovered.grid_regime || '')}
@@ -320,7 +310,6 @@ export const ComposedChart: React.FC<{
             Carbon: {String(hovered.carbon_intensity_gco2_kwh)} gCO₂/kWh
           </div>
           <div className="text-emerald-600 font-mono font-semibold">
->>>>>>> 6c5bb74776f15a398af4e1918fca8cc9792105f2
             Renewable: {String(hovered.renewable_percentage)}%
           </div>
         </div>

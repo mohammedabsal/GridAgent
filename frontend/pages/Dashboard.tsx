@@ -571,36 +571,30 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
           )}
 
           {activeNav === 'dashboard' && (
-            <div className="space-y-5">
-              {/* Operations Console Header + 4 Animated KPIs */}
+            <div className="space-y-4">
+              {/* Compact Operations Control Header + 4 Live Synchronized KPIs */}
               <section
                 id="console-header"
-                className="border border-slate-200/80 bg-white rounded-2xl p-5 shadow-xl shadow-emerald-900/5 ga-glass-card ga-stage-2"
+                className="border border-slate-200/90 bg-white rounded-2xl px-4 py-3.5 shadow-sm"
               >
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 pb-5 border-b border-slate-200">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-emerald-600">
-                        GRIDAGENT-AI
-                      </span>
-                      <span className="text-slate-300">/</span>
-                      <span className="text-[11px] font-mono text-slate-500">
-                        OPERATIONS CONTROL SYSTEM
-                      </span>
-                    </div>
-                    <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-[#0d3f3a]">
-                      Carbon-Aware Cloud Workload Simulation
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 pb-3 border-b border-slate-100">
+                  <div className="flex flex-wrap items-center gap-2 min-w-0">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md">
+                      GRIDAGENT-AI
+                    </span>
+                    <h1 className="text-sm md:text-base font-extrabold tracking-tight text-[#0d3f3a] truncate">
+                      Carbon-Aware Cloud Workload Digital Twin
                     </h1>
-                    <p className="text-xs md:text-sm text-slate-500 max-w-2xl">
-                      Simulate workload execution against grid carbon intensity,
-                      renewable generation, cost, and operational constraints.
-                    </p>
+                    <span className="hidden xl:inline text-xs text-slate-400">•</span>
+                    <span className="hidden xl:inline text-xs font-mono tabular-nums text-slate-500">
+                      Active Clock: <strong className="text-[#0d3f3a]">{grid.current_time} IST</strong>
+                    </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2.5">
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
                     <button
                       onClick={handleRunLiveDemo}
                       disabled={busy || judgeScene !== null}
-                      className="px-7 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shadow-lg shadow-emerald-600/25 disabled:opacity-50"
+                      className="px-4 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] transition shadow-sm shadow-emerald-600/20 disabled:opacity-50 whitespace-nowrap"
                     >
                       {judgeScene !== null
                         ? `▶ SCENE ${judgeScene}/10...`
@@ -608,34 +602,27 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
                     </button>
                     <button
                       onClick={() => navigateTo('impact')}
-                      className="px-7 py-2.5 rounded-full bg-white hover:border-emerald-400 hover:text-emerald-700 text-slate-700 border border-slate-300 text-xs font-bold transition shadow-sm"
+                      className="px-4 py-1.5 rounded-full bg-white hover:border-emerald-400 hover:text-emerald-700 text-slate-700 border border-slate-200 text-[11px] font-bold transition whitespace-nowrap"
                     >
                       VIEW DECISION
                     </button>
                   </div>
                 </div>
 
-                {/* 4 Animated KPI Readouts */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-slate-200 pt-4">
-                  <div className="pr-4 py-1">
-                    <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
-                      GRID CARBON
-                    </div>
-                    <div className="mt-1 flex items-baseline gap-2">
-                      <span className="text-xl font-mono font-semibold text-[#0d3f3a]">
-                        <AnimatedNumber
-                          value={grid.carbon_intensity_gco2_kwh}
-                          decimals={0}
-                          suffix=" gCO₂/kWh"
-                        />
+                {/* 4 Synchronized KPI Readouts */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-0 lg:divide-x divide-slate-200 pt-3">
+                  <div className="lg:pr-4">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
+                        GRID CARBON ({grid.current_time})
                       </span>
                       <span
-                        className={`text-[11px] font-mono ${
+                        className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold ${
                           grid.carbon_intensity_gco2_kwh <= 420
-                            ? 'text-[#10B981]'
+                            ? 'bg-emerald-50 text-[#10B981]'
                             : grid.carbon_intensity_gco2_kwh >= 550
-                            ? 'text-[#EF4444]'
-                            : 'text-[#F59E0B]'
+                            ? 'bg-rose-50 text-[#EF4444]'
+                            : 'bg-amber-50 text-[#F59E0B]'
                         }`}
                       >
                         {grid.carbon_intensity_gco2_kwh <= 420
@@ -645,55 +632,100 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
                           : 'Moderate'}
                       </span>
                     </div>
+                    <div className="mt-1 flex items-baseline gap-2 flex-wrap">
+                      <span className="text-lg sm:text-xl font-mono font-bold tabular-nums whitespace-nowrap text-[#0d3f3a]">
+                        <AnimatedNumber
+                          value={grid.carbon_intensity_gco2_kwh}
+                          decimals={0}
+                          suffix=" gCO₂/kWh"
+                        />
+                      </span>
+                      {grid.current_time !== submitTime && (
+                        <span
+                          className={`text-[10px] font-mono tabular-nums whitespace-nowrap ${
+                            grid.carbon_intensity_gco2_kwh <= baselineCarbonIntensity
+                              ? 'text-emerald-600 font-semibold'
+                              : 'text-rose-600 font-semibold'
+                          }`}
+                        >
+                          {grid.carbon_intensity_gco2_kwh <= baselineCarbonIntensity ? '' : '+'}
+                          {Math.round(grid.carbon_intensity_gco2_kwh - baselineCarbonIntensity)} vs {submitTime}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="lg:px-5 py-1">
-                    <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
-                      RENEWABLE
+                  <div className="lg:px-4">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
+                        RENEWABLE SHARE
+                      </span>
+                      <span className="text-[10px] font-mono tabular-nums whitespace-nowrap text-slate-500">
+                        ☀️ {Math.round(grid.solar_generation_mw)} · 🌬️ {Math.round(grid.wind_generation_mw)} MW
+                      </span>
                     </div>
                     <div className="mt-1 flex items-baseline gap-2">
-                      <span className="text-xl font-mono font-semibold text-[#0d3f3a]">
+                      <span className="text-lg sm:text-xl font-mono font-bold tabular-nums whitespace-nowrap text-[#0d3f3a]">
                         <AnimatedNumber
                           value={grid.renewable_percentage}
                           decimals={1}
                           suffix="%"
                         />
                       </span>
-                      <span className="text-[11px] font-mono text-slate-500">
+                      <span className="text-[11px] font-mono tabular-nums whitespace-nowrap text-slate-500">
                         <AnimatedNumber
-                          value={
-                            grid.solar_generation_mw + grid.wind_generation_mw
-                          }
+                          value={grid.solar_generation_mw + grid.wind_generation_mw}
                           decimals={0}
-                          suffix=" MW"
+                          suffix=" MW total"
                         />
                       </span>
                     </div>
                   </div>
 
-                  <div className="lg:px-5 py-1">
-                    <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
-                      WORKLOAD
+                  <div className="lg:px-4">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
+                        WORKLOAD
+                      </span>
+                      <span
+                        className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold ${
+                          selectedWorkload?.status === 'RUNNING'
+                            ? 'bg-emerald-50 text-emerald-700'
+                            : selectedWorkload?.status === 'COMPLETED'
+                            ? 'bg-sky-50 text-sky-700'
+                            : 'bg-amber-50 text-amber-700'
+                        }`}
+                      >
+                        {selectedWorkload?.status ?? 'IDLE'}
+                      </span>
                     </div>
-                    <div className="mt-1 flex items-baseline gap-2">
-                      <span className="text-xl font-mono font-semibold text-[#0d3f3a]">
+                    <div className="mt-1 flex items-baseline gap-2 min-w-0">
+                      <span className="text-lg sm:text-xl font-mono font-bold tabular-nums whitespace-nowrap shrink-0 text-[#0d3f3a]">
                         {selectedWorkload?.energy_kwh ?? 0} kWh
                       </span>
-                      <span className="text-[11px] font-mono text-slate-500 truncate">
+                      <span
+                        title={selectedWorkload?.name}
+                        className="text-xs font-mono text-slate-600 truncate"
+                      >
                         {selectedWorkload?.name}
                       </span>
                     </div>
                   </div>
 
-                  <div className="lg:pl-5 py-1">
-                    <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
-                      RECOMMENDED
+                  <div className="lg:pl-4">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-slate-500">
+                        RECOMMENDED WINDOW
+                      </span>
+                      <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-[10px] font-mono font-semibold tabular-nums whitespace-nowrap text-emerald-700">
+                        -{carbonReductionPctNum.toFixed(1)}% CO₂
+                      </span>
                     </div>
-                    <div className="mt-1 flex items-baseline gap-2">
-                      <span className="text-xl font-mono font-semibold text-[#10B981]">
+                    <div className="mt-1 flex items-baseline gap-2 flex-wrap">
+                      <span className="text-lg sm:text-xl font-mono font-bold tabular-nums whitespace-nowrap text-[#10B981]">
                         {recStart}
                       </span>
-                      <span className="text-[11px] font-mono text-slate-500">
+                      <span className="text-[11px] font-mono tabular-nums whitespace-nowrap text-slate-500">
                         <AnimatedNumber
                           value={optimizedCarbonIntensity}
                           decimals={0}
@@ -722,24 +754,6 @@ export const Dashboard: React.FC<{ initialSection?: NavSection }> = ({
                 <RecommendedDashboardLayout data={data} />
               </div>
             </div>
-          )}
-
-          {activeNav === 'dashboard' && (
-            <PageHeroArt
-              kind="dashboard"
-              eyebrow="Dashboard · Operations console"
-              title="Carbon-aware operations at a glance"
-              description="Live grid carbon, renewable share, active workload and the recommended clean window."
-            />
-          )}
-
-          {activeNav === 'simulation' && (
-            <PageHeroArt
-              kind="simulation"
-              eyebrow="Simulation · Digital twin"
-              title="Step the 24-hour grid and test decisions"
-              description="Play, pause and scrub the twin to see how carbon intensity and renewables shift through the day."
-            />
           )}
 
           {activeNav === 'simulation' && (

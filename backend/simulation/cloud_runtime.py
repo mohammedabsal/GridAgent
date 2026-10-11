@@ -128,15 +128,82 @@ class SimulatedKubernetesAdapter(CloudRuntimeAdapter):
 
     def advance_clock_transitions(self, current_hour: int) -> List[Dict[str, str]]:
         """
-        Evaluates all DEFERRED and RUNNING jobs when the simulation clock moves to `current_hour`.
-        - DEFERRED jobs whose recommended_start_time matches or precedes current_hour -> RUNNING
-        - RUNNING jobs whose start_hour + duration_hours <= current_hour -> COMPLETED
+        Evaluates all jobs when the simulation clock moves to `current_hour` (forward or backward):
+        - For DEFER-scheduled jobs (policy ALLOW):
+          * current_hour < rec_hour -> DEFERRED
+          * rec_hour <= current_hour < rec_hour + duration_hours -> RUNNING
+          * current_hour >= rec_hour + duration_hours -> COMPLETED
+        - For immediate RUNNING jobs:
+          * current_hour >= start_hour + duration_hours -> COMPLETED
         """
         current_time_str = f"{current_hour:02d}:00"
         transitions: List[Dict[str, str]] = []
 
         for job in list(self._jobs.values()):
-            # 1. Check if DEFERRED job should start now
+            duration_hours = max(1, (job.duration_minutes + 59) // 60)
+
+            # Case 1: Job scheduled via DEFER with an approved recommended_start_time
+            if (
+                job.recommended_start_time
+                and job.decision == "DEFER"
+                and job.status in (WorkloadStatus.DEFERRED, WorkloadStatus.RUNNING, WorkloadStatus.COMPLETED)
+            ):
+                rec_hour = int(job.recommended_start_time.split(":")[0])
+                rec_time_str = f"{rec_hour:02d}:00"
+                end_hour = rec_hour + duration_hours
+
+                if current_hour < rec_hour:
+                    if job.status != WorkloadStatus.DEFERRED:
+                        prev = job.status.value
+                        job.status = WorkloadStatus.DEFERRED
+                        job.actual_start_time = None
+                        job.completed_at_time = None
+                        self._persist(job)
+                        transitions.append(
+                            {
+                                "job_id": job.job_id,
+                                "from": prev,
+                                "to": "DEFERRED",
+                                "time": current_time_str,
+                                "message": f"Timeline at {current_time_str} (prior to {rec_time_str} optimal window). Workload queued in DEFERRED state.",
+                            }
+                        )
+                elif rec_hour <= current_hour < end_hour:
+                    if job.status != WorkloadStatus.RUNNING:
+                        prev = job.status.value
+                        job.status = WorkloadStatus.RUNNING
+                        job.actual_start_time = rec_time_str
+                        job.completed_at_time = None
+                        self._persist(job)
+                        transitions.append(
+                            {
+                                "job_id": job.job_id,
+                                "from": prev,
+                                "to": "RUNNING",
+                                "time": current_time_str,
+                                "message": f"Scheduled clean window active ({rec_time_str}). Pod executing on Simulated K8s cluster.",
+                            }
+                        )
+                else:
+                    if job.status != WorkloadStatus.COMPLETED:
+                        prev = job.status.value
+                        job.status = WorkloadStatus.COMPLETED
+                        if not job.actual_start_time:
+                            job.actual_start_time = rec_time_str
+                        job.completed_at_time = current_time_str
+                        self._persist(job)
+                        transitions.append(
+                            {
+                                "job_id": job.job_id,
+                                "from": prev,
+                                "to": "COMPLETED",
+                                "time": current_time_str,
+                                "message": f"Workload {job.job_id} finished execution ({job.duration_minutes}m) at {current_time_str}.",
+                            }
+                        )
+                continue
+
+            # Case 2: Fallback for manually deferred or immediate RUNNING jobs
             if job.status == WorkloadStatus.DEFERRED and job.recommended_start_time:
                 rec_hour = int(job.recommended_start_time.split(":")[0])
                 if current_hour == rec_hour:
@@ -152,11 +219,8 @@ class SimulatedKubernetesAdapter(CloudRuntimeAdapter):
                             "message": f"Scheduled clean window reached ({current_time_str}). Pod started on Simulated K8s cluster.",
                         }
                     )
-
-            # 2. Check if RUNNING job has completed its duration
             elif job.status == WorkloadStatus.RUNNING and job.actual_start_time:
                 start_hour = int(job.actual_start_time.split(":")[0])
-                duration_hours = max(1, (job.duration_minutes + 59) // 60)
                 end_hour = (start_hour + duration_hours) % 24
                 if current_hour == end_hour or (
                     current_hour > start_hour and (current_hour - start_hour) >= duration_hours

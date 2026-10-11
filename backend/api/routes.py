@@ -94,8 +94,10 @@ def api_grid_renewable() -> Dict[str, Any]:
 
 @router.post("/simulation/update")
 def api_update_simulation(req: SimulationUpdateRequest) -> Dict[str, Any]:
+    profile_updated = False
     if req.profile and req.profile in PROFILES:
         simulated_grid_provider.active_profile = req.profile
+        profile_updated = True
     if req.override_current_carbon is not None:
         simulated_grid_provider.override_current_carbon = req.override_current_carbon
     elif req.override_current_carbon is None and req.profile is not None:
@@ -105,6 +107,22 @@ def api_update_simulation(req: SimulationUpdateRequest) -> Dict[str, Any]:
         simulated_grid_provider.override_current_solar_mw = req.override_current_solar_mw
     if req.cloud_capacity_utilization_pct is not None:
         simulated_grid_provider.cloud_capacity_utilization_pct = req.cloud_capacity_utilization_pct
+
+    if profile_updated:
+        saved_hour = (
+            req.current_hour
+            if req.current_hour is not None
+            else simulated_grid_provider.current_hour
+        )
+        for job in cloud_runtime.list_jobs():
+            if job.status.value in ("DEFERRED", "RUNNING", "COMPLETED", "QUEUED") and job.decision != "BLOCKED_BY_SAFETY":
+                try:
+                    sub_hour = int((job.submitted_at_time or "15:00").split(":")[0])
+                except Exception:
+                    sub_hour = 15
+                simulated_grid_provider.set_hour(sub_hour)
+                orchestrator.orchestrate_job(job.job_id)
+        return orchestrator.advance_simulation_time(saved_hour)
 
     if req.current_hour is not None:
         return orchestrator.advance_simulation_time(req.current_hour)
